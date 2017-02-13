@@ -3,7 +3,7 @@ require_relative "state_machine.rb"
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
-    @state_machine = StateMachine.new :inicio, :fim
+    @state_machine = StateMachine.new [:inicio, :fim], {:add_index => Proc.new{|x| x+1}}
   end
 
   describe "when creating a new state machine configuration" do
@@ -11,6 +11,10 @@ describe StateMachine, "Maintenance interaction cycle definition" do
         @state_machine.machine_states.must_equal [:inicio, :fim]
         # state_machine = StateMachine.new :inicio, :fim
         # assert_equal state_machine.machine_states, [:inicio]
+      end
+
+      it "should find the add_index operation" do
+        @state_machine.operations.must_include :add_index
       end
   end
 end
