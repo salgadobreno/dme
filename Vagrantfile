@@ -70,9 +70,8 @@ Vagrant.configure("2") do |config|
 
     # Install RVM
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-    \curl -sSL https://get.rvm.io | bash -s
-
-    source /home/vagrant/.rvm/scripts/rvm
+    curl -sSL https://get.rvm.io | bash -s $1 
+    source $HOME/.rvm/scripts/rvm || source /etc/profile.d/rvm.sh
 
     # Install Ruby and set it as default
     rvm install ruby-2.4
@@ -85,8 +84,9 @@ Vagrant.configure("2") do |config|
     gem install rails --version 5.0.1 --no-ri --no-rdoc
 
     # create your personal key for gitlab
+    # TODO: BRENO: force user to define email variable before this step?
     echo "ssh-keygen -t rsa -C <youremail>@avixy.com"
-    ssh-keygen -t rsa -C <youremail>@avixy.com
+    ssh-keygen -t rsa -C default@avixy.com
 
     # download project from gitlab
     # git clone <project address>
