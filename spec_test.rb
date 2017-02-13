@@ -18,7 +18,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       end
 
       it "should perform add_index operation" do
-        @state_machine.execute(:add_index, 2).must_equal 3
+        @state_machine.execute(:add_index).must_equal 1
       end
   end
 end
