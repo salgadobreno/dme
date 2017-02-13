@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "test.rb"
+require_relative "state_machine.rb"
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
