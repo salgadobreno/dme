@@ -8,6 +8,7 @@ class StateMachine
   end
 
   def execute(op)
-    @operations[op].call(@index) #TODO: This magic number is temporary
+    @operations[op].call(self)
+  end
   end
 end

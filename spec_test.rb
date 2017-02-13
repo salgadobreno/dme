@@ -3,7 +3,7 @@ require_relative "state_machine.rb"
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
-    @state_machine = StateMachine.new [:inicio, :fim], {:add_index => Proc.new{|x| x+1}}
+    @state_machine = StateMachine.new [:inicio, :fim], {:add_index => Proc.new{|x| x.index = x.index + 1}}, {:even_index => Proc.new{|x| x % 2 == 0 ? true : false}}
   end
 
   describe "when creating a new state machine configuration" do
