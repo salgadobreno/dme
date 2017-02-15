@@ -28,6 +28,6 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     it "should forward to the next state" do
       @state_machine.forward
       @state_machine.current_state.must_equal @state_fim
-    end    
+    end
   end
 end
