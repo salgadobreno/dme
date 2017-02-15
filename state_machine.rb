@@ -3,48 +3,55 @@ class State
 
   def initialize(name, state_options)
     @name = name
-    @state_options = state_options
+
+    # register callbacks
+    @validation_callbacks = state_options[:validation]
+    @execution_callbacks = state_options[:execution]
   end
 
-  def execute
-    @payload = @state_options[:payload]
-    @execute_blocks = @state_options[:execute]
-    @execute_blocks.each {|eb| eb.call(@payload)}
+  def execute(payload)
+    unless @execution_callbacks.nil? || @validation_callbacks.empty?
+      @execution_callbacks.each {|eb| eb.call(payload)}
+    end
   end
 
-  def validate
-    @validation_blocks = @state_options[:validation]
+  def validate(payload)
+    r = nil
 
-    validated = false
-
-    unless @validation_blocks.nil?
-      validated = true #TODO: Review it seems ugly
-
-      @validation_blocks.each do |vproc|
-        validated = vproc.call @payload
-      end
+    if @validation_callbacks.nil? || @validation_callbacks.empty?
+      r = true
+    else
+      # chama all? em array de Boolean, se algum falhar, retorna falso
+      r = @validation_callbacks.map { |validation|
+        validation.call(payload)
+      }.all?
     end
 
-    return validated
+    return r
   end
 
 end
 
 class StateMachine
-  attr_reader :current_state
-  attr_accessor :machine_states
+  attr_reader :current_state, :machine_states, :payload
 
   def initialize(*args)
     @machine_states = args
     @current_state = @machine_states.first
+    @payload = {}
   end
 
   def forward
     # execute/validate the current state call
-    @current_state.execute
+    @current_state.execute @payload
 
-    if @current_state.validate
+    if @current_state.validate @payload
+      p "valido"
+      "current state previo é #{@current_state}"
+      "index do current state é #{@machine_states.find_index(@current_state)}"
       @current_state = @machine_states[@machine_states.find_index(@current_state)+1]
+      "current state agora é #{@current_state}"
+      #TODO: verificação se tá no "end"
     end
   end
 end
