@@ -1,16 +1,27 @@
 require "minitest/autorun"
 require_relative "state_machine.rb"
 
+class DevicePackage
+  attr_accessor :index
+
+  def initialize
+    @index = 0
+  end
+end
+
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
+      @device_package = DevicePackage.new
       @state_inicio = State.new :inicio, {
-        :execute => [Proc.new {puts "inicio"}],
+        :payload => @device_package,
+        :execute => [Proc.new {|x| x.index = x.index + 1}],
         :validation => nil
       }
 
       @state_fim = State.new :fim, {
+        :payload => @device_package,
         :execute => nil,
-        :validation => [Proc.new {return true}]
+        :validation => [Proc.new {x.index % 2 == 0 ? true : false}]
       }
 
       @state_machine = StateMachine.new @state_inicio, @state_fim

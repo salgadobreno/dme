@@ -7,8 +7,9 @@ class State
   end
 
   def execute
+    @payload = @state_options[:payload]
     @execute_blocks = @state_options[:execute]
-    @execute_blocks.each {|eb| eb.call}
+    @execute_blocks.each {|eb| eb.call(@payload)}
   end
 
   def validate
