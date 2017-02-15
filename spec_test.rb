@@ -1,4 +1,5 @@
 require "minitest/autorun"
+require "mocha/mini_test"
 require_relative "state_machine.rb"
 
 class DevicePackage
@@ -12,9 +13,11 @@ end
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
       @device_package = DevicePackage.new
+      @proc_add_index = Proc.new {|x| x.index = x.index + 1}
       @state_inicio = State.new :inicio, {
         :payload => @device_package,
-        :execute => [Proc.new {|x| x.index = x.index + 1}],
+        :execute => [@proc_add_index],
+        #:execute => [Proc.new {|x| x[:index] = x[:index] + 1}],
         :validation => nil
       }
 
@@ -34,6 +37,11 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
     it "should verify the initial state" do
       @state_machine.current_state.must_equal @state_inicio
+    end
+
+    it "should execute the operation" do
+      @proc_add_index.expects :call
+      #@state_machine.forward
     end
 
     it "should forward to the next state" do
