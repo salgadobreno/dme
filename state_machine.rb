@@ -15,16 +15,19 @@ class State
   def validate
     @validation_blocks = @state_options[:validation]
 
-    validated = true
+    validated = false
 
     unless @validation_blocks.nil?
+      validated = true #TODO: Review it seems ugly
+
       @validation_blocks.each do |vproc|
-        validated = vproc.call
+        validated = vproc.call @payload
       end
     end
 
     return validated
   end
+
 end
 
 class StateMachine
