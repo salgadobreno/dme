@@ -1,8 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    autotest-spec (0.1.0)
+    autotest-suffix (1.1.0)
     metaclass (0.0.4)
     minitest (5.10.1)
+    minitest-autotest (1.0.3)
+      minitest-server (~> 1.0)
+    minitest-server (1.0.4)
+      minitest (~> 5.0)
     mocha (1.2.1)
       metaclass (~> 0.0.1)
 
@@ -10,8 +16,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autotest-spec
+  autotest-suffix
   bundler (~> 1.14, >= 1.14.4)
   minitest (~> 5.10, >= 5.10.1)
+  minitest-autotest
   mocha
 
 BUNDLED WITH
