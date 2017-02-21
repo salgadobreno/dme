@@ -1,3 +1,5 @@
+require 'logger'
+
 class StateMachine
 
   attr_reader :current_state, :machine_states, :payload
@@ -6,6 +8,7 @@ class StateMachine
     @machine_states = args
     @current_state = @machine_states.first
     @payload = {}
+    @log = Logger.new(STDOUT)
   end
 
   def forward
@@ -13,12 +16,10 @@ class StateMachine
     @current_state.execute @payload
 
     if @current_state.validate @payload
-      p "valido"
-      "current state previo é #{@current_state}"
-      "index do current state é #{@machine_states.find_index(@current_state)}"
+      @log.info("#{@current_state.name} is valid.")
       @current_state = @machine_states[@machine_states.find_index(@current_state)+1]
-      "current state agora é #{@current_state}"
-      #TODO: verificação se tá no "end"
+    else
+      @log.debug("Error validating the state #{@current_state.name}.")
     end
   end
 end

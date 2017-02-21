@@ -2,6 +2,7 @@ require "minitest/autorun"
 require "mocha/mini_test"
 require_relative "state_machine.rb"
 require_relative "state.rb"
+require_relative "item.rb"
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
@@ -70,6 +71,16 @@ describe StateMachine, "Maintenance interaction cycle definition" do
   describe Item, "An Item in the maintenance lifecycle" do
     before do
       # item will receive the configured state machine
+      @state_inicio = State.new :inicio, {
+        :execution => nil,
+        :validation => nil
+      }
+      @state_fim = State.new :fim, {
+        :execution => nil,
+        :validation => nil
+      }
+
+      @state_machine = StateMachine.new @state_inicio, @state_fim
       @item = Item.new 1234, @state_machine
     end
 
@@ -79,41 +90,44 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
     it "delegates forwarding of state to the state machine" do
       @state_machine.expects :forward
+      p @state_machine.current_state
       @item.forward
+      p @state_machine.current_state
+      p @item.current_state
       @item.current_state.must_equal @state_fim
     end
   end
 
-  describe Buffer, "A list of items that executes actions in batch and keeps track of Item states" do
-    before do
-      @items = [
-        Item.new(0, StateMachine.new @state_inicio, @state_fim),
-        Item.new(1, StateMachine.new @state_inicio, @state_fim),
-        Item.new(2, StateMachine.new @state_inicio, @state_fim),
-        Item.new(3, StateMachine.new @state_inicio, @state_fim),
-        Item.new(4, StateMachine.new @state_inicio, @state_fim),
-        Item.new(5, StateMachine.new @state_inicio, @state_fim),
-      ]
+  #describe Buffer, "A list of items that executes actions in batch and keeps track of Item states" do
+    #before do
+      #@items = [
+        #Item.new(0, StateMachine.new @state_inicio, @state_fim),
+        #Item.new(1, StateMachine.new @state_inicio, @state_fim),
+        #Item.new(2, StateMachine.new @state_inicio, @state_fim),
+        #Item.new(3, StateMachine.new @state_inicio, @state_fim),
+        #Item.new(4, StateMachine.new @state_inicio, @state_fim),
+        #Item.new(5, StateMachine.new @state_inicio, @state_fim),
+      #]
 
-      @buffer = Buffer.new @items
-    end
+      #@buffer = Buffer.new @items
+    #end
 
-    it "organizes items according to their state" do
-      @buffer.items.must_equal {:inicio => @items} # name of @state_inicio
-    end
+    #it "organizes items according to their state" do
+      #@buffer.items.must_equal {:inicio => @items} # name of @state_inicio
+    #end
 
-    it "batch runs state machine operations" do
-      @items.each {|i| i.expects :forward}
-      @buffer.send_forward
-    end
+    #it "batch runs state machine operations" do
+      #@items.each {|i| i.expects :forward}
+      #@buffer.send_forward
+    #end
 
-    it "keeps track of items across states" do
-      @buffer.send_forward
-      state_inicio_name = @state_inicio.name
-      state_fim_name = @state_inicio.name
-      @buffer.items[:inicio].size.must_equal 3
-      @buffer.items[:fim].size.must_equal 3
-    end
-  end
+    #it "keeps track of items across states" do
+      #@buffer.send_forward
+      #state_inicio_name = @state_inicio.name
+      #state_fim_name = @state_inicio.name
+      #@buffer.items[:inicio].size.must_equal 3
+      #@buffer.items[:fim].size.must_equal 3
+    #end
+  #end
 end
 
