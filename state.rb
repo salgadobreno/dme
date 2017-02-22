@@ -30,4 +30,8 @@ class State
     return r
   end
 
+  def to_s
+    "State{name: #{@name}}"
+  end
+
 end

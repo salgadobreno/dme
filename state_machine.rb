@@ -1,14 +1,13 @@
-require 'logger'
+require_relative 'app_log'
 
 class StateMachine
 
   attr_reader :current_state, :machine_states, :payload
 
-  def initialize(*args)
-    @machine_states = args
+  def initialize(states, payload={})
+    @machine_states = states
     @current_state = @machine_states.first
-    @payload = {}
-    @log = Logger.new(STDOUT)
+    @payload = payload
   end
 
   def forward
@@ -16,10 +15,10 @@ class StateMachine
     @current_state.execute @payload
 
     if @current_state.validate @payload
-      @log.info("#{@current_state.name} is valid.")
+      APP_LOG.info("#{@current_state} is valid.")
       @current_state = @machine_states[@machine_states.find_index(@current_state)+1]
     else
-      @log.debug("Error validating the state #{@current_state.name}.")
+      APP_LOG.debug("#{@current_state} invalid.")
     end
   end
 end
