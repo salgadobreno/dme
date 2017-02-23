@@ -1,10 +1,10 @@
-require 'irb'
+require "irb"
 require "minitest/autorun"
 require "mocha/mini_test"
-require_relative "state_machine.rb"
-require_relative "state.rb"
-require_relative "item.rb"
-require_relative "buffer.rb"
+require "app/state_machine"
+require "app/state"
+require "app/item"
+require "app/buffer"
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do

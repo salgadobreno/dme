@@ -1,4 +1,4 @@
-require 'app_log'
+require_relative 'app_log'
 
 class StateMachine
 
