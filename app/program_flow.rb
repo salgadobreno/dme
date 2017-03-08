@@ -10,8 +10,6 @@ require "state"
 require "item"
 require "buffer"
 
-h_respostas = {}
-
 @prompt = TTY::Prompt.new
 
 table_cliente_prompt = "Select CRIENTE"
@@ -25,13 +23,17 @@ bipa_prompt = 'Bipe a maquina:'
 inspecao_visual_prompt = 'Realize inspecao visual(selecione com as setas e use espaço para selecionar)'
 inspecao_visual_opts = ['sem barata', 'teclado integro', 'sem coliformes']
 
-#pergunta = table.render :ascii
-#pergunta << "\n"
-#pergunta << table_cliente_question
-#resposta = prompt.select pergunta, [1,2,3]
+h_respostas = {}
 
 h_respostas[:cliente] = @prompt.select table_cliente_prompt + "\n" + table_cliente.render(:ascii), ['Avixy','Cielo','Rede']
 h_respostas[:serial_number] = @prompt.ask bipa_prompt
 h_respostas[:inspecao_visual] = @prompt.multi_select inspecao_visual_prompt, inspecao_visual_opts
 
-p h_respostas.inspect
+puts "Cliente: #{h_respostas[:cliente]}"
+puts "Numero Serial: #{h_respostas[:serial_number]}"
+puts "Dados de inspeção:\n#{TTY::Table.new(h_respostas[:inspecao_visual].map {|x| [x]}).render(:ascii)}"
+@prompt.yes? "Confirma recebimento?"
+
+#p h_respostas[:inspecao_visual].map {|x| [x]}.inspect
+
+#p h_respostas.inspect
