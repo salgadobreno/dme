@@ -50,7 +50,7 @@ describe "Scenario receiving a single device" do
     end
   end
 
-  descrive "device enters the triage" do
+  describe "device enters the triage" do
     it "should identify the device" do
 
     end
