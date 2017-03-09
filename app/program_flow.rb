@@ -11,29 +11,36 @@ require "item"
 require "buffer"
 
 @prompt = TTY::Prompt.new
+@payload = {}
+@payload[:respostas] = {}
 
-table_cliente_prompt = "Select CRIENTE"
-table_cliente = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Avixy'], ['2', 'Cielo'], ['3', 'Rede']]
+op_input_cliente = lambda {|payload|
+  table_cliente_prompt = "Select CRIENTE"
+  table_cliente = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Avixy'], ['2', 'Cielo'], ['3', 'Rede']]
+  payload[:respostas][:cliente] = @prompt.select table_cliente_prompt + "\n" + table_cliente.render(:ascii), ['Avixy','Cielo','Rede']
+}
 
-#table_transportador_question = "Select TRNASPORTADORA"
-#table_transp = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Rapidao'], ['2', 'Cometa']]
+op_input_serial_number = lambda {|payload|
+  bipa_prompt = 'Bipe a maquina:'
+  payload[:respostas][:serial_number] = @prompt.ask bipa_prompt
+}
 
-bipa_prompt = 'Bipe a maquina:'
+op_input_inspecao = lambda {|payload|
+  inspecao_visual_prompt = 'Realize inspecao visual(selecione com as setas e use espaço para selecionar)'
+  inspecao_visual_opts = ['sem barata', 'teclado integro', 'sem coliformes']
+  payload[:respostas][:inspecao_visual] = @prompt.multi_select inspecao_visual_prompt, inspecao_visual_opts
+}
 
-inspecao_visual_prompt = 'Realize inspecao visual(selecione com as setas e use espaço para selecionar)'
-inspecao_visual_opts = ['sem barata', 'teclado integro', 'sem coliformes']
+def execute(operation)
+  operation.call @payload
+end
 
-h_respostas = {}
+execute op_input_cliente
+execute op_input_serial_number
+execute op_input_inspecao
 
-h_respostas[:cliente] = @prompt.select table_cliente_prompt + "\n" + table_cliente.render(:ascii), ['Avixy','Cielo','Rede']
-h_respostas[:serial_number] = @prompt.ask bipa_prompt
-h_respostas[:inspecao_visual] = @prompt.multi_select inspecao_visual_prompt, inspecao_visual_opts
 
-puts "Cliente: #{h_respostas[:cliente]}"
-puts "Numero Serial: #{h_respostas[:serial_number]}"
-puts "Dados de inspeção:\n#{TTY::Table.new(h_respostas[:inspecao_visual].map {|x| [x]}).render(:ascii)}"
+puts "Cliente: #{@payload[:respostas][:cliente]}"
+puts "Numero Serial: #{@payload[:respostas][:serial_number]}"
+puts "Dados de inspeção:\n#{TTY::Table.new(@payload[:respostas][:inspecao_visual].map {|x| [x]}).render(:ascii)}"
 @prompt.yes? "Confirma recebimento?"
-
-#p h_respostas[:inspecao_visual].map {|x| [x]}.inspect
-
-#p h_respostas.inspect
