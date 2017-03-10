@@ -50,8 +50,6 @@ state_fim = State.new :fim, {
 
 state_machine = StateMachine.new [state_inicio, state_fim], @payload
 
-#state_inicio.execute @payload
-
 while state_machine.has_next?
   state_machine.forward
 end

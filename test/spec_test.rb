@@ -128,7 +128,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       @buffer = Buffer.new @items
     end
 
-    it "organizes items according to their state" do
+    it "organize items according to their state" do
       @buffer.items.must_equal({:inicio => @items}) # name of @state_inicio
     end
 
