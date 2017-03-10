@@ -40,16 +40,19 @@ op_get_operator_input = lambda {|payload|
 
 state_inicio = State.new :inicio, {
   :execution => [op_input_cliente, op_input_serial_number, op_input_inspecao, op_get_operator_input],
-  :validation => Proc.new {|p| }
+  :validation => nil
 }
 
-#@state_fim = State.new :fim, {
-  #:execution => nil,
-  #:validation => nil
-#}
+state_fim = State.new :fim, {
+  :execution => nil,
+  :validation => nil
+}
 
-#@state_machine = StateMachine.new [@state_inicio, @state_fim]
+state_machine = StateMachine.new [state_inicio, state_fim], @payload
 
-state_inicio.execute @payload
+#state_inicio.execute @payload
 
+while state_machine.has_next?
+  state_machine.forward
+end
 

@@ -11,6 +11,7 @@ class StateMachine
   end
 
   def forward
+    #TODO: lidar com 'fim'
     # execute/validate the current state call
     @current_state.execute @payload
 
@@ -20,5 +21,15 @@ class StateMachine
     else
       APP_LOG.debug("#{@current_state} invalid.")
     end
+  end
+
+  def has_next?
+    current_state != last_state
+  end
+
+  private
+
+  def last_state
+    @machine_states.last
   end
 end
