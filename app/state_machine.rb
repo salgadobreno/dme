@@ -18,8 +18,10 @@ class StateMachine
     if @current_state.validate @payload
       APP_LOG.info("#{@current_state} is valid.")
       @current_state = @machine_states[@machine_states.find_index(@current_state)+1]
+      return true
     else
       APP_LOG.debug("#{@current_state} invalid.")
+      return false
     end
   end
 

@@ -3,7 +3,7 @@ require "minitest/autorun"
 require "mocha/mini_test"
 require "app/state_machine"
 require "app/state"
-require "app/item"
+require "app/device"
 require "app/buffer"
 
 class SingleDeviceStm < StateMachine
@@ -23,12 +23,12 @@ end
 
 describe "Scenario receiving a single device" do
   before do
-    @item = Item.new 122321123, SingleDeviceStm.new
+    @device = Device.new 122321123, SingleDeviceStm.new
   end
 
   describe "out of laboratory" do
     it "should receive a device with an serial number" do
-      @device = Item.new 122321123, SingleDeviceStm.new
+      @device = Device.new 122321123, SingleDeviceStm.new
     end
 
     it "should find the SLA for the received device" do

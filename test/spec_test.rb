@@ -3,7 +3,7 @@ require "minitest/autorun"
 require "mocha/mini_test"
 require "app/state_machine"
 require "app/state"
-require "app/item"
+require "app/device"
 require "app/buffer"
 
 describe StateMachine, "Maintenance interaction cycle definition" do
@@ -52,7 +52,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       end
 
       it "should move to next state successfully" do
-        @state_machine.forward
+        @state_machine.forward.must_equal true
         @state_machine.current_state.must_equal @state_fim
       end
     end
@@ -63,7 +63,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       end
 
       it "should remain in the previous state" do
-        @state_machine.forward
+        @state_machine.forward.must_equal false
         @state_machine.current_state.must_equal @state_inicio
       end
 
@@ -87,9 +87,9 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
   end
 
-  describe Item, "An Item in the maintenance lifecycle" do
+  describe Device, "A product in the maintenance lifecycle" do
     before do
-      # item will receive the configured state machine
+      # device will receive the configured state machine
       @state_inicio = State.new :inicio, {
         :execution => nil,
         :validation => nil
@@ -100,29 +100,35 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       }
 
       @state_machine = StateMachine.new [@state_inicio, @state_fim]
-      @item = Item.new 1234, @state_machine
+      @device = Device.new 1234, @state_machine
     end
 
     it "delegates it's state to the state machine" do
-      @item.current_state.must_equal @state_machine.current_state
+      @device.current_state.must_equal @state_machine.current_state
     end
 
     it "delegates forwarding of state to the state machine" do
-      @item.forward
-      @item.current_state.must_equal @state_fim
+      @device.forward
+      @device.current_state.must_equal @state_fim
+    end
+
+    it 'registers state events' do
+      @device.events.size.must_equal 0
+      @device.forward
+      @device.events.size.must_equal 1
     end
   end
 
-  describe Buffer, "A list of items that executes actions in batch and keeps track of Item states" do
+  describe Buffer, "A list of Devices in the maintenance lifecycle that executes actions in batch and keeps track of Device states" do
     before do
       #TODO: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
       @items = [
-        Item.new(0, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
-        Item.new(1, StateMachine.new([@state_inicio, @state_fim], {index: 1})),
-        Item.new(2, StateMachine.new([@state_inicio, @state_fim], {index: 2})),
-        Item.new(3, StateMachine.new([@state_inicio, @state_fim], {index: 3})),
-        Item.new(4, StateMachine.new([@state_inicio, @state_fim], {index: 4})),
-        Item.new(5, StateMachine.new([@state_inicio, @state_fim], {index: 5})),
+        Device.new(0, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
+        Device.new(1, StateMachine.new([@state_inicio, @state_fim], {index: 1})),
+        Device.new(2, StateMachine.new([@state_inicio, @state_fim], {index: 2})),
+        Device.new(3, StateMachine.new([@state_inicio, @state_fim], {index: 3})),
+        Device.new(4, StateMachine.new([@state_inicio, @state_fim], {index: 4})),
+        Device.new(5, StateMachine.new([@state_inicio, @state_fim], {index: 5})),
       ]
 
       @buffer = Buffer.new @items

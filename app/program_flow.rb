@@ -7,8 +7,8 @@ require 'tty-table'
 require "irb"
 require "state_machine"
 require "state"
-require "item"
 require "buffer"
+require "device"
 
 @prompt = TTY::Prompt.new
 @payload = {}
@@ -50,7 +50,15 @@ state_fim = State.new :fim, {
 
 state_machine = StateMachine.new [state_inicio, state_fim], @payload
 
-while state_machine.has_next?
-  state_machine.forward
+device = Device.new 999, state_machine
+
+while device.forward
+  p ""
 end
+
+p device.events.inspect
+
+#while state_machine.has_next?
+  #state_machine.forward
+#end
 
