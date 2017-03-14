@@ -2,104 +2,89 @@ require 'tty-prompt'
 require 'tty-table'
 require 'tty-cursor'
 
-BLANK_SCREEN = <<-VSF
+class Cli2
 
-##########################################
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-##########################################
-VSF
+  BLANK_SCREEN = <<-VSF
 
-SELECT_CLIENT_SCREEN = <<-VSF
+  ##########################################
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+  ##########################################
+  VSF
 
-##########################################
-                                          
-             Selecione cliente            
-                                          
-  +--+-----+                              
-  |id|nome |                              
-  +--+-----+                              
-  |1 |Avixy|                              
-  |2 |Cielo|                              
-  |3 |Rede |                              
-  +--+-----+                              
-                                          
-  ‣ 1                                     
-    2                                     
-    3                                     
-                                          
-##########################################
-VSF
+  MODEL_SCREEN = <<-VSF
 
+  ##########################################
+    %{topcontent}                           
+    %{title}                                
+                                            
+    %{content}                              
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+    %{lowcontent}                           
+                                            
+  ##########################################
+  VSF
 
-SERIAL_NUMBER_SCREEN = <<-VSF
+  GUI = {height: 18, width: 42}
 
-##########################################
-                                          
-                                          
-             Entrada de máquina           
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
- Digite a serial ou bipe a máquina:       
-                                          
-##########################################
-VSF
+  @prompt = TTY::Prompt.new
+  @cursor = TTY::Cursor
 
-VISUAL_INSPECTION_SCREEN = <<-VSF
+  def draw(h={})
+    topcontent = h[:topcontent] || ""
+    title      = h[:title]      || ""
+    content    = h[:content]    || ""
+    lowcontent = h[:lowcontent] || ""
 
-##########################################
-             Inspeção Visual              
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
- ‣ ⬡ vodka                                
-   ⬡ beer                                 
-   ⬡ wine                                 
-   ⬡ whisky                               
-   ⬡ bourbon                              
-                                          
-##########################################
-VSF
+    print MODEL_SCREEN % {
+      topcontent: topcontent,
+      title: title,
+      content: content,
+      lowcontent: lowcontent,
+    }
+  end
 
-@prompt = TTY::Prompt.new
-@cursor = TTY::Cursor
+  def clear_screen
+    system "clear"
+  end
 
-GUI = {height: 18, width: 42}
+  def blank_screen
+    clear_screen
+    print BLANK_SCREEN
+  end
 
-def reset_cursor
-  print @cursor.up(GUI[:height]) + @cursor.backward(GUI[:width])
+  def reset_cursor
+    print @cursor.up(GUI[:height]) + @cursor.backward(GUI[:width])
+  end
+
 end
 
-def clear_screen
-  reset_cursor
-  print EXAMPLE_SCREEN % {title: "", content: ""}
-end
+
+#def clear_screen
+  #reset_cursor
+  #print EXAMPLE_SCREEN % {title: "", content: ""}
+#end
 
 def test_display_screens
   print SELECT_CLIENT_SCREEN
@@ -126,6 +111,21 @@ def test_prompt_in_screen
   @prompt.select 'Select CRIENTE', [1,2,3]
 end
 
-test_display_screens
-test_prompt_in_screen
+def test_display_screens2
+  cli2 = Cli2.new
+  cli2.blank_screen
+  sleep 1
+  cli2.clear_screen
+  sleep 1
+  cli2.blank_screen
+end
+
+def test_prompt_in_screen
+  
+end
+
+test_display_screens2
+
+#test_display_screens2
+#test_prompt_in_screen2
 
