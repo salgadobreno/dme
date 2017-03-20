@@ -1,36 +1,31 @@
-require "irb"
-require "minitest/autorun"
-require "mocha/mini_test"
-require "app/state_machine"
-require "app/state"
-require "app/device"
-require "app/buffer"
+require 'forwardable'
 
-describe MockDB do
-  before do
-    @mock_db = MockDB.new
+class MockDB
+  extend Forwardable
+
+  def initialize
+    @devices = []
   end
 
-  it 'has a list of devices' do
-    @mock_db.list.must_equal []
-  end
+  attr_reader :devices
+  def_delegators :@devices, :<<
 
-  describe "#add" do
-    it 'includes device on list' do
-      stm = StateMachine.new []
-      device = Device.new 342342, stm
-
-      @mock_db.add device
+  def store store_location
+    p Marshal.dump @devices
+    Marshal.dump @devices, File.open(store_location, "w+")
+    if File.exists? store_location
+      true
+    else
+      false
     end
   end
 
-  describe "#persist" do
-    it 'stores the Device list ' do
-      
-    end
+  def self.restore store_location
+    p File.read(store_location)
+    p File.read(store_location)
+    p File.read(store_location)
+
+    Marshal.load(File.read(store_location))
   end
 
-  describe "#rm" do
-
-  end
 end
