@@ -27,11 +27,11 @@ describe MockDB do
     @device = Device.new 1234, @state_machine
   end
 
-  #after do
-    #if File.exists? TEST_STORE_LOCATION
-      #File.delete TEST_STORE_LOCATION
-    #end
-  #end
+  after do
+    if File.exists? TEST_STORE_LOCATION
+      File.delete TEST_STORE_LOCATION
+    end
+  end
 
   it 'has a Device list' do
     @mock_db.devices.must_equal []
@@ -45,6 +45,7 @@ describe MockDB do
       refute @mock_db.devices.empty?
       @mock_db.store TEST_STORE_LOCATION
       File.exist?(TEST_STORE_LOCATION).must_equal(true)
+      File.size(TEST_STORE_LOCATION).wont_equal 0
     end
   end
 
@@ -54,7 +55,8 @@ describe MockDB do
       @mock_db.devices.must_equal [@device]
       @mock_db.store TEST_STORE_LOCATION
       mock_db_restored = MockDB.restore TEST_STORE_LOCATION
-      mock_db_restored.devices.must_equal [@device]
+      mock_db_restored.devices.size.must_equal 1
+      mock_db_restored.devices[0].serial_number.must_equal @device.serial_number
     end
   end
 end

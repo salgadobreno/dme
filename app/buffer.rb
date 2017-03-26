@@ -1,16 +1,31 @@
-class Buffer
-  attr_reader :items
+require 'irb'
 
-  def initialize(list)
-    @items = setup_list list
+class Buffer
+  #TODO: tornar essa classe um 'decorator' de list que mantenha o array internamente
+  attr_reader :devices
+
+  def initialize(list = [])
+    @devices = setup_list list
   end
 
   def send_forward
-    list = @items.values.flatten
+    list = @devices.values.flatten
 
     list.each &:forward
 
-    @items = setup_list list
+    @devices = setup_list list
+  end
+
+  def add device
+    #TODO: fix
+    @devices = setup_list(@devices.values.flatten << device)
+  end
+
+  def rm device
+    #binding.irb
+    devices_arr = @devices.values.flatten
+    devices_arr.delete device
+    @devices = setup_list devices_arr
   end
 
   private
@@ -18,11 +33,11 @@ class Buffer
   def setup_list(list)
     h_list = {}
 
-    for item in list
-      curr_state = item.current_state.name.to_sym
+    for device in list
+      curr_state = device.current_state.name.to_sym
 
       h_list[curr_state] ||= []
-      h_list[curr_state] << item
+      h_list[curr_state] << device
     end
     h_list
   end

@@ -3,10 +3,10 @@ require "forwardable"
 class Device
   extend Forwardable
 
-  attr_reader :events
+  attr_reader :serial_number, :events
 
-  def initialize(item_id, state_machine)
-    @item_id = item_id
+  def initialize(serial_number, state_machine)
+    @serial_number = serial_number
     @state_machine = state_machine
     @events = []
   end

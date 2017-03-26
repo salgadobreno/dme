@@ -117,7 +117,10 @@ def test_display_screens2
   sleep 1
   cli2.clear_screen
   sleep 1
-  cli2.blank_screen
+  cli2.draw title: "bbbbbb",
+    topcontent: "bbb",
+    content: "blabalbalblababla",
+    lowcontent: "bbbb"
 end
 
 def test_prompt_in_screen

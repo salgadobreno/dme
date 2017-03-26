@@ -3,16 +3,16 @@ require 'forwardable'
 class MockDB
   extend Forwardable
 
-  def initialize
-    @devices = []
+  def initialize(devices = [])
+    @devices = devices
   end
 
-  attr_reader :devices
+  attr_accessor :devices
   def_delegators :@devices, :<<
 
   def store store_location
-    p Marshal.dump @devices
-    Marshal.dump @devices, File.open(store_location, "w+")
+    file = Marshal.dump self, File.open(store_location, "w+")
+    file.flush
     if File.exists? store_location
       true
     else
@@ -21,10 +21,6 @@ class MockDB
   end
 
   def self.restore store_location
-    p File.read(store_location)
-    p File.read(store_location)
-    p File.read(store_location)
-
     Marshal.load(File.read(store_location))
   end
 

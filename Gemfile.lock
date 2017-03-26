@@ -1,10 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    awesome_print (1.7.0)
     diff-lcs (1.3)
     equatable (0.5.0)
     escort (0.4.0)
       nesty
+    gli (2.15.0)
     metaclass (0.0.4)
     minitest (5.10.1)
     mocha (1.2.1)
@@ -74,8 +76,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   bundler (~> 1.14, >= 1.14.4)
   escort
+  gli
   minitest (~> 5.10, >= 5.10.1)
   mocha
   tty
