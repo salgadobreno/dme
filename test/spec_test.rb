@@ -31,7 +31,6 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       }
 
       @state_machine = StateMachine.new [@state_inicio, @state_fim]
-      binding.irb
   end
 
   describe "when creating a new state machine configuration" do

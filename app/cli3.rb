@@ -89,7 +89,7 @@ command :add do |c|
     # request device_id
     #   -> NOTE: will be using fixed state machine for now
     bipa_prompt = 'Bipe a maquina:'
-    device_id = @prompt.ask bipa_prompt
+    device_id = TTY::Prompt.new.ask bipa_prompt
 
     # define state machine
     state_inicio = State.new :inicio, {
