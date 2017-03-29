@@ -1,29 +1,25 @@
 require 'irb'
 
 class Buffer
-  attr_reader :devices
 
   def initialize(list = [])
-    @devices = setup_list list
+    @devices = list
+  end
+
+  def devices
+    setup_list @devices
   end
 
   def send_forward
-    list = @devices.values.flatten
-
-    list.each &:forward
-
-    @devices = setup_list list
+    @devices.each &:forward
   end
 
   def add device
-    #TODO: fix
-    @devices = setup_list(@devices.values.flatten << device)
+    @devices << device
   end
 
   def rm device
-    devices_arr = @devices.values.flatten
-    devices_arr.delete device
-    @devices = setup_list devices_arr
+    @devices.delete device
   end
 
   private
