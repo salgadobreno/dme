@@ -8,6 +8,9 @@ require "app/buffer"
 
 class SingleDeviceStm < StateMachine
   def initialize
+    @add_index_op = nil
+    @even_validation = nil
+
     @state_inicio = State.new :inicio, {
       :execution => [@add_index_op],
       :validation => [@even_validation]
