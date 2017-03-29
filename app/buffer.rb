@@ -1,7 +1,6 @@
 require 'irb'
 
 class Buffer
-  #TODO: tornar essa classe um 'decorator' de list que mantenha o array internamente
   attr_reader :devices
 
   def initialize(list = [])
@@ -22,7 +21,6 @@ class Buffer
   end
 
   def rm device
-    #binding.irb
     devices_arr = @devices.values.flatten
     devices_arr.delete device
     @devices = setup_list devices_arr

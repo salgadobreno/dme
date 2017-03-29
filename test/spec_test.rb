@@ -119,37 +119,5 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     end
   end
 
-  describe Buffer, "A list of Devices in the maintenance lifecycle that executes actions in batch and keeps track of Device states" do
-    before do
-      #TODO: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
-      @items = [
-        Device.new(0, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
-        Device.new(1, StateMachine.new([@state_inicio, @state_fim], {index: 1})),
-        Device.new(2, StateMachine.new([@state_inicio, @state_fim], {index: 2})),
-        Device.new(3, StateMachine.new([@state_inicio, @state_fim], {index: 3})),
-        Device.new(4, StateMachine.new([@state_inicio, @state_fim], {index: 4})),
-        Device.new(5, StateMachine.new([@state_inicio, @state_fim], {index: 5})),
-      ]
-
-      @buffer = Buffer.new @items
-    end
-
-    it "organize items according to their state" do
-      @buffer.items.must_equal({:inicio => @items}) # name of @state_inicio
-    end
-
-    it "batch runs state machine operations" do
-      @items.each {|i| i.expects :forward}
-      @buffer.send_forward
-    end
-
-    it "keeps track of items across states" do
-      @buffer.send_forward
-      state_inicio_name = @state_inicio.name
-      state_fim_name = @state_inicio.name
-      @buffer.items[:inicio].size.must_equal 3
-      @buffer.items[:fim].size.must_equal 3
-    end
-  end
 end
 
