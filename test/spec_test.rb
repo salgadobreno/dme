@@ -75,13 +75,13 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
     describe "when the StateMachine is finished" do
       it 'should ???' do
-        fail "TODO"
+        skip "TODO"
       end
     end
 
     describe "when its in the initial state" do
       it 'should still answer has_next?' do
-        fail "TODO"
+        skip "TODO"
       end
     end
 

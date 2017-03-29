@@ -28,7 +28,7 @@ describe MockDB do
   end
 
   after do
-    if File.exists? TEST_STORE_LOCATION
+    if File.exist? TEST_STORE_LOCATION
       File.delete TEST_STORE_LOCATION
     end
   end

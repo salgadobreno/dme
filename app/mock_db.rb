@@ -13,7 +13,7 @@ class MockDB
   def store store_location
     file = Marshal.dump self, File.open(store_location, "w+")
     file.flush
-    if File.exists? store_location
+    if File.exist? store_location
       true
     else
       false
