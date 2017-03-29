@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+   config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -81,12 +81,12 @@ Vagrant.configure("2") do |config|
     # rvm gemset use dashboard
 
     # Install rails 5
-    gem install rails --version 5.0.1 --no-ri --no-rdoc
+    #gem install rails --version 5.0.1 --no-ri --no-rdoc
 
     # create your personal key for gitlab
     # TODO: BRENO: force user to define email variable before this step?
-    echo "ssh-keygen -t rsa -C <youremail>@avixy.com"
-    ssh-keygen -t rsa -C default@avixy.com
+    #echo "ssh-keygen -t rsa -C <youremail>@avixy.com"
+    #ssh-keygen -t rsa -C default@avixy.com
 
     # download project from gitlab
     # git clone <project address>
