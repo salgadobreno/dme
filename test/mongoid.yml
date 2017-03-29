@@ -1,0 +1,10 @@
+development:
+    clients:
+        default:
+            database: test
+            hosts:
+                - 192.168.33.10:27017
+            options:
+                user: 'avixy'
+                password: 'avx3000'
+
