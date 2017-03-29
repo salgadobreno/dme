@@ -122,8 +122,8 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
     it "keeps track of items across states" do
       @buffer.send_forward
-      state_inicio_name = @state_inicio.name
-      state_fim_name = @state_inicio.name
+      #state_inicio_name = @state_inicio.name
+      #state_fim_name = @state_inicio.name
       @buffer.items[:inicio].size.must_equal 3
       @buffer.items[:fim].size.must_equal 3
     end
