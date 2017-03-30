@@ -2,6 +2,7 @@
 lib = File.expand_path('../app', __FILE__)
 #this will include the path in $LOAD_PATH unless it is already included
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+ENV["MONGODB_CFG_PATH"] ||= File.expand_path('../config', __FILE__) + "/mongoid.yml"
 
 require "rake/testtask"
 require "mongoid"
@@ -41,24 +42,26 @@ namespace :db do
   $db_conn = nil
 
   def clean_database
-    begin
-      DatabaseCleaner.clean
-    rescue => error
-      error "Error while cleaning the database: #{error}"
-      abort
-    end
+    DatabaseCleaner.clean
+    return true
+  rescue => error
+    error "Error while cleaning the database: #{error}"
+    return false
+
   end
 
   task :db_config do
     if $db_conn.nil?
-      $db_conn = Mongoid.load! "#{File.expand_path(File.dirname(__FILE__))}/test/mongoid.yml", :development
+      $db_conn = Mongoid.load! ENV["MONGODB_CFG_PATH"], :development
     end
 
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
     # drop the previous database fixtures
-    clean_database
+    if not clean_database
+      abort "rake aborted!"
+    end
   end
 
   desc "create the project fixtures"

@@ -1,3 +1,5 @@
+ENV["MONGODB_CFG_PATH"] ||= File.expand_path('../../config', __FILE__) + "/mongoid.yml"
+
 require "irb"
 require "minitest/autorun"
 require "mocha/mini_test"
@@ -15,8 +17,7 @@ describe "Database configuration" do
 
   before do
     if $db_conn.nil?
-      cfg_file = "#{File.expand_path(File.dirname(__FILE__))}/mongoid.yml"
-      $db_conn = Mongoid.load! cfg_file, :development
+      $db_conn = Mongoid.load! ENV['MONGODB_CFG_PATH'], :development
     end
 
     DatabaseCleaner.strategy = :truncation
