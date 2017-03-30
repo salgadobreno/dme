@@ -15,7 +15,6 @@ describe "Database configuration" do
 
   before do
     if $db_conn.nil?
-      #cfg_file = "#{$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))}/mongoid.yml"
       cfg_file = "#{File.expand_path(File.dirname(__FILE__))}/mongoid.yml"
       $db_conn = Mongoid.load! cfg_file, :development
     end
