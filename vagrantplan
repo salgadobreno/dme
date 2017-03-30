@@ -1,0 +1,9 @@
+DO:
+- Vagrant
+  -> add .bash_aliases 
+  -> add .vimrc
+  - add mongo
+  ? .tmuxrc
+  -> backup originals
+  https://medium.com/@AshPross/setting-up-node-js-mongodb-redis-and-mysql-inside-vagrant-using-centos-6-x-98c98283958e
+  

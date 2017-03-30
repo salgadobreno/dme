@@ -97,4 +97,10 @@ Vagrant.configure("2") do |config|
     gem install minitest --no-ri --no-rdoc
 
   SHELL
+
+  # Copy config files to VM
+  config.vm.provision "file", source: './.bashrc', destination: '~/.bashrc'
+  config.vm.provision "file", source: './.vimrc', destination: '~/.vimrc'
+  config.vm.provision "file", source: './.tmux.conf', destination: '~/.tmux.conf'
+  config.vm.provision "file", source: './.bash_aliases', destination: '~/.bash_aliases'
 end
