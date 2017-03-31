@@ -98,9 +98,9 @@ Vagrant.configure("2") do |config|
 
   SHELL
 
-  # Copy config files to VM
-  config.vm.provision "file", source: './.bashrc', destination: '~/.bashrc'
-  config.vm.provision "file", source: './.vimrc', destination: '~/.vimrc'
-  config.vm.provision "file", source: './.tmux.conf', destination: '~/.tmux.conf'
-  config.vm.provision "file", source: './.bash_aliases', destination: '~/.bash_aliases'
+  # Send config files to VM
+  config.vm.provision "file", source: './vagrantfiles/.bashrc', destination: '~/.bashrc'
+  config.vm.provision "file", source: './vagrantfiles/.vimrc', destination: '~/.vimrc'
+  config.vm.provision "file", source: './vagrantfiles/.tmux.conf', destination: '~/.tmux.conf'
+  config.vm.provision "file", source: './vagrantfiles/.bash_aliases', destination: '~/.bash_aliases'
 end
