@@ -10,7 +10,7 @@ class State
   end
 
   def execute(payload)
-    unless @execution_callbacks.nil? || @validation_callbacks.empty?
+    unless @execution_callbacks.nil? || @execution_callbacks.empty?
       @execution_callbacks.each {|eb| eb.call(payload)}
     end
   end
