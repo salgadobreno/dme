@@ -1,16 +1,25 @@
-class Buffer
-  attr_reader :items
+require 'irb'
 
-  def initialize(list)
-    @items = setup_list list
+class Buffer
+
+  def initialize(list = [])
+    @devices = list
+  end
+
+  def devices
+    setup_list @devices
   end
 
   def send_forward
-    list = @items.values.flatten
+    @devices.each &:forward
+  end
 
-    list.each &:forward
+  def add device
+    @devices << device
+  end
 
-    @items = setup_list list
+  def rm device
+    @devices.delete device
   end
 
   private
@@ -18,11 +27,11 @@ class Buffer
   def setup_list(list)
     h_list = {}
 
-    for item in list
-      curr_state = item.current_state.name.to_sym
+    for device in list
+      curr_state = device.current_state.name.to_sym
 
       h_list[curr_state] ||= []
-      h_list[curr_state] << item
+      h_list[curr_state] << device
     end
     h_list
   end
