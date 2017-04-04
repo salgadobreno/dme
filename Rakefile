@@ -35,7 +35,7 @@ end
 desc "Run all applicaiton tests"
 Rake::TestTask.new do |t|
   t.libs.push '.'
-  t.pattern = "test/*_test.rb"
+  t.pattern = ["test/*_test.rb","test/models/*_test.rb"]
 end
 
 namespace :db do
