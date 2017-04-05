@@ -23,6 +23,8 @@ require 'app/buffer'
 require 'app/device'
 require 'app/mock_db'
 require 'app/app_log'
+require 'app/models/avixy_device'
+require 'app/models/device_history'
 
 
 # configure the database
