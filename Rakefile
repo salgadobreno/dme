@@ -1,36 +1,14 @@
 #this will be the absolute path to lib based on the calling __FILE__
-lib = File.expand_path('../app', __FILE__)
-#this will include the path in $LOAD_PATH unless it is already included
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-ENV["MONGODB_CFG_PATH"] ||= File.expand_path('../config', __FILE__) + "/mongoid.yml"
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 
 require "rake/testtask"
 require "mongoid"
 require "database_cleaner"
 require "date"
-require "models/avixy_device"
+require_relative "dashboard_init"
+require "app_log"
 
 task default: [:test]
-
-def cli_colored_text(color_code, text)
-  "\e[#{color_code}#{text}\e[0m"
-end
-
-def error(text)
-  puts cli_colored_text("1;31m", text)
-end
-
-def warning(text)
-  puts cli_colored_text("1;33m", text)
-end
-
-def success(text)
-  puts cli_colored_text("1;32m", text)
-end
-
-def puts_result(text)
-  puts cli_colored_text("1;36m", text)
-end
 
 desc "Run all applicaiton tests"
 Rake::TestTask.new do |t|
@@ -39,22 +17,15 @@ Rake::TestTask.new do |t|
 end
 
 namespace :db do
-  $db_conn = nil
-
   def clean_database
     DatabaseCleaner.clean
     return true
   rescue => error
     error "Error while cleaning the database: #{error}"
     return false
-
   end
 
   task :db_config do
-    if $db_conn.nil?
-      $db_conn = Mongoid.load! ENV["MONGODB_CFG_PATH"], :development
-    end
-
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
