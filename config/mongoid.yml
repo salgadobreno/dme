@@ -3,7 +3,7 @@ development:
         default:
             database: test
             hosts:
-                - 192.168.33.10:27017
+                - 127.0.0.1
             options:
                 user: 'avixy'
                 password: 'avx3000'

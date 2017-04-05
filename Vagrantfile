@@ -64,10 +64,18 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+  #
+  # NOTE: Commands to run as root
   config.vm.provision "shell", inline: <<-SHELL
+    echo 'Running root setup'
     apt-get update
-    apt-get install -y git wget htop vim curl
+    apt-get install -y git wget htop vim curl mongodb-server
+  SHELL
+    #NOTE: if running local must update mongoid.yml file
 
+  #NOTE: Commands to run as vagrant user
+  config.vm.provision "shell", privileged: false,  inline: <<-SHELL
+    echo 'Running vagrant user setup'
     # Install RVM
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     curl -sSL https://get.rvm.io | bash -s $1 
@@ -95,6 +103,16 @@ Vagrant.configure("2") do |config|
     rvm gemset create minitest
     rvm gemset use minitest
     gem install minitest --no-ri --no-rdoc
+    gem install bundler --no-ri --no-rdoc
 
+    # install janus
+    curl -L https://bit.ly/janus-bootstrap | bash
   SHELL
+
+  # Send config files to VM
+  config.vm.provision "file", source: './vagrantfiles/.bashrc', destination: '~/.bashrc'
+  config.vm.provision "file", source: './vagrantfiles/.vimrc', destination: '~/.vimrc'
+  config.vm.provision "file", source: './vagrantfiles/.vimrc.after', destination: '~/.vimrc.after'
+  config.vm.provision "file", source: './vagrantfiles/.tmux.conf', destination: '~/.tmux.conf'
+  config.vm.provision "file", source: './vagrantfiles/.bash_aliases', destination: '~/.bash_aliases'
 end

@@ -1,5 +1,4 @@
 require 'mongoid'
-#require 'models/device_history'
 
 class AvixyDevice 
   include Mongoid::Document
