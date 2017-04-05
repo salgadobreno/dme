@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "vtnc"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -64,10 +64,16 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+  #
+  # NOTE: Commands to run as root
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install -y git wget htop vim curl
+    apt-get install -y git wget htop vim curl mongodb-server
+  SHELL
+    #NOTE: if running local must update mongoid.yml file
 
+  #NOTE: Commands to run as vagrant user
+  config.vm.provision "shell", inline: <<-SHELL
     # Install RVM
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     curl -sSL https://get.rvm.io | bash -s $1 
@@ -95,7 +101,6 @@ Vagrant.configure("2") do |config|
     rvm gemset create minitest
     rvm gemset use minitest
     gem install minitest --no-ri --no-rdoc
-
   SHELL
 
   # Send config files to VM
