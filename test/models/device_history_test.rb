@@ -30,7 +30,7 @@ describe DeviceHistory do
     DatabaseCleaner.clean
   end
 
-  it "shoudl create a new DeviceHistory registry in the database" do
+  it "should create a new DeviceHistory registry in the database" do
     model = DeviceHistory.new(:avixy_device => @avixy_device,
                               :description => "Entrando na manutencao",
                               :registered_at => DateTime.now)
@@ -38,5 +38,9 @@ describe DeviceHistory do
     model.save.must_equal true
     DeviceHistory.count.must_be :==, 1
     DeviceHistory.first.description.must_equal model.description
+  end
+
+  it "should not save an invalid history log" do
+    DeviceHistory.new.save.must_equal false
   end
 end
