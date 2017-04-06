@@ -1,0 +1,6 @@
+alias ltr='ls -ltra'
+alias sshdash='ssh avixy@192.168.2.5'
+alias cdp='cd ~/workspace/device-management-engine'
+alias gs='git status'
+alias gb='git branch'
+alias cls='clear'
