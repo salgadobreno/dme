@@ -1,7 +1,8 @@
 require 'mongoid'
 
-class AvixyDevice 
+class AvixyDevice
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   field :serial_number, type: Integer
   field :sold_at, type: DateTime

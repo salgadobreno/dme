@@ -6,15 +6,11 @@ require 'dashboard_init'
 require 'gli'
 require 'tty-prompt'
 require 'tty-table'
+require 'app/mock_db' #TODO: remove
 
 include GLI::App
 
 program_desc 'Dashboard CLI APP'
-
-# TODO:
-# x simple db
-# x command actions
-# refactor, extract commands
 
 DB_LOCATION = './.db'
 
@@ -133,6 +129,10 @@ end
 desc "list devices and their states"
 command :ls do |c|
   c.action do
+    #devices = AvixyDevice.all
+    #d_rows = devices.map {|d| [d.serial_number, d.sold_at, d.warranty_days]}
+    #header = ['Serial number', 'Sold at', 'Warranty']
+    #table_devices = TTY::Table.new header: header, rows: d_rows
     # print the list in table format
     rows = @buffer.devices.values.flatten.map { |d| [d.current_state.name, d.serial_number] }
     table_devices = TTY::Table.new header: ['State', 'Serial Number'], rows: rows

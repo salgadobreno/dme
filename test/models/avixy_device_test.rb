@@ -32,4 +32,16 @@ describe AvixyDevice do
     device = AvixyDevice.new :serial_number => 'abdc'
     device.save.must_equal false
   end
+
+  it 'fills created_at after saving' do
+    @avixy_device.created_at.must_be_nil
+    @avixy_device.save.must_equal true
+    @avixy_device.created_at.wont_be_nil
+  end
+
+  it 'fills updated_at after saving' do
+    @avixy_device.updated_at.must_be_nil
+    @avixy_device.save.must_equal true
+    @avixy_device.updated_at.wont_be_nil
+  end
 end

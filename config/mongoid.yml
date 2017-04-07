@@ -4,7 +4,7 @@ development:
             database: test
             hosts:
                 - 127.0.0.1
-            options:
-                user: 'avixy'
-                password: 'avx3000'
-                server_selection_timeout: 1
+            #options:
+                #user: 'avixy'
+                #password: 'avx3000'
+                #server_selection_timeout: 1
