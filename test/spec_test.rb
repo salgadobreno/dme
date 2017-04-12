@@ -1,10 +1,4 @@
-require "irb"
-require "minitest/autorun"
-require "mocha/mini_test"
-require "app/state_machine"
-require "app/state"
-require "app/device"
-require "app/buffer"
+require 'test_helper'
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
@@ -120,4 +114,3 @@ describe StateMachine, "Maintenance interaction cycle definition" do
   end
 
 end
-

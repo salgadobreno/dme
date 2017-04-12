@@ -26,7 +26,7 @@ class StateMachine
   end
 
   def has_next?
-    current_state != last_state
+    current_state.equal? last_state
   end
 
   private

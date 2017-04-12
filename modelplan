@@ -1,7 +1,7 @@
 - AvixyDevice > Device
   - model StateMachine?
-  - data to payload???
-  - device_histories -> inline?
+  # data to payload???
+  x device_histories -> inline?
 - Device::events > DeviceHistory
 
 - cli3 tests
