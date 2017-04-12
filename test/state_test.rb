@@ -19,7 +19,8 @@ describe State do
   }
   let(:validation) {
     lambda { |x|
-      x[:index].even? ?  true : x[:error] = "Valor não é par: #{x[:index]}"; false
+      x[:index].even? ?  true : x[:error] = 'Valor não é par:' + x[:index]
+      false
     }
   }
   let(:state) { State.new "state", {execution: [operation], validation: [validation]} }

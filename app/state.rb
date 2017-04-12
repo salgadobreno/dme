@@ -14,15 +14,15 @@ class State
   field :st_validation_callbacks, type: Array
 
   before_save do |doc|
-    doc[:st_validation_callbacks] = @validation_callbacks.map { |e| ProcSerializer.new(e).to_source } unless @validation_callbacks.nil?
-    doc[:st_operation_callbacks] = @operation_callbacks.map { |e| ProcSerializer.new(e).to_source } unless @operation_callbacks.nil?
-    p "before_save"
+    doc[:st_validation_callbacks] = @validation_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@validation_callbacks.nil? || !@validation_callbacks.empty?
+    doc[:st_operation_callbacks] = @execution_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@execution_callbacks.nil? || !@operation_callbacks.empty?
   end
 
   after_find do |doc|
+    @execution_callbacks = doc[:st_operation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_operation_callbacks.nil?
+    @validation_callbacks = doc[:st_validation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_validation_callbacks.nil?
     doc[:st_validation_callbacks]
     doc[:st_operation_callbacks]
-    p "after_find"
   end
 
   def initialize(name, state_options)
@@ -32,7 +32,6 @@ class State
     # register callbacks
     @validation_callbacks = state_options[:validation]
     @execution_callbacks = state_options[:execution]
-    p "initialized State"
   end
 
   def execute(payload)
