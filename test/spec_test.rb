@@ -16,11 +16,11 @@ describe StateMachine, "Maintenance interaction cycle definition" do
         end
       }
       @state_inicio = State.new :inicio, {
-        :execution => [@add_index_op],
+        :operation => [@add_index_op],
         :validation => [@even_validation]
       }
       @state_fim = State.new :fim, {
-        :execution => nil,
+        :operation => nil,
         :validation => nil
       }
 
@@ -85,11 +85,11 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     before do
       # device will receive the configured state machine
       @state_inicio = State.new :inicio, {
-        :execution => nil,
+        :operation => nil,
         :validation => nil
       }
       @state_fim = State.new :fim, {
-        :execution => nil,
+        :operation => nil,
         :validation => nil
       }
 

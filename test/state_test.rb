@@ -23,7 +23,7 @@ describe State do
       false
     }
   }
-  let(:state) { State.new "state", {execution: [operation], validation: [validation]} }
+  let(:state) { State.new "state", {operation: [operation], validation: [validation]} }
   let(:payload) { {} }
 
   it "has name" do

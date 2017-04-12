@@ -4,9 +4,9 @@ require 'lib/proc_serializer'
 class State
   include Mongoid::Document
 
-  attr_reader :validation_callbacks, :execution_callbacks
+  attr_reader :validation_callbacks, :operation_callbacks
   alias_method :validations, :validation_callbacks
-  alias_method :operations, :execution_callbacks
+  alias_method :operations, :operation_callbacks
 
   field :name, type: String
   field :st_operation_callbacks, type: Array
@@ -14,11 +14,11 @@ class State
 
   before_save do |doc|
     doc[:st_validation_callbacks] = @validation_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@validation_callbacks.nil? || !@validation_callbacks.empty?
-    doc[:st_operation_callbacks] = @execution_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@execution_callbacks.nil? || !@operation_callbacks.empty?
+    doc[:st_operation_callbacks] = @operation_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@operation_callbacks.nil? || !@operation_callbacks.empty?
   end
 
   after_find do |doc|
-    @execution_callbacks = doc[:st_operation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_operation_callbacks.nil?
+    @operation_callbacks = doc[:st_operation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_operation_callbacks.nil?
     @validation_callbacks = doc[:st_validation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_validation_callbacks.nil?
     doc[:st_validation_callbacks]
     doc[:st_operation_callbacks]
@@ -30,12 +30,12 @@ class State
 
     # register callbacks
     @validation_callbacks = state_options[:validation]
-    @execution_callbacks = state_options[:execution]
+    @operation_callbacks = state_options[:operation]
   end
 
   def execute(payload)
-    unless @execution_callbacks.nil? || @execution_callbacks.empty?
-      @execution_callbacks.each {|eb| eb.call(payload)}
+    unless @operation_callbacks.nil? || @operation_callbacks.empty?
+      @operation_callbacks.each {|eb| eb.call(payload)}
     end
   end
 
