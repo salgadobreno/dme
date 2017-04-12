@@ -3,7 +3,6 @@ require 'lib/proc_serializer'
 
 class State
   include Mongoid::Document
-  store_in collection: "lixos"
 
   attr_reader :validation_callbacks, :execution_callbacks
   alias_method :validations, :validation_callbacks
