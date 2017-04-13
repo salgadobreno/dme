@@ -22,7 +22,6 @@ require 'app/state_machine'
 require 'app/buffer'
 require 'app/app_log'
 require 'app/models/device'
-require 'app/models/avixy_device'
 require 'app/models/device_history'
 
 
