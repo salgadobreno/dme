@@ -1,14 +1,18 @@
 require 'mongoid'
-require 'models/avixy_device'
 
 class DeviceHistory
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   field :description, type: String
-  field :registered_at, type: DateTime
 
-  belongs_to :avixy_device
+  belongs_to :device
 
   validates_presence_of :description
-  validates_presence_of :registered_at
+
+  def initialize(device, event_description)
+    raise ArgumentError.new 'A Device should be informed' if device == nil
+    raise ArgumentError.new 'A description should be informed' if event_description == nil
+    super(device: device, description: event_description)
+  end
 end
