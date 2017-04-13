@@ -8,4 +8,4 @@ gem 'gli'
 gem 'awesome_print'
 gem 'mongoid', '~> 6.1'
 gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
-
+gem 'sourcify', '~> 0.5.0'
