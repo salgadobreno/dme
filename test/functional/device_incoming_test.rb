@@ -1,10 +1,4 @@
-require "irb"
-require "minitest/autorun"
-require "mocha/mini_test"
-require "app/state_machine"
-require "app/state"
-require "app/device"
-require "app/buffer"
+require 'test_helper'
 require "date"
 
 DEFAULT_WARRANTY_DAYS = 365

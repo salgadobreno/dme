@@ -16,7 +16,11 @@ task default: [:test]
 desc "Run all applicaiton tests"
 Rake::TestTask.new do |t|
   t.libs.push '.'
-  t.pattern = ["test/*_test.rb","test/models/*_test.rb"]
+  t.pattern = [
+    "test/*_test.rb",
+    "test/models/*_test.rb",
+    "test/functional/*_test.rb"
+  ]
 end
 
 namespace :db do
@@ -44,6 +48,7 @@ namespace :db do
     devices = []
     dt1 = DateTime.now
     dt2 = DateTime.now + 10
+    # TODO: Move this initialization to a fixture file
     devices << AvixyDevice.new(:serial_number => '100000001', :sold_at => dt1, :warranty_days => 365)
     devices << AvixyDevice.new(:serial_number => '100000002', :sold_at => dt1, :warranty_days => 365)
     devices << AvixyDevice.new(:serial_number => '100000003', :sold_at => dt1, :warranty_days => 365)
