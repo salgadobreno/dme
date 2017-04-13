@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'date'
 
 describe StateMachine, "Maintenance interaction cycle definition" do
   before do
@@ -94,7 +95,11 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       }
 
       @state_machine = StateMachine.new [@state_inicio, @state_fim]
-      @device = Device.new 1234, @state_machine
+      @device = Device.new(1234,
+                           Time.now,
+                           365,
+                           @state_machine
+                          )
     end
 
     it "delegates it's state to the state machine" do
