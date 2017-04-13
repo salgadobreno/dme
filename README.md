@@ -13,4 +13,13 @@ mongodb://dbuser:dbpass@host1:port1,host2:port2/dbname
 The configuration fo the mongoDB connection could be found at
 test/mongoid.yml
 
+Tests
+===
+
+To run a single test, just do:
+
+```
+ruby -I . -I test/helper test/state_test.rb --name /database.operations/
+```
+
 
