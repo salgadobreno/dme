@@ -6,8 +6,6 @@ require 'dashboard_init'
 module MiniTest
   module Assertions
     def refute_raises *exp
-      msg = "#{exp.pop}.\n" if String === exp.last
-
       begin
         yield
       rescue MiniTest::Skip => e
