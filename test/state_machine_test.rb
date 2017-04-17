@@ -24,7 +24,7 @@ describe StateMachine do
       if x[:index].even?
         true
       else
-        x[:error] = 'Valor não é par: ' + x[:index]
+        x[:error] = 'Valor não é par: ' + x[:index].to_s
         false
       end
     }
@@ -46,10 +46,24 @@ describe StateMachine do
   }
 
   describe "database operations" do
+    let(:even_validation) {
+      lambda {|x| true}
+    }
     it "should save a new State into the Databse" do
       state_machine.save.must_equal true
       StateMachine.count.must_equal 1
     end
+
+    it "should restore current state" do
+      #binding.irb
+      state_machine.forward.must_equal true
+      prev_curr_state = state_machine.current_state
+
+      state_machine.save.must_equal true
+      stm_restored = StateMachine.last
+      stm_restored.current_state.must_equal prev_curr_state
+    end
+
   end
   #it "requires name"
   #it "has Operation/Validation callbacks"

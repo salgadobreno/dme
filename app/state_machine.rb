@@ -6,15 +6,20 @@ class StateMachine
 
   embeds_many :states, cascade_callbacks: true
 
-  attr_reader :current_state, :machine_states, :payload
+  field :current_state_index, type: Integer
 
-  after_initialize { p "after initialize" }
-  after_build { p "after build" }
+  attr_reader :machine_states, :current_state, :payload
+
+  after_initialize { APP_LOG.info "after initialize" }
+  after_build { APP_LOG.info "after build" }
   after_find {
     APP_LOG.info "after find"
-    @machine_states = states
-    @current_state = @machine_states.first
     @payload = {}
+    @machine_states = states
+    @current_state = @machine_states[current_state_index] || @machine_states.first
+  }
+  before_save {
+    self[:current_state_index] = @machine_states.find_index @current_state
   }
 
   def initialize(states, payload={})
@@ -22,7 +27,7 @@ class StateMachine
     @current_state = @machine_states.first
     @payload = payload
 
-    super(states: states)
+    super(states: @machine_states)
     APP_LOG.info "initialize"
   end
 
@@ -42,11 +47,11 @@ class StateMachine
   end
 
   def has_next?
-    !current_state.equal?(last_state)
+    !@current_state.equal?(last_state)
   end
 
   def inspect
-    "#{super} | machine_states: #{@machine_states}, current_state: #{@current_state}"
+    "#{super} | @machine_states: #{@machine_states}, @current_state: #{@current_state}"
   end
 
   private

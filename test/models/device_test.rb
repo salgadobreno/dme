@@ -7,7 +7,7 @@ describe Device do
   before do
     @dt1 = DateTime.now
     @device = Device.new( 100000001,
-      @dt1, 365, nil)
+                         @dt1, 365, nil)
 
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start

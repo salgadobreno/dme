@@ -109,7 +109,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       StateMachine.new [state_inicio, state_fim]
     }
     let(:device) {
-      Device.new 1234, state_machine
+      Device.new 1234, Time.now, 365, state_machine
     }
 
     it "delegates it's state to the state machine" do
