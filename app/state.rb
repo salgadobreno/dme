@@ -13,15 +13,13 @@ class State
   field :st_validation_callbacks, type: Array
 
   before_save do |doc|
-    doc[:st_validation_callbacks] = @validation_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@validation_callbacks.nil? || !@validation_callbacks.empty?
-    doc[:st_operation_callbacks] = @operation_callbacks.map { |e| ProcSerializer.new(e).to_source } if !@operation_callbacks.nil? || !@operation_callbacks.empty?
+    doc[:st_validation_callbacks] = @validation_callbacks.map { |e| ProcSerializer.new(e).to_source } unless @validation_callbacks.nil? || @validation_callbacks.empty?
+    doc[:st_operation_callbacks] = @operation_callbacks.map { |e| ProcSerializer.new(e).to_source } unless @operation_callbacks.nil? || @operation_callbacks.empty?
   end
 
   after_find do |doc|
     @operation_callbacks = doc[:st_operation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_operation_callbacks.nil?
     @validation_callbacks = doc[:st_validation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_validation_callbacks.nil?
-    doc[:st_validation_callbacks]
-    doc[:st_operation_callbacks]
   end
 
   def initialize(name, state_options)
@@ -54,8 +52,8 @@ class State
     return r
   end
 
-  def to_s
-    "State{name: #{@name}}"
+  def inspect
+    "#{super} | @operations: #{operations.inspect}, @validations: #{validations.inspect}"
   end
 
 end

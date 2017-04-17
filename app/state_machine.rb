@@ -1,13 +1,29 @@
-require_relative 'app_log'
+require 'app_log'
+require 'state'
 
 class StateMachine
+  include Mongoid::Document
+
+  embeds_many :states, cascade_callbacks: true
 
   attr_reader :current_state, :machine_states, :payload
+
+  after_initialize { p "after initialize" }
+  after_build { p "after build" }
+  after_find {
+    APP_LOG.info "after find"
+    @machine_states = states
+    @current_state = @machine_states.first
+    @payload = {}
+  }
 
   def initialize(states, payload={})
     @machine_states = states
     @current_state = @machine_states.first
     @payload = payload
+
+    super(states: states)
+    APP_LOG.info "initialize"
   end
 
   def forward
@@ -27,6 +43,10 @@ class StateMachine
 
   def has_next?
     !current_state.equal?(last_state)
+  end
+
+  def inspect
+    "#{super} | machine_states: #{@machine_states}, current_state: #{@current_state}"
   end
 
   private
