@@ -1,4 +1,4 @@
-require_relative 'helper/test_helper'
+require 'test_helper'
 require 'date'
 
 DEFAULT_WARRANTY_DAYS = 365
@@ -13,17 +13,17 @@ describe Buffer, "A list of Devices in the maintenance lifecycle that executes a
       if x[:index].even?
         true
       else
-        x[:error] = "Valor não é par: #{x[:index]}"
+        x[:error] = 'Valor não é par:' + x[:index].to_s
         false
       end
     }
     @state_inicio = State.new :inicio, {
-      :execution => [@add_index_op],
-      :validation => [@even_validation]
+      :executions => [@add_index_op],
+      :validations => [@even_validation]
     }
     @state_fim = State.new :fim, {
-      :execution => nil,
-      :validation => nil
+      :executions => nil,
+      :validations => nil
     }
 
     @state_machine = StateMachine.new [@state_inicio, @state_fim]

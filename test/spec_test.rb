@@ -17,15 +17,15 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       if x[:index].even?
         true
       else
-        x[:error] = "Valor não é par: #{x[:index]}"
+        x[:error] = 'Valor não é par:' + x[:index].to_s
         false
       end
     }
   }
   let(:state_inicio) {
     State.new :inicio, {
-      :operation => [add_index_op],
-      :validation => [even_validation]
+      :operations => [add_index_op],
+      :validations => [even_validation]
     }
   }
   let(:state_fim) {
@@ -40,7 +40,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
   describe "when creating a new state machine configuration" do
     it "should load a machine with the basic states" do
-      state_machine.machine_states.must_equal [state_inicio, state_fim]
+      state_machine.states.must_equal [state_inicio, state_fim]
     end
 
     it "should be at the initial state" do
@@ -67,14 +67,10 @@ describe StateMachine, "Maintenance interaction cycle definition" do
         state_machine.payload[:index] = 0 # force odd index after +1 op
       end
 
-      it "should remain in the previous state" do
+      it "should remain in the previous state, include error in the payload" do
         state_machine.forward.must_equal false
         state_machine.current_state.must_equal state_inicio
-      end
-
-      it "should include error in the payload" do
-        state_machine.forward
-        refute state_machine.payload[:error] == nil
+        state_machine.payload[:error].wont_equal nil
       end
     end
 
@@ -122,10 +118,10 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     end
 
     it 'registers state events' do
-      device.events.size.must_equal 0
+      #TODO: must update with DeviceHistory
+      device.device_histories.size.must_equal 0
       device.forward
-      device.events.size.must_equal 1
+      device.device_histories.size.must_equal 1
     end
   end
-
 end

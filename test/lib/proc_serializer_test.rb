@@ -21,4 +21,48 @@ describe ProcSerializer do
     prok_recover.call mock_obj
     lamqda_recover.call mock_obj
   end
+
+  describe "bugs" do
+    let(:nonbug) {
+      lambda { |x|
+        if x[:index].even?
+          true
+        else
+          x[:error] = 'Valor não é par:' + x[:index].to_s
+          false
+        end
+      }
+    }
+    let(:bug) {
+      lambda { |x|
+        if x[:index].even?
+          true
+        else
+          x[:error] = "Valor não é par:" + x[:index].to_s
+          false
+        end
+      }
+    }
+    let(:bug2) {
+      lambda { |x|
+        x[:error] = "teste"
+      }
+    }
+    let(:nonbug2) {
+      lambda { |x|
+        x[:error] = 'teste'
+      }
+    }
+
+    #NOTE: trying to register problems with the very old sourcify,
+    #we can change implementation to other options if necessary:
+    #ruby2ruby, seattlerb/ruby_parser, whitequark/parser
+    it 'bugs predictably' do
+      proc { ProcSerializer.new(bug).to_source }.must_raise Exception
+      proc { ProcSerializer.new(bug2).to_source }.must_raise Exception
+      ProcSerializer.new(nonbug).to_source #no error
+      ProcSerializer.new(nonbug2).to_source #no error
+    end
+
+  end
 end

@@ -1,4 +1,4 @@
-require "test/helper/test_helper"
+require "test_helper"
 require "mongoid"
 require "database_cleaner"
 require "date"
@@ -9,7 +9,10 @@ describe DeviceHistory do
     DatabaseCleaner.start
 
     dt1 = DateTime.now
-    @device = Device.new('100000001', dt1, 365, nil)
+    @state_inicio = State.new :inicio, { :operation => nil, :validation => nil }
+    @state_fim = State.new :fim, { :operation => nil, :validation => nil }
+    @state_machine = StateMachine.new [@state_inicio, @state_fim]
+    @device = Device.new('100000001', dt1, 365, @state_machine)
     @device.save
   end
 
@@ -21,8 +24,9 @@ describe DeviceHistory do
     model = DeviceHistory.new(@device, "Entrando na manutencao")
     model.wont_be_nil
     model.save.must_equal true
-    DeviceHistory.count.must_be :==, 1
-    DeviceHistory.first.description.must_equal model.description
+    #DeviceHistory.count.must_be :==, 1
+    #DeviceHistory.first.description.must_equal model.description
+    #NOTE: embedded so no DeviceHistory.count changes
   end
 
   it "should not create an invalid history log" do

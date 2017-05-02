@@ -2,49 +2,68 @@ require 'mongoid'
 require 'lib/proc_serializer'
 
 class State
+  class OperationArray < Array
+    class << self
+      # Get the object as it was stored in the database, and instantiate
+      # this custom class from it.
+      def demongoize(object)
+        object.map { |e| ProcSerializer.new(e).from_source }
+      end
+
+      # Converts the object that was supplied to a criteria and converts it
+      # into a database friendly form.
+      def evolve(object)
+        case object
+        when OperationArray then object.mongoize
+        else object
+        end
+      end
+
+      # Takes any possible object and converts it to how it would be
+      # stored in the database.
+      def mongoise(object)
+        object.mongoise
+      end
+    end
+
+    def mongoize
+      self.map { |e| ProcSerializer.new(e).to_source }
+    end
+  end
+
+  class ValidationArray < OperationArray
+  end
+
   include Mongoid::Document
 
-  attr_reader :validation_callbacks, :operation_callbacks
-  alias_method :validations, :validation_callbacks
-  alias_method :operations, :operation_callbacks
-
+  embedded_in :state_machine
   field :name, type: String
-  field :st_operation_callbacks, type: Array
-  field :st_validation_callbacks, type: Array
-
-  before_save do |doc|
-    doc[:st_validation_callbacks] = @validation_callbacks.map { |e| ProcSerializer.new(e).to_source } unless @validation_callbacks.nil? || @validation_callbacks.empty?
-    doc[:st_operation_callbacks] = @operation_callbacks.map { |e| ProcSerializer.new(e).to_source } unless @operation_callbacks.nil? || @operation_callbacks.empty?
-  end
-
-  after_find do |doc|
-    @operation_callbacks = doc[:st_operation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_operation_callbacks.nil?
-    @validation_callbacks = doc[:st_validation_callbacks].map { |e| ProcSerializer.new(e).from_source } unless st_validation_callbacks.nil?
-  end
+  field :operations, type: OperationArray
+  field :validations, type: ValidationArray
 
   def initialize(name, state_options)
     raise ArgumentError.new "Name is required" if name == nil
-    super(name: name)
-
     # register callbacks
-    @validation_callbacks = state_options[:validation]
-    @operation_callbacks = state_options[:operation]
+    validation_callbacks = ValidationArray.new state_options[:validations] || []
+    operation_callbacks = OperationArray.new state_options[:operations] || []
+
+    super(name: name, validations: validation_callbacks, operations: operation_callbacks)
   end
 
   def execute(payload)
-    unless @operation_callbacks.nil? || @operation_callbacks.empty?
-      @operation_callbacks.each {|eb| eb.call(payload)}
+    unless operations.nil? || operations.empty?
+      operations.each {|eb| eb.call(payload)}
     end
   end
 
   def validate(payload)
     r = nil
 
-    if @validation_callbacks.nil? || @validation_callbacks.empty?
+    if validations.nil? || validations.empty?
       r = true
     else
       # chama all? em array de Boolean, se algum falhar, retorna falso
-      r = @validation_callbacks.map { |validation|
+      r = validations.map { |validation|
         validation.call(payload)
       }.all?
     end
