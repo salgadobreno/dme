@@ -20,15 +20,15 @@ class StateMachine
   end
 
   def current_state
-    # se @current_state estiver definido: return current_state
-    # se não, obter pelo current_state_index e setar o @current_state
-    # se nenhum, deixar que dê erro pois deve ser feito mais robusto depois
-    # (e.g.: impedir que esse estado do objeto seja possível antes de chegar aqui)
+    # if @current_state is defined: return current_state
+    # else, load it through current_state_index and set @current_state
+    # if neither is present we'll let it blow up because this is unexpected state
+    # (This is an approach against overly defensive programming in favour of design integrity)
     return @current_state || self.states[current_state_index]
   end
 
   def forward
-    #TODO: lidar com 'fim'
+    #TODO: deal with 'end'
     # execute/validate the current state call
     current_state.execute payload
 

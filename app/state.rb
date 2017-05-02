@@ -2,6 +2,12 @@ require 'mongoid'
 require 'lib/proc_serializer'
 
 class State
+  class Operation
+  end
+
+  class Validation
+  end
+
   class OperationArray < Array
     class << self
       # Get the object as it was stored in the database, and instantiate

@@ -22,6 +22,45 @@ describe ProcSerializer do
     lamqda_recover.call mock_obj
   end
 
+  it 'should serialize an Operation/Validation successfully' do
+    class TestOperation < State::Operation
+      def call payload
+        payload[:teste] ||= 0
+        payload[:teste] += 1
+      end
+    end
+
+    class TestValidation < State::Validation
+      def call payload
+        payload[:teste_v] ||= 0
+        payload[:teste_v] += 1
+      end
+    end
+
+    to = TestOperation.new
+    tv = TestValidation.new
+
+    payload = {}
+
+    to.call payload
+    tv.call payload
+
+    payload[:teste].must_equal 1
+    payload[:teste_v].must_equal 1
+
+    to_serialized = ProcSerializer.new(to).serialize
+    tv_serialized = ProcSerializer.new(tv).serialize
+
+    to_restored = ProcSerializer.new(to_serialized).restore
+    tv_restored = ProcSerializer.new(tv_serialized).restore
+
+    to_restored.call payload
+    tv_restored.call payload
+
+    payload[:teste].must_equal 2
+    payload[:teste_v].must_equal 2
+  end
+
   describe "bugs" do
     let(:nonbug) {
       lambda { |x|
@@ -54,9 +93,6 @@ describe ProcSerializer do
       }
     }
 
-    #NOTE: trying to register problems with the very old sourcify,
-    #we can change implementation to other options if necessary:
-    #ruby2ruby, seattlerb/ruby_parser, whitequark/parser
     it 'bugs predictably' do
       proc { ProcSerializer.new(bug).to_source }.must_raise Exception
       proc { ProcSerializer.new(bug2).to_source }.must_raise Exception

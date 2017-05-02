@@ -93,7 +93,42 @@ describe State do
         end
       end
       describe "when Operation/Validation is a Class" do
-        it "should serialize and deserialize the Class successfully"
+
+        class ExampleOperation < State::Operation
+          def call payload
+            $c_global ||= 0
+            $c_global += 1
+          end
+        end
+
+        class ExampleValidation < State::Validation
+          def call payload
+            $c_v_global ||= 0
+            $c_v_global += 1
+          end
+        end
+
+        before do
+          @operation = ExampleOperation.new
+          @validation = ExampleValidation.new
+          state = State.new "state", {operations: [@operation], validations: [@validation]}
+          state_machine = StateMachine.new [state]
+          device = Device.new 000, DateTime.now, 1, state_machine
+          @state = state_machine.states.first
+        end
+
+        it "should serialize and deserialize the Class successfully" do
+          @state.execute @payload
+          $c_global.must_equal 1
+          @state.validate @payload
+          $c_v_global.must_equal 1
+          @state.save.must_equal true
+          state_reloaded = Device.last.state_machine.states.select { |st| st == @state }.first
+          state_reloaded.execute @payload
+          $c_global.must_equal 2
+          state_reloaded.validate @payload
+          $c_v_global.must_equal 2
+        end
       end
     end
   end

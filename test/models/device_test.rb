@@ -88,7 +88,9 @@ describe Device do
 
   describe "#forward" do
     it 'should add a DeviceHistory' do
-      @device
+      @device.device_histories.size.must_equal 0
+      @device.forward
+      @device.device_histories.size.must_equal 1
     end
   end
 end

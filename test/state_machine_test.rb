@@ -36,22 +36,12 @@ describe StateMachine do
   end
 
   describe "database operations" do
-    #let(:even_validation) {
-      #lambda {|x| true}
-    #}
-    #NOTE: Embedded in Device
-    #it "should save a new StateMachine into the Databse" do
-      #@state_machine.save.must_equal true
-      #StateMachine.count.must_equal 1
-    #end
-
     it "should restore current state" do
       prev_curr_state = @state_machine.current_state
       @state_machine.forward.must_equal true
       curr_state_after_forward = @state_machine.current_state
       (prev_curr_state != curr_state_after_forward).must_equal true
 
-      #@state_machine.device = @device
       @state_machine.save.must_equal true
       stm_restored = Device.last.state_machine
       stm_restored.current_state.must_equal curr_state_after_forward

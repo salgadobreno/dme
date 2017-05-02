@@ -26,7 +26,7 @@ module Cli3
     commands[:ls].execute nil, nil, nil
   end
 
-  class OpInputClient
+  class OpInputClient < State::Operation
     def call(payload)
       table_client_prompt = "Select CRIENTE"
       table_client = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Avixy'], ['2', 'Cielo'], ['3', 'Rede']]
@@ -34,7 +34,7 @@ module Cli3
     end
   end
 
-  class OpInputSerialNumber
+  class OpInputSerialNumber < State::Operation
     def call(payload)
       table_client_prompt = "Select CRIENTE"
       table_client = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Avixy'], ['2', 'Cielo'], ['3', 'Rede']]
@@ -42,7 +42,7 @@ module Cli3
     end
   end
 
-  class OpInputInspection
+  class OpInputInspection < State::Validation
     def call(payload)
       inspecao_visual_prompt = 'Realize inspecao visual(selecione com as setas e use espaço para selecionar)'
       inspecao_visual_opts = ['sem barata', 'teclado integro', 'sem coliformes']
@@ -50,7 +50,7 @@ module Cli3
     end
   end
 
-  class OpGetOperadorOk
+  class OpGetOperadorOk < State::Validation
     def call(payload)
       puts "Cliente: #{payload[:answer_cliente]}"
       puts "Numero Serial: #{payload[:answer_serial_number]}"
@@ -71,15 +71,13 @@ module Cli3
 
       # define state machine
       state_inicio = State.new :inicio, {
-        :execution => [],
-        #TODO: class serialization
-        #:execution => [OpInputClient.new, OpInputSerialNumber.new, OpInputInspection.new, OpGetOperadorOk.new],
-        :validation => nil
+        :operations => [OpInputClient.new, OpInputSerialNumber.new, OpInputInspection.new, OpGetOperadorOk.new],
+        :validations => nil
       }
 
       state_fim = State.new :fim, {
-        :execution => nil,
-        :validation => nil
+        :operations => nil,
+        :validations => nil
       }
 
       state_machine = StateMachine.new [state_inicio, state_fim]
