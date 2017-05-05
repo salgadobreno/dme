@@ -21,9 +21,9 @@ require 'app/state'
 require 'app/state_machine'
 require 'app/buffer'
 require 'app/app_log'
+require 'app/asset_manager/am_device'
 require 'app/models/device'
 require 'app/models/device_history'
-
 
 # configure the database
 Mongoid.load! ENV['MONGODB_CFG_PATH'], @db_environment
