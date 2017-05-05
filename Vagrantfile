@@ -6,6 +6,7 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
+  config.ssh.forward_agent = true
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
@@ -115,4 +116,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: './vagrantfiles/.vimrc.after', destination: '~/.vimrc.after'
   config.vm.provision "file", source: './vagrantfiles/.tmux.conf', destination: '~/.tmux.conf'
   config.vm.provision "file", source: './vagrantfiles/.bash_aliases', destination: '~/.bash_aliases'
+  config.vm.provision "file", source: './vagrantfiles/.pryrc', destination: '~/.pryrc'
+
+  #aditional vim config
+  config.vm.provision "shell", privileged: false,  inline: <<-SHELL
+    mkdir ~/.janus
+    git clone https://github.com/christoomey/vim-tmux-navigator ~/.janus/vim-tmux-navigator
+  SHELL
 end

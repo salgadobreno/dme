@@ -2,6 +2,7 @@
 lib = File.expand_path('../app', __FILE__)
 #this will include the path in $LOAD_PATH unless it is already included
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 ENV["MONGODB_CFG_PATH"] ||= File.expand_path('../config', __FILE__) + "/mongoid.yml"
 
 require "rake/testtask"
@@ -16,7 +17,13 @@ task default: [:test]
 desc "Run all applicaiton tests"
 Rake::TestTask.new do |t|
   t.libs.push '.'
-  t.pattern = ["test/*_test.rb","test/models/*_test.rb"]
+  t.libs.push File.expand_path('../test', __FILE__)
+  
+  t.pattern = [
+    "test/*_test.rb",
+    "test/models/*_test.rb",
+    "test/functional/*_test.rb"
+  ]
 end
 
 namespace :db do
@@ -44,6 +51,7 @@ namespace :db do
     devices = []
     dt1 = DateTime.now
     dt2 = DateTime.now + 10
+    # TODO: Move this initialization to a fixture file
     devices << AvixyDevice.new(:serial_number => '100000001', :sold_at => dt1, :warranty_days => 365)
     devices << AvixyDevice.new(:serial_number => '100000002', :sold_at => dt1, :warranty_days => 365)
     devices << AvixyDevice.new(:serial_number => '100000003', :sold_at => dt1, :warranty_days => 365)

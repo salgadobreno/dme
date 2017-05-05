@@ -15,7 +15,7 @@ module AvxLog
     APP_LOG.warn(cli_colored_text("1;33m", text))
   end
 
-  def success(text)
+  def info(text)
     APP_LOG.info(cli_colored_text("1;32m", text))
   end
 end

@@ -1,4 +1,4 @@
-require "test/helper/test_helper"
+require "test_helper"
 require "mongoid"
 require "database_cleaner"
 require "date"
@@ -9,8 +9,11 @@ describe DeviceHistory do
     DatabaseCleaner.start
 
     dt1 = DateTime.now
-    @avixy_device = AvixyDevice.new(:serial_number => '100000001', :sold_at => dt1, :warranty_days => 365)
-    @avixy_device.save
+    @state_inicio = State.new :inicio, { :operation => nil, :validation => nil }
+    @state_fim = State.new :fim, { :operation => nil, :validation => nil }
+    @state_machine = StateMachine.new [@state_inicio, @state_fim]
+    @device = Device.new('100000001', dt1, 365, @state_machine)
+    @device.save
   end
 
   after do
@@ -18,16 +21,15 @@ describe DeviceHistory do
   end
 
   it "should create a new DeviceHistory registry in the database" do
-    model = DeviceHistory.new(:avixy_device => @avixy_device,
-                              :description => "Entrando na manutencao",
-                              :registered_at => DateTime.now)
+    model = DeviceHistory.new(@device, "Entrando na manutencao")
     model.wont_be_nil
     model.save.must_equal true
-    DeviceHistory.count.must_be :==, 1
-    DeviceHistory.first.description.must_equal model.description
+    #DeviceHistory.count.must_be :==, 1
+    #DeviceHistory.first.description.must_equal model.description
+    #NOTE: embedded so no DeviceHistory.count changes
   end
 
-  it "should not save an invalid history log" do
-    DeviceHistory.new.save.must_equal false
+  it "should not create an invalid history log" do
+    proc{ DeviceHistory.new }.must_raise ArgumentError
   end
 end

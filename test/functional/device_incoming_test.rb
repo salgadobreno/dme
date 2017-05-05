@@ -1,10 +1,12 @@
-require "irb"
-require "minitest/autorun"
-require "mocha/mini_test"
-require "app/state_machine"
-require "app/state"
-require "app/device"
-require "app/buffer"
+require 'test_helper'
+require "date"
+
+DEFAULT_WARRANTY_DAYS = 365
+
+# TODO: This test should be user to test
+# the first two basic state of the maintenance
+# the device pre-triage and post triage (triaged - device accepted or not)
+# THIS IS A FUNCTIONAL TEST - Move it to the proper folder
 
 class SingleDeviceStm < StateMachine
   def initialize
@@ -26,12 +28,19 @@ end
 
 describe "Scenario receiving a single device" do
   before do
-    @device = Device.new 122321123, SingleDeviceStm.new
+    @device = Device.new(122321123,
+      Time.now,
+      DEFAULT_WARRANTY_DAYS,
+      SingleDeviceStm.new)
   end
 
   describe "out of laboratory" do
     it "should receive a device with an serial number" do
-      @device = Device.new 122321123, SingleDeviceStm.new
+      # This test seems to be doing nothing
+      @device = Device.new(122321123,
+        Time.now,
+        DEFAULT_WARRANTY_DAYS,
+        SingleDeviceStm.new)
     end
 
     it "should find the SLA for the received device" do
@@ -55,10 +64,6 @@ describe "Scenario receiving a single device" do
 
   describe "device enters the triage" do
     it "should identify the device" do
-
-    end
-
-    it "should " do
 
     end
   end

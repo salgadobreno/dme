@@ -1,4 +1,7 @@
-require_relative 'helper/test_helper'
+require 'test_helper'
+require 'date'
+
+DEFAULT_WARRANTY_DAYS = 365
 
 describe Buffer, "A list of Devices in the maintenance lifecycle that executes actions in batch and keeps track of Device states" do
   before do
@@ -10,28 +13,28 @@ describe Buffer, "A list of Devices in the maintenance lifecycle that executes a
       if x[:index].even?
         true
       else
-        x[:error] = "Valor não é par: #{x[:index]}"
+        x[:error] = 'Valor não é par:' + x[:index].to_s
         false
       end
     }
     @state_inicio = State.new :inicio, {
-      :execution => [@add_index_op],
-      :validation => [@even_validation]
+      :executions => [@add_index_op],
+      :validations => [@even_validation]
     }
     @state_fim = State.new :fim, {
-      :execution => nil,
-      :validation => nil
+      :executions => nil,
+      :validations => nil
     }
 
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
     #TODO: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
     @devices = [
-      Device.new(0, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
-      Device.new(1, StateMachine.new([@state_inicio, @state_fim], {index: 1})),
-      Device.new(2, StateMachine.new([@state_inicio, @state_fim], {index: 2})),
-      Device.new(3, StateMachine.new([@state_inicio, @state_fim], {index: 3})),
-      Device.new(4, StateMachine.new([@state_inicio, @state_fim], {index: 4})),
-      Device.new(5, StateMachine.new([@state_inicio, @state_fim], {index: 5})),
+      Device.new(0, Time.now, DEFAULT_WARRANTY_DAYS, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
+      Device.new(1, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 1})),
+      Device.new(2, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 2})),
+      Device.new(3, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 3})),
+      Device.new(4, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 4})),
+      Device.new(5, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 5})),
     ]
 
     @buffer = Buffer.new @devices
@@ -55,7 +58,7 @@ describe Buffer, "A list of Devices in the maintenance lifecycle that executes a
   describe "#add, #rm" do
     it 'adds and removes a device' do
       state = @state_fim
-      device = Device.new(0, StateMachine.new([state], {index: 0}))
+      device = Device.new(0, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([state], {index: 0}))
       @buffer.add device
       @buffer.devices[:fim].must_include device
       @buffer.rm device

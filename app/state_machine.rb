@@ -1,37 +1,58 @@
-require_relative 'app_log'
+require 'app_log'
+require 'state'
 
 class StateMachine
+  include Mongoid::Document
 
-  attr_reader :current_state, :machine_states, :payload
+  embedded_in :device
+  embeds_many :states
+  field :payload, type: Hash
+  field :current_state_index, type: Integer
 
   def initialize(states, payload={})
-    @machine_states = states
-    @current_state = @machine_states.first
-    @payload = payload
+    super(states: states, payload: payload)
+    self.current_state = states.first
+  end
+
+  def current_state=(state)
+    @current_state = state
+    self.current_state_index = self.states.find_index state
+  end
+
+  def current_state
+    # if @current_state is defined: return current_state
+    # else, load it through current_state_index and set @current_state
+    # if neither is present we'll let it blow up because this is unexpected state
+    # (This is an approach against overly defensive programming in favour of design integrity)
+    return @current_state || self.states[current_state_index]
   end
 
   def forward
-    #TODO: lidar com 'fim'
+    #TODO: deal with 'end'
     # execute/validate the current state call
-    @current_state.execute @payload
+    current_state.execute payload
 
-    if @current_state.validate @payload
-      APP_LOG.info("#{@current_state} is valid.")
-      @current_state = @machine_states[@machine_states.find_index(@current_state)+1]
+    if current_state.validate payload
+      APP_LOG.info("#{current_state} is valid.")
+      self.current_state = states[self.current_state_index + 1]
       return true
     else
-      APP_LOG.debug("#{@current_state} invalid.")
+      APP_LOG.debug("#{current_state} invalid.")
       return false
     end
   end
 
   def has_next?
-    current_state != last_state
+    !current_state.equal?(last_state)
+  end
+
+  def inspect
+    "#{super} | @states: #{states}, @current_state: #{current_state}"
   end
 
   private
 
   def last_state
-    @machine_states.last
+    states.last
   end
 end

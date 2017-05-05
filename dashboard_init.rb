@@ -15,17 +15,15 @@ else
   @db_environment = :production
 end
 
-require 'irb'
+require 'pry'
 require 'awesome_print'
 require 'app/state'
 require 'app/state_machine'
 require 'app/buffer'
-require 'app/device'
 require 'app/app_log'
-require 'app/models/avixy_device'
+require 'app/models/device'
 require 'app/models/device_history'
 
 
 # configure the database
 Mongoid.load! ENV['MONGODB_CFG_PATH'], @db_environment
-
