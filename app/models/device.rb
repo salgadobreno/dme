@@ -40,5 +40,4 @@ class Device
       DeviceHistory.new(self, "State changed to: #{current_state}, from #{prev_state}")
     end
   end
-
 end
