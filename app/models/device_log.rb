@@ -6,7 +6,7 @@ class DeviceHistory
 
   field :description, type: String
 
-  embedded_in :device
+  belongs_to :device
 
   validates_presence_of :description
 

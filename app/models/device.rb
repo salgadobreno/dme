@@ -10,7 +10,7 @@ class Device
   field :serial_number, type: Integer #TODO: Integer vs String
   field :sold_at, type: DateTime
   field :warranty_days, type: Integer
-  embeds_many :device_histories
+  has_many :device_logs, autosave: true
   embeds_one :state_machine
 
   def_delegators :state_machine, :current_state
@@ -37,7 +37,7 @@ class Device
   def forward
     prev_state = current_state.name
     if state_machine.forward
-      DeviceHistory.new(self, "State changed to: #{current_state}, from #{prev_state}")
+      DeviceLog.new(self, "State changed to: #{current_state}, from #{prev_state}")
     end
   end
 end

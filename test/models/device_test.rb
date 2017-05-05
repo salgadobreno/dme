@@ -87,10 +87,14 @@ describe Device do
   end
 
   describe "#forward" do
-    it 'should add a DeviceHistory' do
-      @device.device_histories.size.must_equal 0
+    it 'should add a DeviceLog' do
+      @device.device_logs.size.must_equal 0
       @device.forward
-      @device.device_histories.size.must_equal 1
+      @device.device_logs.size.must_equal 1
+      el_device_log @device.device_logs.last
+      @device.save.must_equal true
+      device_reload = Device.last
+      device_reload.device_logs.last.must_equal el_device_log
     end
   end
 end
