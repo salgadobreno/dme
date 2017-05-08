@@ -16,7 +16,8 @@ describe State do
     }
     state = State.new "state", {operations: [@operation], validations: [@validation]}
     state_machine = StateMachine.new [state]
-    device = Device.new 000, DateTime.now, 1, state_machine
+    am_device = AMDevice.new 000, DateTime.now, 1
+    @device = Device.new am_device, state_machine
     @state = state_machine.states.first
 
     @payload = {}
@@ -62,6 +63,7 @@ describe State do
 
   describe "database operations" do
     it "should save a new State into the Databse" do
+      #@device.save.must_equal true # ???
       @state.save.must_equal true
       #State.first.name.must_equal state.name
       #State.count.must_equal 1
@@ -74,7 +76,8 @@ describe State do
         @validation = lambda {|x| $global_v ||= 0; $global_v += 1 }
         state = State.new "state", {operations: [@operation], validations: [@validation]}
         state_machine = StateMachine.new [state]
-        device = Device.new 000, DateTime.now, 1, state_machine
+        am_device = AMDevice.new 000, DateTime.now, 1
+        device = Device.new am_device, state_machine
         @state = state_machine.states.first
       end
 
@@ -113,7 +116,8 @@ describe State do
           @validation = ExampleValidation.new
           state = State.new "state", {operations: [@operation], validations: [@validation]}
           state_machine = StateMachine.new [state]
-          device = Device.new 000, DateTime.now, 1, state_machine
+          am_device = AMDevice.new 000, DateTime.now, 1
+          device = Device.new am_device, state_machine
           @state = state_machine.states.first
         end
 

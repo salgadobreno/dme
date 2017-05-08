@@ -28,13 +28,14 @@ describe Buffer, "A list of Devices in the maintenance lifecycle that executes a
 
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
     #TODO: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
+    @am_device = AMDevice.new 0, Time.now, DEFAULT_WARRANTY_DAYS
     @devices = [
-      Device.new(0, Time.now, DEFAULT_WARRANTY_DAYS, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
-      Device.new(1, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 1})),
-      Device.new(2, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 2})),
-      Device.new(3, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 3})),
-      Device.new(4, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 4})),
-      Device.new(5, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([@state_inicio, @state_fim], {index: 5})),
+      Device.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
+      Device.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 1})),
+      Device.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 2})),
+      Device.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 3})),
+      Device.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 4})),
+      Device.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 5})),
     ]
 
     @buffer = Buffer.new @devices
@@ -58,7 +59,8 @@ describe Buffer, "A list of Devices in the maintenance lifecycle that executes a
   describe "#add, #rm" do
     it 'adds and removes a device' do
       state = @state_fim
-      device = Device.new(0, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([state], {index: 0}))
+      #device = Device.new(0, Time.now, DEFAULT_WARRANTY_DAYS,  StateMachine.new([state], {index: 0}))
+      device = Device.new(@am_device,  StateMachine.new([state], {index: 0}))
       @buffer.add device
       @buffer.devices[:fim].must_include device
       @buffer.rm device

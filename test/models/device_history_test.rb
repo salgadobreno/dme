@@ -12,7 +12,8 @@ describe DeviceHistory do
     @state_inicio = State.new :inicio, { :operation => nil, :validation => nil }
     @state_fim = State.new :fim, { :operation => nil, :validation => nil }
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
-    @device = Device.new('100000001', dt1, 365, @state_machine)
+    @am_device = AMDevice.new('100000001', dt1, 365)
+    @device = Device.new(@am_device, @state_machine)
     @device.save
   end
 
