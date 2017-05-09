@@ -1,8 +1,8 @@
 require 'test_helper'
 
-describe AMDevice do
+describe AmDevice do
   it 'has a Serial Number, Warranty Days & Sold At' do
-    AMDevice.new 333, 365, Date.today
+    AmDevice.new 333, 365, Date.today
   end
 
 end

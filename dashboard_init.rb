@@ -22,7 +22,7 @@ require 'app/state_machine'
 require 'app/buffer'
 require 'app/app_log'
 require 'app/asset_manager/am_device'
-require 'app/models/device'
+require 'app/models/device_so'
 require 'app/models/device_history'
 
 # configure the database

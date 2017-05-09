@@ -3,7 +3,7 @@ require "mongoid"
 require "database_cleaner"
 require "date"
 
-describe Device do
+describe DeviceSo do
   before do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
@@ -15,9 +15,9 @@ describe Device do
     @state_inicio = State.new :inicio, { :operation => nil, :validation => nil }
     @state_fim = State.new :fim, { :operation => nil, :validation => nil }
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
-    @am_device = AMDevice.new @serial_number, @dt1, @warranty
+    @am_device = AmDevice.new @serial_number, @dt1, @warranty
     @am_device.save.must_equal true
-    @device = Device.new @am_device, @state_machine
+    @device = DeviceSo.new @am_device, @state_machine
   end
 
   after do
@@ -26,39 +26,23 @@ describe Device do
 
   describe "database operations" do
 
-    it "should create a new Device into the Databse" do
+    it "should create a new DeviceSo into the Databse" do
       @device.save.must_equal true
-      Device.count.must_be :==, 1
-      Device.first.sold_at.to_s.must_equal @dt1.to_s
+      DeviceSo.count.must_be :==, 1
+      DeviceSo.first.sold_at.to_s.must_equal @dt1.to_s
     end
 
-    #it 'requires serial number' do
-      #proc { device = Device.new(nil, @sold_at, @warranty, @state_machine) }.must_raise ArgumentError
-    #end
-
-    it 'requires AMDevice' do
-      proc { device = Device.new(nil, @state_machine) }.must_raise ArgumentError
+    it 'requires AmDevice' do
+      proc { device = DeviceSo.new(nil, @state_machine) }.must_raise ArgumentError
     end
 
     it 'requires StateMachine' do
-      proc { device = Device.new(@am_device, nil) }.must_raise ArgumentError
+      proc { device = DeviceSo.new(@am_device, nil) }.must_raise ArgumentError
     end
 
-    #it 'requires sold at' do
-      #proc { device = Device.new(@serial_number, nil, @warranty, @state_machine) }.must_raise ArgumentError
-    #end
-
-    #it 'requires warranty' do
-      #proc { device = Device.new(@serial_number, @sold_at, nil, @state_machine) }.must_raise ArgumentError
-    #end
-
-    it "should not save invalid Device" do
-      proc { device = Device.new }.must_raise ArgumentError
+    it "should not save invalid DeviceSo" do
+      proc { device = DeviceSo.new }.must_raise ArgumentError
     end
-
-    #it "should not save a device with non numeric serial number" do
-      #proc { device = Device.new 'abdc', Time.now, 345, nil }.must_raise ArgumentError
-    #end
 
     it 'should save and restore the state_machine' do
       #TODO: State && [nil] && storing
@@ -72,10 +56,9 @@ describe Device do
       }
       state_machine = StateMachine.new [inicio, fim]
 
-      #device = Device.new(100000001, @dt1, 365, state_machine)
-      device = Device.new(@am_device, state_machine)
+      device = DeviceSo.new(@am_device, state_machine)
       device.save.must_equal true
-      dev_restored = Device.last
+      dev_restored = DeviceSo.last
       dev_restored[:state_machine].must_equal device[:state_machine]
     end
 

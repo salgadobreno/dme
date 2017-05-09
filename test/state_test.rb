@@ -16,8 +16,8 @@ describe State do
     }
     state = State.new "state", {operations: [@operation], validations: [@validation]}
     state_machine = StateMachine.new [state]
-    am_device = AMDevice.new 000, DateTime.now, 1
-    @device = Device.new am_device, state_machine
+    am_device = AmDevice.new 000, DateTime.now, 1
+    @device = DeviceSo.new am_device, state_machine
     @state = state_machine.states.first
 
     @payload = {}
@@ -63,11 +63,7 @@ describe State do
 
   describe "database operations" do
     it "should save a new State into the Databse" do
-      #@device.save.must_equal true # ???
       @state.save.must_equal true
-      #State.first.name.must_equal state.name
-      #State.count.must_equal 1
-      #NOTE: it is embedded, so no count changes
     end
 
     describe "Saving and Restoring" do
@@ -76,8 +72,8 @@ describe State do
         @validation = lambda {|x| $global_v ||= 0; $global_v += 1 }
         state = State.new "state", {operations: [@operation], validations: [@validation]}
         state_machine = StateMachine.new [state]
-        am_device = AMDevice.new 000, DateTime.now, 1
-        device = Device.new am_device, state_machine
+        am_device = AmDevice.new 000, DateTime.now, 1
+        device = DeviceSo.new am_device, state_machine
         @state = state_machine.states.first
       end
 
@@ -88,7 +84,7 @@ describe State do
           @state.validate @payload
           $global_v.must_equal 1
           @state.save.must_equal true
-          state_reloaded = Device.last.state_machine.states.select { |st| st == @state }.first
+          state_reloaded = DeviceSo.last.state_machine.states.select { |st| st == @state }.first
           state_reloaded.execute @payload
           $global.must_equal 2
           state_reloaded.validate @payload
@@ -116,8 +112,8 @@ describe State do
           @validation = ExampleValidation.new
           state = State.new "state", {operations: [@operation], validations: [@validation]}
           state_machine = StateMachine.new [state]
-          am_device = AMDevice.new 000, DateTime.now, 1
-          device = Device.new am_device, state_machine
+          am_device = AmDevice.new 000, DateTime.now, 1
+          device = DeviceSo.new am_device, state_machine
           @state = state_machine.states.first
         end
 
@@ -127,7 +123,7 @@ describe State do
           @state.validate @payload
           $c_v_global.must_equal 1
           @state.save.must_equal true
-          state_reloaded = Device.last.state_machine.states.select { |st| st == @state }.first
+          state_reloaded = DeviceSo.last.state_machine.states.select { |st| st == @state }.first
           state_reloaded.execute @payload
           $c_global.must_equal 2
           state_reloaded.validate @payload

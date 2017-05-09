@@ -1,7 +1,8 @@
-class AMDevice
+#Asset Manager Device
+class AmDevice
   include Mongoid::Document
 
-  has_many :devices
+  has_many :device_sos
 
   field :serial_number, type: Integer #TODO: Integer vs String
   field :sold_at, type: DateTime

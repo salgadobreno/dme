@@ -88,7 +88,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
   end
 
-  describe Device, "A product in the maintenance lifecycle" do
+  describe DeviceSo, "A product in the maintenance lifecycle" do
     let(:state_inicio) {
       State.new :inicio, {
         :operation => nil,
@@ -104,9 +104,9 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     let(:state_machine) {
       StateMachine.new [state_inicio, state_fim]
     }
-    let(:am_device) { AMDevice.new 1234, Time.now, 365 }
+    let(:am_device) { AmDevice.new 1234, Time.now, 365 }
     let(:device) {
-      Device.new am_device, state_machine
+      DeviceSo.new am_device, state_machine
     }
 
     it "delegates it's state to the state machine" do
@@ -119,7 +119,6 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     end
 
     it 'registers state events' do
-      #TODO: must update with DeviceHistory
       device.device_histories.size.must_equal 0
       device.forward
       device.device_histories.size.must_equal 1

@@ -28,9 +28,8 @@ describe StateMachine do
       :validation => nil
     }
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
-    #@device = Device.new 333, DateTime.now, 365, @state_machine
-    @am_device = AMDevice.new @serial_number, @dt1, @warranty
-    @device = Device.new @am_device, @state_machine
+    @am_device = AmDevice.new @serial_number, @dt1, @warranty
+    @device = DeviceSo.new @am_device, @state_machine
   end
 
   after do
@@ -45,7 +44,7 @@ describe StateMachine do
       (prev_curr_state != curr_state_after_forward).must_equal true
 
       @state_machine.save.must_equal true
-      stm_restored = Device.last.state_machine
+      stm_restored = DeviceSo.last.state_machine
       stm_restored.current_state.must_equal curr_state_after_forward
     end
   end
