@@ -1,6 +1,6 @@
 require 'mongoid'
 
-class DeviceHistory
+class DeviceLog
   include Mongoid::Document
   include Mongoid::Timestamps
 

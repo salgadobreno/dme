@@ -119,9 +119,9 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     end
 
     it 'registers state events' do
-      device.device_histories.size.must_equal 0
+      device.device_logs.size.must_equal 0
       device.forward
-      device.device_histories.size.must_equal 1
+      device.device_logs.size.must_equal 1
     end
   end
 end

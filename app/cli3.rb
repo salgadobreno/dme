@@ -135,7 +135,7 @@ module Cli3
       puts "Device: %s" % device.serial_number
       puts "State: %s" % device.current_state.name
       puts "LOG:"
-      rows = device.device_histories.map { |e| [e.created_at, e.description] }
+      rows = device.device_logs.map { |e| [e.created_at, e.description] }
       table_log = TTY::Table.new header: ['Data', 'Evento'], rows: rows
       puts table_log.render :ascii
     end

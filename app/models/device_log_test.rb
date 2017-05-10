@@ -3,7 +3,7 @@ require "mongoid"
 require "database_cleaner"
 require "date"
 
-describe DeviceHistory do
+describe DeviceLog do
   before do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
@@ -21,13 +21,13 @@ describe DeviceHistory do
     DatabaseCleaner.clean
   end
 
-  it "should create a new DeviceHistory registry in the database" do
-    model = DeviceHistory.new(@device, "Entrando na manutencao")
+  it "should create a new DeviceLog registry in the database" do
+    model = DeviceLog.new(@device, "Entrando na manutencao")
     model.wont_be_nil
     model.save.must_equal true
   end
 
   it "should not create an invalid history log" do
-    proc{ DeviceHistory.new }.must_raise ArgumentError
+    proc{ DeviceLog.new }.must_raise ArgumentError
   end
 end

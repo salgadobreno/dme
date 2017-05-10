@@ -13,7 +13,7 @@ class DeviceSo
   def_delegators :am_device, :serial_number
   def_delegators :am_device, :sold_at
   def_delegators :am_device, :warranty_days
-  def_delegators :am_device, :device_histories
+  def_delegators :am_device, :device_logs
 
   def_delegators :state_machine, :current_state
 
@@ -33,7 +33,7 @@ class DeviceSo
   def forward
     prev_state = current_state.name
     if state_machine.forward
-      dh = DeviceHistory.new(am_device, "State changed to: #{current_state}, from #{prev_state}")
+      dh = DeviceLog.new(am_device, "State changed to: #{current_state}, from #{prev_state}")
       dh.save!
     end
   end
