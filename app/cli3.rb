@@ -16,7 +16,8 @@ module Cli3
   program_desc 'Dashboard CLI APP'
 
   def find_device device_id
-    device = Device.find_by(serial_number: device_id.to_i) #TODO: Integer/String
+    am_device = AmDevice.find_by serial_number: device_id.to_i
+    device = am_device.device_sos.last
     exit_now! "Could not find device #{device_id}" if device.nil?
 
     device
@@ -83,7 +84,8 @@ module Cli3
       state_machine = StateMachine.new [state_inicio, state_fim]
 
       # creates device
-      device = Device.new device_id, Date.today, 365, state_machine
+      am_device = AmDevice.find_by(serial_number: device_id.to_i)
+      device = DeviceSo.new am_device, state_machine
       device.save!
 
       #@buffer.add device
@@ -114,7 +116,7 @@ module Cli3
   command :ls do |c|
     c.action do
       # print the list in table format
-      devices = Device.all
+      devices = DeviceSo.all
       d_rows = devices.map {|d| [d.serial_number, d.sold_at, d.warranty_days, d.current_state.name]}
       header = ['Serial number', 'Sold at', 'Warranty', 'Current State']
       table_devices = TTY::Table.new header: header, rows: d_rows
