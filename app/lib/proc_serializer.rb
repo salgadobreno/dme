@@ -1,5 +1,5 @@
 require 'sourcify'
-require 'app/state'
+require 'app/models/state'
 
 class ProcSerializer
 

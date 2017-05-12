@@ -1,5 +1,4 @@
-require 'app_log'
-require 'state'
+require 'dashboard_init'
 
 class StateMachine
   include Mongoid::Document
