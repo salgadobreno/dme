@@ -4,7 +4,7 @@ require 'state'
 class StateMachine
   include Mongoid::Document
 
-  embedded_in :device
+  embedded_in :device_so
   embeds_many :states
   field :payload, type: Hash
   field :current_state_index, type: Integer
@@ -27,12 +27,12 @@ class StateMachine
     return @current_state || self.states[current_state_index]
   end
 
-  def forward
+  def forward device_so
     #TODO: deal with 'end'
     # execute/validate the current state call
-    current_state.execute payload
+    current_state.execute payload, device_so
 
-    if current_state.validate payload
+    if current_state.validate payload, device_so
       APP_LOG.info("#{current_state} is valid.")
       self.current_state = states[self.current_state_index + 1]
       return true

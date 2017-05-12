@@ -56,13 +56,13 @@ class State
     super(name: name, validations: validation_callbacks, operations: operation_callbacks)
   end
 
-  def execute(payload)
+  def execute(payload, device_so=nil)
     unless operations.nil? || operations.empty?
-      operations.each {|eb| eb.call(payload)}
+      operations.each {|eb| eb.call(payload, device_so)}
     end
   end
 
-  def validate(payload)
+  def validate(payload, device_so=nil)
     r = nil
 
     if validations.nil? || validations.empty?
@@ -70,7 +70,7 @@ class State
     else
       # chama all? em array de Boolean, se algum falhar, retorna falso
       r = validations.map { |validation|
-        validation.call(payload)
+        validation.call(payload, device_so)
       }.all?
     end
 
@@ -80,5 +80,4 @@ class State
   def inspect
     "#{super} | @operations: #{operations.inspect}, @validations: #{validations.inspect}"
   end
-
 end
