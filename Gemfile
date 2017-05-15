@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'rake', '~> 12.0'
 gem 'bundler', '~> 1.14', '>= 1.14.0'
 
 gem 'tty'

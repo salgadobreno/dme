@@ -1,6 +1,8 @@
 require 'sinatra'
 
+set :environment, :production
+
 get '/' do
-    "OK"
+    "<html><body>OK</body></html>"
 end
 
