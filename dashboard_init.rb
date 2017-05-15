@@ -23,7 +23,7 @@ require 'app/buffer'
 require 'app/app_log'
 require 'app/asset_manager/am_device'
 require 'app/models/device'
-require 'app/models/device_history'
+require 'app/models/device_log'
 
 # configure the database
 Mongoid.load! ENV['MONGODB_CFG_PATH'], @db_environment

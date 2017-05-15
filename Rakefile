@@ -6,11 +6,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 ENV["MONGODB_CFG_PATH"] ||= File.expand_path('../config', __FILE__) + "/mongoid.yml"
 
 require "rake/testtask"
-require "mongoid"
 require "database_cleaner"
-require "date"
 require "./dashboard_init"
-require "app_log"
 
 task default: [:test]
 
