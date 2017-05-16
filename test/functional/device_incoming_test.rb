@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 require "date"
 
 DEFAULT_WARRANTY_DAYS = 365
@@ -28,19 +28,17 @@ end
 
 describe "Scenario receiving a single device" do
   before do
-    @device = Device.new(122321123,
-      Time.now,
-      DEFAULT_WARRANTY_DAYS,
-      SingleDeviceStm.new)
+    @am_device = AmDevice.new(122321123, Time.now, DEFAULT_WARRANTY_DAYS)
+    @device = DeviceSo.new(@am_device, SingleDeviceStm.new)
   end
 
   describe "out of laboratory" do
     it "should receive a device with an serial number" do
       # This test seems to be doing nothing
-      @device = Device.new(122321123,
-        Time.now,
-        DEFAULT_WARRANTY_DAYS,
-        SingleDeviceStm.new)
+      #@device = DeviceSo.new(122321123,
+        #Time.now,
+        #DEFAULT_WARRANTY_DAYS,
+        #SingleDeviceStm.new)
     end
 
     it "should find the SLA for the received device" do
@@ -68,4 +66,3 @@ describe "Scenario receiving a single device" do
     end
   end
 end
-
