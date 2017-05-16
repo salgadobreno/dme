@@ -140,6 +140,23 @@ To clear unused containers, images and networs do:
 docker system prune
 ```
 
+# Using docker-compose to run your environment
+
+I have added a docker compose file to help the deployment of this application, but it can also be used to the development environment.
+
+## To run and build the environment
+```
+docker-compose up -d --build
+```
+
+This will make the mongo container running and will run the application tests. You could see the test result by running `docker logs` or re-running the service docker container with the rake instruction enabled:
+
+```
+docker run --rm avxmngsrv rake
+```
+
+At the end of the development session run `docker compose down` to shut down all containers, networks and volumes created by the docker-compose command.
+
 KNOWN ISSUES
 ===========
 
