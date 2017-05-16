@@ -77,9 +77,9 @@ describe DeviceSo do
 
   describe "#forward" do
     it 'should add a DeviceLog' do
-      @device.device_logs.size.must_equal 0
+      previous_size = @device.device_logs.size
       @device.forward
-      @device.device_logs.size.must_equal 1
+      @device.device_logs.size.must_be :>=, (previous_size + 1)
     end
   end
 end

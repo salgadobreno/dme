@@ -30,4 +30,14 @@ describe DeviceLog do
   it "should not create an invalid history log" do
     proc{ DeviceLog.new }.must_raise ArgumentError
   end
+
+  it 'requires the Asset Manager Device' do
+    dl = DeviceLog.new(nil, @device, "teste")
+    dl.valid?.must_equal false
+  end
+
+  it 'does not require the Device from Service Order' do
+    dl = DeviceLog.new(@am_device, nil, "teste")
+    dl.valid?.must_equal true
+  end
 end

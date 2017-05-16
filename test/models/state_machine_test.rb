@@ -7,11 +7,11 @@ describe StateMachine do
     DatabaseCleaner.start
 
     @payload = {}
-    @add_index_op = lambda { |x|
+    @add_index_op = lambda { |x,d|
       x[:index] ||= 0
       x[:index] += 1
     }
-    @even_validation = lambda { |x|
+    @even_validation = lambda { |x,d|
       if x[:index].even?
         true
       else
@@ -39,7 +39,7 @@ describe StateMachine do
   describe "database operations" do
     it "should restore current state" do
       prev_curr_state = @state_machine.current_state
-      @state_machine.forward.must_equal true
+      @state_machine.forward(@device).must_equal true
       curr_state_after_forward = @state_machine.current_state
       (prev_curr_state != curr_state_after_forward).must_equal true
 

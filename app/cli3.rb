@@ -28,7 +28,7 @@ module Cli3
   end
 
   class OpInputClient < State::Operation
-    def call(payload)
+    def call(payload, device)
       table_client_prompt = "Select CRIENTE"
       table_client = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Avixy'], ['2', 'Cielo'], ['3', 'Rede']]
       payload[:answer_cliente] = TTY::Prompt.new.select table_client_prompt + "\n" + table_client.render(:ascii), ['Avixy','Cielo','Rede']
@@ -36,23 +36,27 @@ module Cli3
   end
 
   class OpInputSerialNumber < State::Operation
-    def call(payload)
+    def call(payload, device)
       table_client_prompt = "Select CRIENTE"
       table_client = TTY::Table.new header: ['id', 'nome'], rows: [['1', 'Avixy'], ['2', 'Cielo'], ['3', 'Rede']]
       payload[:answer_cliente] = TTY::Prompt.new.select table_client_prompt + "\n" + table_client.render(:ascii), ['Avixy','Cielo','Rede']
+
+      device.device_logs << DeviceLog.new(device, 'Cliente: ' + payload[:answer_cliente].inspect)
     end
   end
 
   class OpInputInspection < State::Validation
-    def call(payload)
+    def call(payload, device)
       inspecao_visual_prompt = 'Realize inspecao visual(selecione com as setas e use espaço para selecionar)'
       inspecao_visual_opts = ['sem barata', 'teclado integro', 'sem coliformes']
       payload[:answer_inspecao_visual] = TTY::Prompt.new.multi_select inspecao_visual_prompt, inspecao_visual_opts
+
+      device.device_logs << DeviceLog.new(device, 'inspecao visual result: ' + payload[:answer_inspecao_visual].inspect)
     end
   end
 
   class OpGetOperadorOk < State::Validation
-    def call(payload)
+    def call(payload, device)
       puts "Cliente: #{payload[:answer_cliente]}"
       puts "Numero Serial: #{payload[:answer_serial_number]}"
       puts "Dados de inspeção:\n#{TTY::Table.new(payload[:answer_inspecao_visual].map {|x| [x]}).render(:ascii)}"
@@ -132,10 +136,11 @@ module Cli3
       help_now! "Usage: show [device_id]" if device_id.nil?
 
       device = find_device device_id
+      am_device = device.am_device #grab the AssetManagerDevice because we want the full history
       puts "Device: %s" % device.serial_number
       puts "State: %s" % device.current_state.name
       puts "LOG:"
-      rows = device.device_logs.map { |e| [e.created_at, e.description] }
+      rows = am_device.device_logs.map { |e| [e.created_at, e.description] }
       table_log = TTY::Table.new header: ['Data', 'Evento'], rows: rows
       puts table_log.render :ascii
     end

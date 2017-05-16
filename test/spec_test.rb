@@ -57,7 +57,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       end
 
       it "should move to next state successfully" do
-        state_machine.forward.must_equal true
+        state_machine.forward(nil).must_equal true
         state_machine.current_state.must_equal state_fim
       end
     end
@@ -68,7 +68,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       end
 
       it "should remain in the previous state, include error in the payload" do
-        state_machine.forward.must_equal false
+        state_machine.forward(nil).must_equal false
         state_machine.current_state.must_equal state_inicio
         state_machine.payload[:error].wont_equal nil
       end
@@ -85,14 +85,13 @@ describe StateMachine, "Maintenance interaction cycle definition" do
         skip "TODO"
       end
     end
-
   end
 
   describe DeviceSo, "A product in the maintenance lifecycle" do
     let(:state_inicio) {
       State.new :inicio, {
-        :operation => nil,
-        :validation => nil
+        :operations => nil,
+        :validations => nil
       }
     }
     let(:state_fim) {
@@ -118,10 +117,32 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       device.current_state.must_equal state_fim
     end
 
-    it 'registers state events' do
+    it 'registers state change events' do
       device.device_logs.size.must_equal 0
       device.forward
-      device.device_logs.size.must_equal 1
+      device.device_logs.size.must_be :>=, 1
+    end
+
+    describe "Operations/validations DeviceLogs" do
+      let(:state_inicio) {
+        State.new :inicio, {
+          :operations => [lambda {|payload,device|
+            #do stuff
+            device.device_logs << DeviceLog.new(device, 'done stuff')
+          }],
+          :validations => [lambda {|payload,device|
+            #check stuff
+            device.device_logs << DeviceLog.new(device, 'checked stuff')
+          }]
+        }
+      }
+
+      it "should be capable of adding DeviceLogs to the Device" do
+        device.save
+        previous_size = device.reload.device_logs.size
+        device.forward # should +1 in operation, +1 in validation
+        device.device_logs.size.must_be :>=, (previous_size + 2)
+      end
     end
   end
 end

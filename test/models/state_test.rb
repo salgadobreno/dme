@@ -6,11 +6,11 @@ describe State do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
-    @operation = lambda { |x|
+    @operation = lambda { |x,d|
       x[:index] ||= 0
       x[:index] += 1
     }
-    @validation = lambda { |x|
+    @validation = lambda { |x,d|
       x[:index].even? ?  true : x[:error] = 'Valor não é par:' + x[:index].to_s
       false
     }
@@ -68,8 +68,8 @@ describe State do
 
     describe "Saving and Restoring" do
       before do
-        @operation = lambda {|x| $global ||= 0; $global += 1 }
-        @validation = lambda {|x| $global_v ||= 0; $global_v += 1 }
+        @operation = lambda {|x,d| $global ||= 0; $global += 1 }
+        @validation = lambda {|x,d| $global_v ||= 0; $global_v += 1 }
         state = State.new "state", {operations: [@operation], validations: [@validation]}
         state_machine = StateMachine.new [state]
         am_device = AmDevice.new 000, DateTime.now, 1
@@ -92,16 +92,15 @@ describe State do
         end
       end
       describe "when Operation/Validation is a Class" do
-
         class ExampleOperation < State::Operation
-          def call payload
+          def call payload, device
             $c_global ||= 0
             $c_global += 1
           end
         end
 
         class ExampleValidation < State::Validation
-          def call payload
+          def call payload, device
             $c_v_global ||= 0
             $c_v_global += 1
           end
