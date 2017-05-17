@@ -76,7 +76,13 @@ module Cli3
 
       # define state machine
       state_inicio = State.new :inicio, {
-        :operations => [OpInputClient.new, OpInputSerialNumber.new, OpInputInspection.new, OpGetOperadorOk.new],
+        :operations => [
+          OpInputClient.new,
+          OpInputSerialNumber.new,
+          OpInputInspection.new,
+          OpGetOperadorOk.new,
+          OpWarrantyCheck.new
+        ],
         :validations => nil
       }
 
