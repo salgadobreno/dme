@@ -1,6 +1,13 @@
+test:
+  clients:
+    default:
+      database: mngsrv-test
+      hosts:
+       - mongodb:27017
+
 development:
-    clients:
-        default:
-            database: dev-envine-test
-            hosts:
-              - mongodb:27017
+  clients:
+    default:
+      database: mngsrv-dev
+      hosts:
+       - localhost:27017

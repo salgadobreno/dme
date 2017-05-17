@@ -74,7 +74,8 @@ In order to use docker as a tool for development, test and deploy in the product
 
 * you need the docker environment installed on your machine. Please refer to https://docs.docker.com/engine/installation/
 
-To make everything work you need
+To make everything work you need:
+
 1 - build the development container with ruby 2.4.1
 2 - pull the mongoid container
 3 - create a private network for the containers to share
@@ -152,8 +153,10 @@ docker-compose up -d --build
 This will make the mongo container running and will run the application tests. You could see the test result by running `docker logs` or re-running the service docker container with the rake instruction enabled:
 
 ```
-docker run --rm avxmngsrv rake
+docker run --network=devicemanagementengine_default --rm -it --env RACK_ENV=test avixy/maintenancesrv:0.1 rake
 ```
+
+You could use docker-compose command to run the service vm, just remember to set the network between the containers.
 
 At the end of the development session run `docker compose down` to shut down all containers, networks and volumes created by the docker-compose command.
 

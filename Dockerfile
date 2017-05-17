@@ -1,6 +1,8 @@
 FROM ruby:2.4
 WORKDIR /usr/src/app
-ADD . /usr/src/app
+COPY Gemfile /usr/src/app
+COPY Gemfile.lock /usr/src/app
 RUN bundle install
+ADD . /usr/src/app
 EXPOSE 4567
 CMD ["rake"]
