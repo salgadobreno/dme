@@ -1,10 +1,20 @@
+test:
+  clients:
+    default:
+      database: mngsrv-test
+      hosts:
+       - mongodb:27017
+
 development:
-    clients:
-        default:
-            database: test
-            hosts:
-              - localhost:27017
-            #options:
-                #user: 'avixy'
-                #password: 'avx3000'
-                #server_selection_timeout: 1
+  clients:
+    default:
+      database: mngsrv-dev
+      hosts:
+       - localhost:27017
+
+production:
+  clients:
+    default:
+      database: mngsrv-production
+      hosts:
+       - mongodb:27017

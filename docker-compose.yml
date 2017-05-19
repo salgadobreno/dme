@@ -1,0 +1,13 @@
+version: '3'
+services:
+  avxmngapp:
+    container_name: avxmngapp
+    build: .
+    ports: 
+      - "8080:4567" # Sinatra mapping
+    depends_on: 
+      - mongodb
+
+  mongodb:
+    container_name: mongodb
+    image: mongo

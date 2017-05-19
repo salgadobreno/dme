@@ -2,17 +2,16 @@ $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)) + "/app")
 ENV["MONGODB_CFG_PATH"] ||= File.expand_path(File.dirname(__FILE__)) + "/config/mongoid.yml"
 
-@db_environment = :development
-if ENV["APP_ENV"].nil?
-  ENV["APP_ENV"] = "test"
+if ENV["RACK_ENV"].nil?
+  ENV["RACK_ENV"] = "development"
 end
 
-if ENV["APP_ENV"] == "test"
-  @db_environment = :development
-elsif ENV["APP_ENV"] == "development"
-  @db_environment = :development
-else
+if ENV["RACK_ENV"] == "production"
   @db_environment = :production
+elsif ENV["RACK_ENV"] == "test"
+  @db_environment = :test
+else
+  @db_environment = :development
 end
 
 require 'pry'
