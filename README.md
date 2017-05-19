@@ -160,6 +160,25 @@ You could use docker-compose command to run the service vm, just remember to set
 
 At the end of the development session run `docker compose down` to shut down all containers, networks and volumes created by the docker-compose command.
 
+Production deployment
+===
+
+To deploy this project into production you should use the docker-machine application. Do the following steps (Google is your friend):
+
+- Install docker into the production host if needed
+- Configure your local docker machine to map the production host using a generic driver for example ...
+- Use the docker-compose-production.yml file as the configuration base for your deployment
+
+I will explain the last item:
+
+Run:
+
+```
+docker-compose -f docker-compose-production.yml up --build -d
+```
+
+this should bring everything that you need to the production host.
+
 KNOWN ISSUES
 ===========
 

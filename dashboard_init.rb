@@ -7,7 +7,7 @@ if ENV["RACK_ENV"].nil?
 end
 
 if ENV["RACK_ENV"] == "production"
-  @db_environment = "production"
+  @db_environment = :production
 elsif ENV["RACK_ENV"] == "test"
   @db_environment = :test
 else

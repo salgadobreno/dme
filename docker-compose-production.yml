@@ -2,7 +2,10 @@ version: '3'
 services:
   avxmngapp:
     container_name: avxmngapp
-    build: .
+    image: avixy/maintenancesrv:0.1 # NOTE: Remember to update the version in each release
+    build:
+      context: .
+      dockerfile: Dockerfile-production
     ports: 
       - "8080:4567" # Sinatra mapping
     depends_on: 

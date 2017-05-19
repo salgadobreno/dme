@@ -11,3 +11,10 @@ development:
       database: mngsrv-dev
       hosts:
        - localhost:27017
+
+production:
+  clients:
+    default:
+      database: mngsrv-production
+      hosts:
+       - mongodb:27017
