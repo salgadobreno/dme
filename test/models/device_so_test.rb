@@ -15,7 +15,7 @@ describe DeviceSo do
     @state_inicio = State.new :inicio, { :operation => nil, :validation => nil }
     @state_fim = State.new :fim, { :operation => nil, :validation => nil }
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
-    @am_device = AmDevice.new @serial_number, @dt1, @warranty
+    @am_device = AmDevice.new @serial_number, @dt1, @warranty, false
     @am_device.save.must_equal true
     @device = DeviceSo.new @am_device, @state_machine
   end

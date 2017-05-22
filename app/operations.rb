@@ -1,6 +1,6 @@
 require 'dashboard_init'
 
-class OpWarrantyCheck < State::Operation
+class WarrantyCheckValidation < State::Validation
   def call(payload, device)
     #NOTE: should this go through payload or device? Originally we planned to
     #data into the payload, but now we have a device param...
@@ -15,5 +15,16 @@ class OpWarrantyCheck < State::Operation
     device.device_logs << DeviceLog.new(device, "Device in warranty: #{in_warranty}")
     #TODO: I'd like to have a method for device which would shortcut the
     #`device.device_logs << DeviceLog.new(device...` part
+    return payload[:warranted]
+  end
+end
+
+class BlacklistValidation < State::Validation
+  def call(payload, device)
+    if device.blacklisted
+      device.device_logs << DeviceLog.new(device, "Device is blacklisted!")
+    end
+
+    return !device.blacklisted # se blacklisted, invalido
   end
 end

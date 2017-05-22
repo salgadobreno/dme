@@ -14,6 +14,7 @@ class DeviceSo
   def_delegators :am_device, :serial_number
   def_delegators :am_device, :sold_at
   def_delegators :am_device, :warranty_days
+  def_delegators :am_device, :blacklisted
 
   def_delegators :state_machine, :current_state
 

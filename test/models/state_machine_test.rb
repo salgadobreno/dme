@@ -28,7 +28,7 @@ describe StateMachine do
       :validation => nil
     }
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
-    @am_device = AmDevice.new @serial_number, @dt1, @warranty
+    @am_device = AmDevice.new @serial_number, @dt1, @warranty, false
     @device = DeviceSo.new @am_device, @state_machine
   end
 

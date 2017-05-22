@@ -28,7 +28,7 @@ describe Buffer, "A list of Devices in the maintenance lifecycle that executes a
 
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
     #TODO: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
-    @am_device = AmDevice.new 0, Time.now, DEFAULT_WARRANTY_DAYS
+    @am_device = AmDevice.new 0, Time.now, DEFAULT_WARRANTY_DAYS, false
     @devices = [
       DeviceSo.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 0})),
       DeviceSo.new(@am_device, StateMachine.new([@state_inicio, @state_fim], {index: 1})),
