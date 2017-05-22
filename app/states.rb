@@ -1,25 +1,25 @@
 require 'dashboard_init'
 
-class StateRecebimento < State
+class StateAceptance < State
   def initialize
-    super :recebimento, {}
+    super :aceptance, {}
   end
 end
 
-class StateTriagem < State
+class StateTriage < State
   def initialize
-    super :triagem, {}
+    super :triage, {}
   end
 end
 
-class StateExpedicao < State
+class StateExpedition < State
   def initialize
-    super :expedicao, {}
+    super :expedition, {}
   end
 end
 
-class StateSegregado < State
+class StateSegregated < State
   def initialize
-    super :segregado, {}
+    super :segregated, {}
   end
 end
