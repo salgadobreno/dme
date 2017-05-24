@@ -67,6 +67,10 @@ class StateMachine
     !current_state.equal?(last_state)
   end
 
+  def last_state?
+    current_state.equal?(last_state)
+  end
+
   def inspect
     "#{super} | @states: #{states}, @current_state: #{current_state}"
   end

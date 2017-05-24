@@ -40,12 +40,12 @@ module Cli3
 
       # creates device
       am_device = AmDevice.find_by(serial_number: device_id.to_i)
-      if DeviceSo.where(am_device: am_device).any?
+      if DeviceSo.where(am_device: am_device).active.any?
         #já está no lab
         print "Device already in lab\n"
       else
-        device = DeviceSo.new am_device, state_machine
         state_machine = DefaultStateMachine.new
+        device = DeviceSo.new am_device, state_machine
         device.save!
 
         #@buffer.add device
@@ -74,7 +74,7 @@ module Cli3
   command :ls do |c|
     c.action do
       # print the list in table format
-      devices = DeviceSo.all
+      devices = DeviceSo.active
       d_rows = devices.map {|d| [d.serial_number, d.sold_at, d.warranty_days, d.current_state.name]}
       header = ['Serial number', 'Sold at', 'Warranty', 'Current State']
       table_devices = TTY::Table.new header: header, rows: d_rows

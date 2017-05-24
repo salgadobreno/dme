@@ -25,10 +25,10 @@ describe DeviceSo do
   end
 
   describe "database operations" do
-
     it "should create a new DeviceSo into the Databse" do
+      count = DeviceSo.count
       @device.save.must_equal true
-      DeviceSo.count.must_be :==, 1
+      DeviceSo.count.must_be :>, count
       DeviceSo.first.sold_at.to_s.must_equal @dt1.to_s
     end
 
@@ -73,6 +73,21 @@ describe DeviceSo do
       @device.save.must_equal true
       @device.updated_at.wont_be_nil
     end
+
+    describe "#active" do
+      before do
+        @active = DeviceSo.new @am_device, @state_machine
+        @finished = DeviceSo.new @am_device, @state_machine
+        @finished.forward
+        @finished.forward
+        @active.save!
+        @finished.save!
+      end
+      it 'filters finished DeviceServiceOrders' do
+        DeviceSo.where(am_device: @am_device).active.to_a.must_include @active
+        DeviceSo.where(am_device: @am_device).active.to_a.wont_include @finished
+      end
+    end
   end
 
   describe "#forward" do
@@ -80,6 +95,20 @@ describe DeviceSo do
       previous_size = @device.device_logs.size
       @device.forward
       @device.device_logs.size.must_be :>=, (previous_size + 1)
+    end
+
+    it 'should forward the state_machine state' do
+      @device.forward
+      @device.current_state.must_equal @state_fim
+    end
+
+    describe "when DeviceSo is at the last state" do
+      it 'should mark the DeviceSo as terminated' do
+        @device.forward
+        @state_machine.last_state?.must_equal true
+        @device.forward
+        @device.finished.must_equal true
+      end
     end
   end
 end
