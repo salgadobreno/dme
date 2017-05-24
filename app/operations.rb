@@ -28,3 +28,43 @@ class BlacklistValidation < State::Validation
     return !device.blacklisted # se blacklisted, invalido
   end
 end
+
+class BetterCallAlineValidation < State::Validation
+  ALINE = <<-HERE
+                  `` ```` `                       
+               ``.:oshhdhs/```                    
+             ``.ommmmmmmNNNmh/.`                  
+            `.+mmmmmNNNNNNNNmNh-``                
+          ``-ymmmmmNNdyo+++odNNd-``               
+         ``:hNmmmNds:.......-yNMy-`               
+        ``-hNmmmmh:........--.hNMs.`              
+        ``sNmmmmh/.........-:-/mNN/``             
+       ``/mNmmmdsosso:..-yyyyy/hNMh-``            
+       ` yNmmmh+syhho:..-/odoy--dNN+``            
+       ` yNmmNs./++/....:-.--.`-dNNh-``           
+       ``omNNNs......-..--......hNNN+``           
+       ``sNNNNy...-:+s/:++:----.hNNNo`            
+       ``sNNNMh--//..-:/.-::o/..yNNNh-``          
+       ` sNNNNm+.:/ss////:-y+-`/mNNNm+``          
+       ` sNNNNNmo..-/so++ss-..+mNNNNNo``          
+       ` yNNNNNNNdo.`:++++-.:hNNNmNmNy.           
+       ` yNNNNmNNNNh:/:--:++dNNmmmmmNd/``         
+       ` yNNNmmmNNNd.://///`+NmmmmmmdNy.``        
+      ```yNmmmmmmNNy`.-----`shmmmmmmdmms:.``      
+    ``./odNmmmmmmmmh:`----.`d-yNmdddddmmdho.`     
+   ``-yhymNmmmmmmmmys`......h./mmddmdddmdhdy.`    
+   ``yhyymmmmmmmmmmy+`.....`ooyhmmmmmddmmdydh``   
+  ` shyyymNmmmmmmmNmso+++/oohhyydmmmmmdmmdyhdo `  
+  `.hhyyymNmmmmmmmNdyyyyyyyyyyyyymNmmmmmmdyyhm.`  
+  HERE
+
+  def call(payload, device)
+    print ALINE
+    print "\n"
+    print "chama a aline"
+    print "\n"
+    print "\n"
+    device.device_logs << DeviceLog.new(device, "AlineAlarm")
+    return false
+  end
+end

@@ -20,6 +20,6 @@ end
 
 class StateSegregated < State
   def initialize
-    super :segregated, {}
+    super :segregated, {:validations => [BetterCallAlineValidation.new]}
   end
 end

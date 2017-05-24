@@ -17,6 +17,7 @@ describe "operations and validations" do
     StateMachine.new [state_inicio, state_fim]
   }
   let(:am_device) { AmDevice.new 1234, DateTime.now, 365, false }
+  let(:device_so) { DeviceSo.new am_device, state_machine }
 
   describe WarrantyCheckValidation do
     let(:am_device) { AmDevice.new 1234, (DateTime.now - 6.months), 365, false }
@@ -66,6 +67,14 @@ describe "operations and validations" do
 
       state_w_blacklist.validate({}, device_so).must_equal true
       state_w_blacklist.validate({}, device_so_blacklisted).must_equal false
+    end
+  end
+
+  describe BetterCallAlineValidation do
+    let(:state_inicio) { State.new :inicio, {:validations => [BetterCallAlineValidation.new]} }
+
+    it 'asks to call Aline' do
+      state_inicio.validate({}, device_so).must_equal false
     end
   end
 end
