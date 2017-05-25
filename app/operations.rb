@@ -12,9 +12,7 @@ class WarrantyCheckValidation < State::Validation
 
     payload[:warranted] = in_warranty
 
-    device.device_logs << DeviceLog.new(device, "Device in warranty: #{in_warranty}")
-    #TODO: I'd like to have a method for device which would shortcut the
-    #`device.device_logs << DeviceLog.new(device...` part
+    device.log "Device in warranty: #{in_warranty}"
     return payload[:warranted]
   end
 end
@@ -22,7 +20,7 @@ end
 class BlacklistValidation < State::Validation
   def call(payload, device)
     if device.blacklisted
-      device.device_logs << DeviceLog.new(device, "Device is blacklisted!")
+      device.log "Device is blacklisted!"
     end
 
     return !device.blacklisted # se blacklisted, invalido
@@ -64,7 +62,7 @@ class BetterCallAlineValidation < State::Validation
     print "chama a aline"
     print "\n"
     print "\n"
-    device.device_logs << DeviceLog.new(device, "AlineAlarm")
+    device.log "AlineAlarm"
     return false
   end
 end

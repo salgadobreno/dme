@@ -111,4 +111,13 @@ describe DeviceSo do
       end
     end
   end
+
+  describe "#log" do
+    it 'adds a log' do
+      prev_log_count = @device.device_logs.size
+      @device.log "this is a test"
+      @device.device_logs.size.must_equal prev_log_count + 1
+      @device.device_logs.last.description.must_equal "this is a test"
+    end
+  end
 end

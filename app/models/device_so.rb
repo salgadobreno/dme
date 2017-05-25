@@ -23,7 +23,7 @@ class DeviceSo
   validates_presence_of :state_machine
 
   before_create { |device|
-    device.device_logs << DeviceLog.new(self, 'Device: ' + device.serial_number.to_s + ' entry.')
+    device.log 'Device: ' + device.serial_number.to_s + ' entry.'
   }
 
   scope :active, ->{ where(finished: false) }
@@ -43,13 +43,16 @@ class DeviceSo
     # if last state receives fw -> mark finished
     if state_machine.last_state?
       self.finished = true
-      device_logs << DeviceLog.new(self, "Device: #{serial_number} exit.")
+      log "Device: #{serial_number} exit."
     else
       prev_state = current_state
       if state_machine.forward self
-        dl = DeviceLog.new(self, "State changed from: #{prev_state.name}, from #{current_state.name}")
-        device_logs << dl
+        log "State changed from: #{prev_state.name}, from #{current_state.name}"
       end
     end
+  end
+
+  def log(message)
+    self.device_logs << DeviceLog.new(self, message)
   end
 end

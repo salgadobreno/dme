@@ -15,7 +15,7 @@ class StateMachine
 
   def initialize(states, payload={})
     super(states: states, payload: payload)
-    self.current_state = states.first        
+    self.current_state = states.first
     @segregated_state = SEGREGATED_STATE
   end
 
@@ -43,7 +43,6 @@ class StateMachine
 
   def forward device_so
     begin
-      #TODO: deal with 'end'
       # execute/validate the current state call
       current_state.execute payload, device_so
 
@@ -57,7 +56,7 @@ class StateMachine
         return false
       end
     rescue Exception => e
-      device_so.am_device.device_logs << DeviceLog.new(device_so, "Error while executing/validating the device in state #{current_state}: #{e.message}")
+      device_so.log "Error while executing/validating the device in state #{current_state}: #{e.message}"
       self.current_state = SEGREGATED_STATE
       return false
     end
