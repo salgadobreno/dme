@@ -18,6 +18,7 @@ class DeviceSo
   def_delegators :am_device, :blacklisted
 
   def_delegators :state_machine, :current_state
+  def_delegators :state_machine, :last_state?
 
   validates_presence_of :am_device
   validates_presence_of :state_machine
