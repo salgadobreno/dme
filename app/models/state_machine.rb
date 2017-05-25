@@ -62,10 +62,6 @@ class StateMachine
     end
   end
 
-  def has_next?
-    !current_state.equal?(last_state)
-  end
-
   def last_state?
     current_state.equal?(last_state)
   end

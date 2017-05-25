@@ -47,10 +47,6 @@ describe StateMachine, "Maintenance interaction cycle definition" do
       state_machine.current_state.must_equal state_inicio
     end
 
-    it 'should answer #has_next?' do
-      state_machine.has_next?.must_equal true
-    end
-
     describe "when the item is valid" do
       before do
         state_machine.payload[:index] = 1 # force even index after +1 op
@@ -75,12 +71,6 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
     describe "when the StateMachine is finished" do
       it 'should ???' do
-        skip "TODO"
-      end
-    end
-
-    describe "when its in the initial state" do
-      it 'should still answer has_next?' do
         skip "TODO"
       end
     end

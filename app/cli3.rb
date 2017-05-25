@@ -44,9 +44,13 @@ module Cli3
     c.action do |global_options, options, args|
       # Prompt device
       device_id = prompt_text_input 'Bipe a maquina:'
-      SERVICE.fw device_id
+      r = SERVICE.fw device_id
 
-      run_ls
+      if r[:success]
+        run_ls
+      else
+        p "fail"
+      end
     end
   end
 
