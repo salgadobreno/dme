@@ -69,8 +69,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
 
       it "should remain in the previous state, include error in the payload" do
         state_machine.forward(nil).must_equal false
-        state_machine.current_state.must_equal state_inicio
-        state_machine.payload[:error].wont_equal nil
+        state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
       end
     end
 
@@ -103,7 +102,7 @@ describe StateMachine, "Maintenance interaction cycle definition" do
     let(:state_machine) {
       StateMachine.new [state_inicio, state_fim]
     }
-    let(:am_device) { AmDevice.new 1234, Time.now, 365 }
+    let(:am_device) { AmDevice.new 1234, Time.now, 365, false }
     let(:device) {
       DeviceSo.new am_device, state_machine
     }

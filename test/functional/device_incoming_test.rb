@@ -28,7 +28,7 @@ end
 
 describe "Scenario receiving a single device" do
   before do
-    @am_device = AmDevice.new(122321123, Time.now, DEFAULT_WARRANTY_DAYS)
+    @am_device = AmDevice.new(122321123, Time.now, DEFAULT_WARRANTY_DAYS, false)
     @device = DeviceSo.new(@am_device, SingleDeviceStm.new)
   end
 

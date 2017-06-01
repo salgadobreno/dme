@@ -49,7 +49,10 @@ class State
 
   def initialize(name, state_options)
     raise ArgumentError.new "Name is required" if name == nil
+    raise ArgumentError.new "Operations is not Array" if !state_options[:operations].nil? && !state_options[:operations].kind_of?(Array)
+    raise ArgumentError.new "Validations is not Array" if !state_options[:validations].nil? && !state_options[:validations].kind_of?(Array)
     # register callbacks
+    #TODO: verificacao/validacao de param p/ validations/operations, muitos erros de esquecer a forma de usar
     validation_callbacks = ValidationArray.new state_options[:validations] || []
     operation_callbacks = OperationArray.new state_options[:operations] || []
 

@@ -12,7 +12,7 @@ describe DeviceLog do
     @state_inicio = State.new :inicio, { :operation => nil, :validation => nil }
     @state_fim = State.new :fim, { :operation => nil, :validation => nil }
     @state_machine = StateMachine.new [@state_inicio, @state_fim]
-    @am_device = AmDevice.new('100000001', dt1, 365)
+    @am_device = AmDevice.new('100000001', dt1, 365, false)
     @device = DeviceSo.new(@am_device, @state_machine)
     @device.save
   end
