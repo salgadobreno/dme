@@ -17,13 +17,15 @@ end
 require 'pry'
 require 'awesome_print'
 require 'app/models/state'
+require 'app/operations'
+require 'app/models/device_so'
+require 'app/states'
 require 'app/models/state_machine'
 require 'app/models/buffer'
 require 'app/app_log'
 require 'app/asset_manager/am_device'
-require 'app/models/device_so'
 require 'app/models/device_log'
-require 'app/operations'
+require 'app/state_machines'
 
 # configure the database
 Mongoid.load! ENV['MONGODB_CFG_PATH'], @db_environment

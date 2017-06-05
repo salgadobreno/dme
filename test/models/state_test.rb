@@ -16,7 +16,7 @@ describe State do
     }
     state = State.new "state", {operations: [@operation], validations: [@validation]}
     state_machine = StateMachine.new [state]
-    am_device = AmDevice.new 000, DateTime.now, 1
+    am_device = AmDevice.new 000, DateTime.now, 1, false
     @device = DeviceSo.new am_device, state_machine
     @state = state_machine.states.first
 
@@ -72,7 +72,7 @@ describe State do
         @validation = lambda {|x,d| $global_v ||= 0; $global_v += 1 }
         state = State.new "state", {operations: [@operation], validations: [@validation]}
         state_machine = StateMachine.new [state]
-        am_device = AmDevice.new 000, DateTime.now, 1
+        am_device = AmDevice.new 000, DateTime.now, 1, false
         device = DeviceSo.new am_device, state_machine
         @state = state_machine.states.first
       end
@@ -111,7 +111,7 @@ describe State do
           @validation = ExampleValidation.new
           state = State.new "state", {operations: [@operation], validations: [@validation]}
           state_machine = StateMachine.new [state]
-          am_device = AmDevice.new 000, DateTime.now, 1
+          am_device = AmDevice.new 000, DateTime.now, 1, false
           device = DeviceSo.new am_device, state_machine
           @state = state_machine.states.first
         end
