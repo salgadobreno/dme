@@ -23,3 +23,10 @@ class StateSegregated < State
     super :segregated, {validations: [BetterCallAlineValidation.new]}
   end
 end
+
+class StateFinished < State
+  def initialize
+    #super :finished, {operations: [lambda {|x,y| raise "Invalid Execution at StateFinished"}]}
+    super :finished, {}
+  end
+end

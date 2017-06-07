@@ -48,18 +48,14 @@ describe StateMachine do
       stm_restored.current_state.must_equal curr_state_after_forward
     end
   end
-  
-  describe "alternative state procedures" do
-    it "state machine has a segregated state" do
-      @state_machine.segregated_state.wont_be :==, nil
-    end      
 
+  describe "alternative state procedures" do
     it "set to segregated state when forward fails" do
       @state_inicio.stubs(:validate).returns(false)
       @state_machine.forward(@device).must_equal false
       @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
     end
-    
+
     it "treat error and send to the segregated state" do
       @state_inicio.stubs(:validate).raises(Exception, 'undefined error')
       @state_machine.forward(@device).must_equal false

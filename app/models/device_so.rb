@@ -41,20 +41,18 @@ class DeviceSo
   end
 
   def forward
-    # if last state receives fw -> mark finished
-    if state_machine.last_state?
-      #FIXME: currently wont call anything on last state
-      self.finished = true
-      log "Device: #{serial_number} exit."
-      return true
-    else
-      prev_state = current_state
-      if state_machine.forward self
-        log "State changed from: #{prev_state.name}, from #{current_state.name}"
+    prev_state = current_state
+    if state_machine.forward self
+      if state_machine.last_state?
+        self.finished = true
+        log "Device: #{serial_number} exit."
         return true
       else
-        return false
+        log "State changed from: #{prev_state.name}, from #{current_state.name}"
+        return true
       end
+    else
+      return false
     end
   end
 
