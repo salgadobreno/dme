@@ -2,3 +2,4 @@
 .rvmrc
 .db
 dls/
+node_modules
