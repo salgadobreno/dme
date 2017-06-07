@@ -61,7 +61,7 @@ describe StateMachine do
       @state_machine.forward(@device).must_equal false
       @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
       @am_device.device_logs.last.description.must_match /undefined error/
-    end    
+    end
   end
-  
+
 end
