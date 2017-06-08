@@ -2,9 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: [
-    './react/src/index'
-  ],
+  entry: {
+    items: './react/src/index',
+    myapp: './react/src/myappindex'
+  },
   module: {
     loaders: [
       { test: /\.js?$/, loader: 'babel-loader', exclude: /node_modules/ },
@@ -16,7 +17,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/app/web/public'),
-    filename: 'bundle.js'
+    filename: '[name]-bundle.js'
   },
   devtool: 'cheap-eval-source-map',
   devServer: {
