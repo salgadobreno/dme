@@ -26,9 +26,13 @@ ruby -I . -I test/helper test/state_test.rb --name /database.operations/
 Sinatra and React
 ===================
 
-# Pre-requisites
-* yarn
-* node
+###Pre-requisites
+
+- yarn
+- node
+
+------------------------------
+###Running
 
 * Run React components in 'dev mode'(webpack js webserver, hot reload): `yarn dev`
 * Build React components, update app/web/public/bundle.js and make it
