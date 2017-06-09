@@ -105,10 +105,19 @@ describe DeviceSo do
     describe "when DeviceSo is at the last state" do
       it 'should mark the DeviceSo as terminated' do
         @device.forward
-        @state_machine.last_state?.must_equal true
         @device.forward
         @device.finished.must_equal true
+        @device.current_state.must_equal StateMachine::DONE_STATE
       end
+    end
+  end
+
+  describe "#log" do
+    it 'adds a log' do
+      prev_log_count = @device.device_logs.size
+      @device.log "this is a test"
+      @device.device_logs.size.must_equal prev_log_count + 1
+      @device.device_logs.last.description.must_equal "this is a test"
     end
   end
 end

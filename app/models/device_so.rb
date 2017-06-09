@@ -18,12 +18,13 @@ class DeviceSo
   def_delegators :am_device, :blacklisted
 
   def_delegators :state_machine, :current_state
+  def_delegators :state_machine, :last_state?
 
   validates_presence_of :am_device
   validates_presence_of :state_machine
 
   before_create { |device|
-    device.device_logs << DeviceLog.new(self, 'Device: ' + device.serial_number.to_s + ' entry.')
+    device.log 'Device: ' + device.serial_number.to_s + ' entry.'
   }
 
   scope :active, ->{ where(finished: false) }
@@ -40,16 +41,22 @@ class DeviceSo
   end
 
   def forward
-    # if last state receives fw -> mark finished
-    if state_machine.last_state?
-      self.finished = true
-      device_logs << DeviceLog.new(self, "Device: #{serial_number} exit.")
-    else
-      prev_state = current_state
-      if state_machine.forward self
-        dl = DeviceLog.new(self, "State changed from: #{prev_state.name}, from #{current_state.name}")
-        device_logs << dl
+    prev_state = current_state
+    if state_machine.forward self
+      if state_machine.last_state?
+        self.finished = true
+        log "Device: #{serial_number} exit."
+        return true
+      else
+        log "State changed from: #{prev_state.name}, from #{current_state.name}"
+        return true
       end
+    else
+      return false
     end
+  end
+
+  def log(message)
+    self.device_logs << DeviceLog.new(self, message)
   end
 end

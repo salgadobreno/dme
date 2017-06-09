@@ -30,6 +30,12 @@ Running: `ruby app/cli3.rb [command]`
 
 To see full StackTrace:  `GLI_DEBUG=true ruby app/cli3.rb [command]`
 
+APP RUNNER
+==========
+
+Running: `ruby -I . app/app_runner.rb -W0` (-W0 tries to supress
+warnings)
+
 GUARD
 =====
 
