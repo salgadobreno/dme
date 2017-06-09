@@ -1,7 +1,7 @@
 require 'dashboard_init'
 
 class AppService
-  def add(serial_number)
+  def add(serial_number, payload = {})
     am_device = AmDevice.find_by(serial_number: serial_number)
     if DeviceSo.where(am_device: am_device).active.any?
       #já está no lab
@@ -9,7 +9,7 @@ class AppService
         message: "Device already in lab"
       }
     else
-      state_machine = DefaultStateMachine.new
+      state_machine = DefaultStateMachine.new(payload)
       device = DeviceSo.new am_device, state_machine
       device.save!
       {}
