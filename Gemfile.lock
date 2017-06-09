@@ -66,9 +66,12 @@ GEM
     pry-byebug (3.4.2)
       byebug (~> 9.0)
       pry (~> 0.10)
+    puma (3.9.1)
     rack (2.0.2)
     rack-protection (2.0.0)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
     rake (12.0.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
@@ -169,10 +172,12 @@ DEPENDENCIES
   mongoid (~> 6.1)
   pry
   pry-byebug
+  puma
+  rack-test
   rake (~> 12.0)
   sinatra (~> 2.0)
   sourcify
   tty
 
 BUNDLED WITH
-   1.14.6
+   1.15.1
