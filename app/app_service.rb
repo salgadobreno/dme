@@ -58,8 +58,7 @@ class AppService
   def find_device serial_number
     am_device = AmDevice.find_by serial_number: serial_number.to_i
     device = am_device.device_sos.last
-    #exit_now! "Could not find device #{serial_number}" if device.nil?
-    raise Exception.new "vai toma no cu" if device.nil?
+    raise Exception.new "Could not find device #{serial_number}" if device.nil?
 
     device
   end
