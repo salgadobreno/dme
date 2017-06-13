@@ -57,7 +57,6 @@ describe App do
       DeviceSo.count.must_equal count+1
       DeviceSo.last.payload.keys.must_include "teste"
       DeviceSo.last.payload.keys.must_include "teste2"
-      binding.pry
     end
 
   end
