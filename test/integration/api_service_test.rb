@@ -58,7 +58,5 @@ describe App do
       DeviceSo.last.payload.keys.must_include "teste"
       DeviceSo.last.payload.keys.must_include "teste2"
     end
-
   end
-
 end
