@@ -1,0 +1,52 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "items": [
+    "item-dev-1",
+    "item-dev-2"
+  ],
+  "devices": [
+    {
+      "serial_number": 1234,
+      "sold_at": "2017-06-13",
+      "warranty_days": 365,
+      "blacklisted": false,
+      "current_state": "triage"
+    },
+    {
+      "serial_number": 4321,
+      "sold_at": "2017-06-14",
+      "warranty_days": 365,
+      "blacklisted": false,
+      "current_state": "triage"
+    },
+    {
+      "serial_number": 6666,
+      "sold_at": "2017-06-10",
+      "warranty_days": 365,
+      "blacklisted": true,
+      "current_state": "acceptance"
+    },
+    {
+      "id": "3214",
+      "serial_number": "4124",
+      "payload[][key]": "141414",
+      "payload[][value]": "1414141"
+    }
+  ]
+}
