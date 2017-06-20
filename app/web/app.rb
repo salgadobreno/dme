@@ -13,11 +13,32 @@ class App < Sinatra::Application
     render :html, :index
   end
 
+  # List devices
+  get '/devices' do
+    content_type :json
+    SERVICE.list.to_json
+  end
+
+  # Show device
+  get '/devices/:serial_number' do
+    content_type :json
+    serial_number = params[:serial_number]
+    SERVICE.show(serial_number).to_json
+  end
+
+  # Add device
   post '/devices' do
     serial_number = params[:serial_number]
     payload = params[:payload]
 
     SERVICE.add serial_number, payload
+  end
+
+  # Delete device
+  delete '/devices/:serial_number' do
+    content_type :json
+    serial_number = params[:serial_number]
+    SERVICE.rm(serial_number)
   end
 
   get '/items' do
