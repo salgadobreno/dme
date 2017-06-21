@@ -47,7 +47,7 @@ class State
   field :operations, type: OperationArray
   field :validations, type: ValidationArray
 
-  def initialize(name, state_options)
+  def initialize(name, state_options = {})
     raise ArgumentError.new "Name is required" if name == nil
     raise ArgumentError.new "Operations is not Array" if !state_options[:operations].nil? && !state_options[:operations].kind_of?(Array)
     raise ArgumentError.new "Validations is not Array" if !state_options[:validations].nil? && !state_options[:validations].kind_of?(Array)
