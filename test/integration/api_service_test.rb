@@ -25,7 +25,7 @@ describe App do
   describe "REST API" do
     it 'GET /' do
       get '/'
-      assert last_response.ok?
+      last_response.ok?.must_equal true
     end
 
     describe "GET /devices" do
@@ -35,9 +35,9 @@ describe App do
       end
       it 'lists the devices' do
         get '/devices'
-        assert last_response.ok?
+        last_response.ok?.must_equal true
         response_hash = JSON.parse(last_response.body)
-        assert response_hash.size, 2
+        response_hash.size.must_equal 2
       end
     end
 
@@ -47,9 +47,9 @@ describe App do
       end
       it 'shows requested device' do
         get "/devices/#{@device.serial_number}"
-        assert last_response.ok?
+        last_response.ok?.must_equal true
         response_hash = JSON.parse(last_response.body)
-        assert response_hash["serial_number"], @device.serial_number
+        @device.serial_number.must_equal response_hash["serial_number"]
       end
     end
 
@@ -60,14 +60,24 @@ describe App do
       it 'deletes DeviceSo :id' do
         device_count = DeviceSo.count
         delete "/devices/#{@device.serial_number}"
-        assert last_response.ok?
-        assert DeviceSo.count, (device_count-1)
+        last_response.ok?.must_equal true
+        (device_count-1).must_equal DeviceSo.count
       end
     end
 
     describe '/devices/:id/forward' do
-      #TODO
-      it 'forwards Device'
+      before do
+        @state_inicio = State.new :inicio
+        @state_fim = State.new :fim
+        @state_machine = StateMachine.new [@state_inicio, @state_fim]
+        @device = create(:device_so, state_machine: @state_machine)
+      end
+      it 'forwards Device' do
+        @device.current_state.must_equal @state_inicio
+        post "/devices/#{@device.serial_number}/forward"
+        last_response.ok?.must_equal true
+        @device.reload.current_state.must_equal @state_fim
+      end
     end
 
     describe 'POST /devices' do
@@ -83,7 +93,7 @@ describe App do
 
         post '/devices', @params
 
-        assert last_response.ok?
+        last_response.ok?.must_equal true
         DeviceSo.count.must_equal count+1
       end
 
@@ -97,7 +107,7 @@ describe App do
 
         post '/devices', @params.merge(payload_args)
 
-        assert last_response.ok?
+        last_response.ok?.must_equal true
         DeviceSo.count.must_equal count+1
         DeviceSo.last.payload.keys.must_include "teste"
         DeviceSo.last.payload.keys.must_include "teste2"

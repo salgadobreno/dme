@@ -34,6 +34,13 @@ class App < Sinatra::Application
     SERVICE.add serial_number, payload
   end
 
+  # Forward device
+  post '/devices/:serial_number/forward' do
+    serial_number = params[:serial_number]
+
+    SERVICE.fw serial_number
+  end
+
   # Delete device
   delete '/devices/:serial_number' do
     content_type :json
