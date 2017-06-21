@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import DeviceCard from './DeviceCard';
-import DeviceLog from './DeviceLog';
 
 class Device extends Component {
   constructor(){
@@ -9,12 +7,14 @@ class Device extends Component {
 
   render() {
     return(
-        <tr>
-          <td> {this.props.serial_number} </td>
-          <td> {this.props.current_state} </td>
-          <td> <DeviceCard /> </td>
-          <td> <DeviceLog /> </td>
-        </tr>
+      <div>
+        <h4>Device Info</h4>
+        SerialNumber: {this.props.serial_number}<br />
+        SoldAt: {this.props.sold_at}<br />
+        WarrantyDays: {this.props.warranty_days}<br />
+        Blacklisted: {this.props.blacklisted}<br />
+        CurrentState: {this.props.current_state}<br />
+      </div>
     );
   }
 }

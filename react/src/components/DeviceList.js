@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import Device from './Device';
+import DeviceLog from './DeviceLog';
 
 class DeviceList extends Component {
   constructor(){
     super();
     this.state = {
-      devices: []
+      devices: [],
+      currentDevice: {
+      }
     };
+
+    this.handleShowDevice = this.handleShowDevice.bind(this);
   }
 
   componentDidMount() {
@@ -15,10 +20,18 @@ class DeviceList extends Component {
     });
   }
 
+  handleShowDevice(device) {
+    this.setState(
+      {
+        currentDevice: device
+      }
+    )
+  }
+
   render() {
     return (
       <div>
-
+      <div>
       <table>
        <caption>
         <h3> Devices </h3>
@@ -35,18 +48,32 @@ class DeviceList extends Component {
         {
           this.state.devices.map((device,index)=> {
             return(
-              <Device 
-                key={index}
-                serial_number={device.serial_number}
-                sold_at={device.sold_at}
-                warranty_days={device.warranty_days}
-                blacklisted={device.blacklisted}
-                current_state={device.current_state} />
+              <tr key={index}>
+                <td> {device.serial_number} </td>
+                <td> {device.current_state} </td>
+                <td> <button onClick={this.handleShowDevice.bind(this, device)}>ShowInfo </button> </td>
+                <td> <button>ShowLog</button> </td>
+              </tr>
             )
           })
         }
         </tbody>
       </table>
+      </div>
+      <hr/>
+      <div>
+        <Device 
+          serial_number={this.state.currentDevice.serial_number}
+          sold_at={this.state.currentDevice.sold_at}
+          warranty_days={this.state.currentDevice.warranty_days}
+          blacklisted={this.state.currentDevice.blacklisted}
+          current_state={this.state.currentDevice.current_state} />
+      </div>
+      <hr/>
+      <div>
+        <DeviceLog />
+      </div>
+
       </div>
    );
   }

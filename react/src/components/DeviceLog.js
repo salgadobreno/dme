@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
 class DeviceLog extends Component {
-  handleShow() {
-    alert('Tell me your story');
-  }
   render() {
     return(
     <div>
-      <button onClick={this.handleShow} >DeviceLog</button>
+      <h4> Log Events </h4>
     </div>
     );
   }
