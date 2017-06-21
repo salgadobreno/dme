@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import DeviceCard from './DeviceCard';
+import DeviceLog from './DeviceLog';
 
 class Device extends Component {
   constructor(){
@@ -6,25 +8,13 @@ class Device extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <div>
-        Serial Number: {this.props.serial_number}
-        </div>
-        <div>
-        Solt at: {this.props.sold_at}
-        </div>
-        <div>
-        Warranty Days: {this.props.warranty_days}
-        </div>
-        <div>
-        Blacklisted?: {String(this.props.blacklisted)}
-        </div>
-        <div>
-        Current State: {this.props.current_state}
-        </div>
-        <hr/>
-      </div>
+    return(
+        <tr>
+          <td> {this.props.serial_number} </td>
+          <td> {this.props.current_state} </td>
+          <td> <DeviceCard /> </td>
+          <td> <DeviceLog /> </td>
+        </tr>
     );
   }
 }

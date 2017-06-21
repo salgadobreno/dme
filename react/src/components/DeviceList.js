@@ -18,20 +18,37 @@ class DeviceList extends Component {
   render() {
     return (
       <div>
-      <div>Devices:</div>
-      {
-        this.state.devices.map(device=> {
-          return <Device
-          serial_number={device.serial_number}
-          sold_at={device.sold_at}
-          warranty_days={device.warranty_days}
-          blacklisted={device.blacklisted}
-          current_state={device.current_state}
-            />
-        })
-      }
+
+      <table>
+       <caption>
+        <h3> Devices </h3>
+       </caption>
+
+        <thead>
+          <tr>
+            <th> Serial Number </th>
+            <th> Current State </th>
+            <th colSpan="2"> Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+        {
+          this.state.devices.map((device,index)=> {
+            return(
+              <Device 
+                key={index}
+                serial_number={device.serial_number}
+                sold_at={device.sold_at}
+                warranty_days={device.warranty_days}
+                blacklisted={device.blacklisted}
+                current_state={device.current_state} />
+            )
+          })
+        }
+        </tbody>
+      </table>
       </div>
-    );
+   );
   }
 }
 
