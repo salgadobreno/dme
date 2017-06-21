@@ -3,3 +3,4 @@
 .db
 dls/
 node_modules
+app/web/public/*

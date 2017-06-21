@@ -10,7 +10,7 @@ class DeviceList extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/devices').then(result=> {
+    fetch(process.env.API_URL + '/devices').then(result=> {
       result.json().then(json=> this.setState({devices:json}));
     });
   }
