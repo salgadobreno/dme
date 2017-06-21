@@ -1,7 +1,6 @@
 require "test_helper"
 require "mongoid"
 require "database_cleaner"
-require "date"
 
 describe DeviceSo do
   before do

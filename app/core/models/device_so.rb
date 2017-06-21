@@ -19,6 +19,7 @@ class DeviceSo
 
   def_delegators :state_machine, :current_state
   def_delegators :state_machine, :last_state?
+  def_delegators :state_machine, :payload
 
   validates_presence_of :am_device
   validates_presence_of :state_machine

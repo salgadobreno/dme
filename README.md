@@ -23,6 +23,23 @@ To run a single test, just do:
 ruby -I . -I test/helper test/state_test.rb --name /database.operations/
 ```
 
+Sinatra and React
+===================
+
+###Pre-requisites
+
+- yarn
+- node
+
+------------------------------
+###Running
+
+* Run React components in 'dev mode'(webpack js webserver, hot reload):
+  `yarn dev`
+* Build React components, update app/web/public/bundle.js and make it
+  available for Sinatra App: `yarn build`
+* Run Sinatra App: `ruby app/web/app.rb`
+
 CLI App
 =======
 
@@ -60,7 +77,8 @@ Useful commands:
 * `show-source Device#initialize`
 * `edit Device#initialize`
 * `ls -I @device #lists instances variable`s on @device
-* `watch @device.state_machine.current_sta`te #add an expression to 'watch', it will tell you when it changes
+* `watch @device.state_machine.current_sta`te #add an expression to
+  'watch', it will tell you when it changes
 * `watch #show all watches and their curre`nt values
 * `help`
 * `whereami #shows which line you are and `the code surrounding it
@@ -76,16 +94,20 @@ Vagrant Customizations
 
 Docker configuration
 ===
-In order to use docker as a tool for development, test and deploy in the production environement, some actions should be performed to make everything work smothly.
+In order to use docker as a tool for development, test and deploy in the
+production environement, some actions should be performed to make
+everything work smothly.
 
-* you need the docker environment installed on your machine. Please refer to https://docs.docker.com/engine/installation/
+* you need the docker environment installed on your machine. Please
+  refer to https://docs.docker.com/engine/installation/
 
 To make everything work you need:
 
 1 - build the development container with ruby 2.4.1
 2 - pull the mongoid container
 3 - create a private network for the containers to share
-4 - start the mongodb container using the private network created on the previous step
+4 - start the mongodb container using the private network created on the
+previous step
 
 ## Build the development container
 
@@ -93,7 +115,8 @@ To make everything work you need:
 docker build .
 ```
 
-* you can give a name for your development container and use it in you docker file to avoid forced unecessary builds.
+* you can give a name for your development container and use it in you
+  docker file to avoid forced unecessary builds.
 
 eg. docker build -t company/name:tag
 
@@ -139,7 +162,8 @@ docker run --network=my_nw ruby -p 8080:4567 app/api_service.rb
 
 To make the container be removed after running do this:
 ```
-docker run --rm --network=my_nw -p 8080:4567 09cedce91b94 ruby app/api_service.rb
+docker run --rm --network=my_nw -p 8080:4567 09cedce91b94 ruby
+app/api_service.rb
 ```
 
 To clear unused containers, images and networs do:
@@ -149,31 +173,42 @@ docker system prune
 
 # Using docker-compose to run your environment
 
-I have added a docker compose file to help the deployment of this application, but it can also be used to the development environment.
+I have added a docker compose file to help the deployment of this
+application, but it can also be used to the development environment.
 
 ## To run and build the environment
 ```
 docker-compose up -d --build
 ```
 
-This will make the mongo container running and will run the application tests. You could see the test result by running `docker logs` or re-running the service docker container with the rake instruction enabled:
+This will make the mongo container running and will run the application
+tests. You could see the test result by running `docker logs` or
+re-running the service docker container with the rake instruction
+enabled:
 
 ```
-docker run --network=devicemanagementengine_default --rm -it --env RACK_ENV=test avixy/maintenancesrv:0.1 rake
+docker run --network=devicemanagementengine_default --rm -it --env
+RACK_ENV=test avixy/maintenancesrv:0.1 rake
 ```
 
-You could use docker-compose command to run the service vm, just remember to set the network between the containers.
+You could use docker-compose command to run the service vm, just
+remember to set the network between the containers.
 
-At the end of the development session run `docker compose down` to shut down all containers, networks and volumes created by the docker-compose command.
+At the end of the development session run `docker compose down` to shut
+down all containers, networks and volumes created by the docker-compose
+command.
 
 Production deployment
 ===
 
-To deploy this project into production you should use the docker-machine application. Do the following steps (Google is your friend):
+To deploy this project into production you should use the docker-machine
+application. Do the following steps (Google is your friend):
 
 - Install docker into the production host if needed
-- Configure your local docker machine to map the production host using a generic driver for example ...
-- Use the docker-compose-production.yml file as the configuration base for your deployment
+- Configure your local docker machine to map the production host using a
+  generic driver for example ...
+- Use the docker-compose-production.yml file as the configuration base
+  for your deployment
 
 I will explain the last item:
 
@@ -196,3 +231,4 @@ procs/lambdas will be more of a Development helper. If it gets
 problematic we'll move to either only using Validations/Operations
 defined in classes, or switch the implementation to other gems:
 ruby2ruby, seattlerb/ruby_parser, whitequark/parser
+

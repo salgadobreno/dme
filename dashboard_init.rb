@@ -16,16 +16,16 @@ end
 
 require 'pry'
 require 'awesome_print'
-require 'app/models/state'
-require 'app/operations'
-require 'app/models/device_so'
-require 'app/states'
-require 'app/models/state_machine'
-require 'app/models/buffer'
-require 'app/app_log'
-require 'app/asset_manager/am_device'
-require 'app/models/device_log'
-require 'app/state_machines'
+require 'app/core/models/state'
+require 'app/core/operations'
+require 'app/core/models/device_so'
+require 'app/core/states'
+require 'app/core/models/state_machine'
+require 'app/core/models/buffer'
+require 'app/lib/app_log'
+require 'app/core/asset_manager/am_device'
+require 'app/core/models/device_log'
+require 'app/core/state_machines'
 
 # configure the database
 Mongoid.load! ENV['MONGODB_CFG_PATH'], @db_environment

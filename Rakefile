@@ -10,7 +10,7 @@ require "mongoid"
 require "database_cleaner"
 require "date"
 require "./dashboard_init"
-require "app_log"
+require "lib/app_log"
 
 task default: [:test]
 
@@ -20,9 +20,7 @@ Rake::TestTask.new do |t|
   t.libs.push File.expand_path('../test', __FILE__)
 
   t.pattern = [
-    "test/*_test.rb",
-    "test/models/*_test.rb",
-    "test/functional/*_test.rb"
+    "test/**/*_test.rb",
   ]
 end
 
