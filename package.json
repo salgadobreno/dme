@@ -4,7 +4,8 @@
   "description": "example sinatra-react app",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --content-base app/web/views --hot --inline",
+    "dev": "webpack-dev-server --content-base react/views --hot --inline",
+    "api": "json-server --watch db.json --port 8080",
     "build": "webpack --config webpack.prod.config.js",
     "lint": "eslint react/src/**",
     "lint:watch": "esw -w react/src/**",
@@ -38,6 +39,7 @@
     "eslint-plugin-react": "^6.10.3",
     "eslint-watch": "^3.1.0",
     "ignore-styles": "^5.0.1",
+    "json-server": "^0.10.1",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
     "webpack-dev-middleware": "^1.10.1",

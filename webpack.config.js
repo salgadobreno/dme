@@ -4,7 +4,9 @@ const path = require('path');
 module.exports = {
   entry: {
     items: './react/src/index',
-    myapp: './react/src/myappindex'
+    myapp: './react/src/myappindex',
+    devicelist: './react/src/device-list-index.js',
+    deviceadd: './react/src/device-add-index.js'
   },
   module: {
     loaders: [
@@ -21,12 +23,17 @@ module.exports = {
   },
   devtool: 'cheap-eval-source-map',
   devServer: {
-    contentBase: './app/web/views/',
+    contentBase: './react/views/',
     hot: true
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'API_URL': JSON.stringify("http://localhost:8080")
+      }
+    })
   ]
 };

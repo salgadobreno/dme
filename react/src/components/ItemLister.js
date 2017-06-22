@@ -12,14 +12,14 @@ class ItemLister extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:4567/items').then(result=> {
+    fetch(process.env.API_URL + '/items').then(result=> {
       result.json().then(json=> this.setState({items:json}));
     });
   }
 
   activateLasers(){
     this.componentDidMount();
-    //fetch('http://localhost:4567/items').then(result=> {
+    //fetch(process.env.API_URL + '/items').then(result=> {
       //result.json().then(json=> this.setState({items:json}));
     //});
   }

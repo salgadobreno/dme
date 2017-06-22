@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'app/services/app_service'
 
-class App < Sinatra::Base
+class App < Sinatra::Application
 
   configure { set :server, :puma }
 
@@ -33,4 +33,6 @@ class App < Sinatra::Base
     render :html, :myappindex
   end
 
+  # start the server if ruby file executed directly
+  run! if app_file == $0
 end
