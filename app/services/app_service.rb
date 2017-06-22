@@ -39,18 +39,13 @@ class AppService
     device = find_device serial_number
     am_device = device.am_device #grab the AssetManagerDevice because we want the full history
 
-    {
-      device: device,
-      device_logs: am_device.device_logs
-    }
+    device
   end
 
   def list
     devices = DeviceSo.active
 
-    {
-      devices: devices
-    }
+    devices
   end
 
   private

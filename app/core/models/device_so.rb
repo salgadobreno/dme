@@ -60,4 +60,8 @@ class DeviceSo
   def log(message)
     self.device_logs << DeviceLog.new(self, message)
   end
+
+  def as_json(options={})
+    super(options.merge({methods: :serial_number}))
+  end
 end

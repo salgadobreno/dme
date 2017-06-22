@@ -6,7 +6,7 @@ $LOAD_PATH.unshift(PROJ_PATH << '/../')
 require 'gli'
 require 'tty-prompt'
 require 'tty-table'
-require 'app/app_service'
+require 'app/services/app_service'
 
 #NOTE: Wrapping Cli3 in a module to work around GLI bug, see:
 # "`binding.pry` does not work after including GLI": https://github.com/davetron5000/gli/issues/196

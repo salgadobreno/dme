@@ -20,6 +20,7 @@ gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
 gem 'minitest', '~> 5.10', '>= 5.10.1'
 gem 'mocha'
 gem 'rack-test'
+gem 'factory_girl', "~> 4.0"
 
 # api service
 gem 'sinatra', '~> 2.0'
