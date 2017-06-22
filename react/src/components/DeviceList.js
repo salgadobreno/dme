@@ -27,7 +27,6 @@ class DeviceList extends Component {
       }
     )
   }
-
   render() {
     return (
       <div>
@@ -60,7 +59,6 @@ class DeviceList extends Component {
         </tbody>
       </table>
       </div>
-      <hr/>
       <div>
         <Device
           serial_number={this.state.currentDevice.serial_number}

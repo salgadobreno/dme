@@ -39,8 +39,8 @@
       "device_logs": [
          {"description": "device entrou na manutenção", "created_at": "2017-06-22"},
          {"description": "device passou de Acceptance p/ Triage", "created_at": "2017-06-22"},
-         {"description": "device chamou a aline", "create_at": "2017-06-23"},
-         {"description": "device saiu da manutenção", "create_at": "2017-06-28"}
+         {"description": "device chamou a aline", "created_at": "2017-06-23"},
+         {"description": "device saiu da manutenção", "created_at": "2017-06-28"}
       ],
       "sold_at": "2017-06-14",
       "warranty_days": 365,
@@ -52,7 +52,7 @@
       "device_logs": [
          {"description": "device entrou na manutenção", "created_at": "2017-06-22"},
          {"description": "device passou de Acceptance p/ Triage", "created_at": "2017-06-22"},
-         {"description": "device chamou a aline", "create_at": "2017-06-23"}
+         {"description": "device chamou a aline", "created_at": "2017-06-23"}
       ],
       "sold_at": "2017-06-10",
       "warranty_days": 365,
