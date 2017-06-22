@@ -62,16 +62,17 @@ class DeviceList extends Component {
       </div>
       <hr/>
       <div>
-        <Device 
+        <Device
           serial_number={this.state.currentDevice.serial_number}
           sold_at={this.state.currentDevice.sold_at}
           warranty_days={this.state.currentDevice.warranty_days}
           blacklisted={this.state.currentDevice.blacklisted}
-          current_state={this.state.currentDevice.current_state} />
+          current_state={this.state.currentDevice.current_state}
+          />
       </div>
       <hr/>
       <div>
-        <DeviceLog />
+          <DeviceLog history={this.state.currentDevice.device_logs} />
       </div>
 
       </div>
