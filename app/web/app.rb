@@ -10,7 +10,11 @@ class App < Sinatra::Application
   set :root, 'app/web'
 
   get '/' do
-    render :html, :index
+    render :html, :deviceaddindex
+  end
+
+  get '/teste' do
+    render :html, :devicelistindex
   end
 
   # List devices
