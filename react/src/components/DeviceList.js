@@ -7,11 +7,13 @@ class DeviceList extends Component {
     super();
     this.state = {
       devices: [],
-      currentDevice: {
-      }
+      currentDevice: {},
+      showDetails: false,
+      showHistory: false
     };
 
-    this.handleShowDevice = this.handleShowDevice.bind(this);
+    this.handleShowDetails = this.handleShowDetails.bind(this);
+    this.handleShowHistory = this.handleShowHistory.bind(this);
   }
 
   componentDidMount() {
@@ -20,10 +22,20 @@ class DeviceList extends Component {
     });
   }
 
-  handleShowDevice(device) {
+  handleShowDetails(device) {
     this.setState(
       {
-        currentDevice: device
+        currentDevice: device,
+        showDetails: !this.state.showDetails
+      }
+    )
+  }
+
+  handleShowHistory(device) {
+    this.setState(
+      {
+        currentDevice: device,
+        showHistory: !this.state.showHistory
       }
     )
   }
@@ -50,8 +62,8 @@ class DeviceList extends Component {
               <tr key={index}>
                 <td> {device.serial_number} </td>
                 <td> {device.current_state} </td>
-                <td> <button onClick={this.handleShowDevice.bind(this, device)}>ShowInfo </button> </td>
-                <td> <button>ShowLog</button> </td>
+                <td> <button onClick={this.handleShowDetails.bind(this, device)}>Details {this.state.showDetails? '(-)': '(+)'} </button> </td>
+                <td> <button onClick={this.handleShowHistory.bind(this, device)}>History {this.state.showHistory? '(-)': '(+)'} </button> </td>
               </tr>
             )
           })
@@ -60,6 +72,8 @@ class DeviceList extends Component {
       </table>
       </div>
       <div>
+      {
+        this.state.showDetails &&
         <Device
           serial_number={this.state.currentDevice.serial_number}
           sold_at={this.state.currentDevice.sold_at}
@@ -67,10 +81,14 @@ class DeviceList extends Component {
           blacklisted={this.state.currentDevice.blacklisted}
           current_state={this.state.currentDevice.current_state}
           />
+      }
       </div>
       <hr/>
       <div>
-          <DeviceLog history={this.state.currentDevice.device_logs} />
+      {
+        this.state.showHistory &&
+        <DeviceLog history={this.state.currentDevice.device_logs} />
+      }
       </div>
 
       </div>
