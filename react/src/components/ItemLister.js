@@ -19,6 +19,9 @@ class ItemLister extends Component {
 
   activateLasers(){
     this.componentDidMount();
+    //fetch(__API__ + '/items').then(result=> {
+      //result.json().then(json=> this.setState({items:json}));
+    //});
   }
 
   render() {
