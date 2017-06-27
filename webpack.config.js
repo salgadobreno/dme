@@ -31,9 +31,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        'API_URL': JSON.stringify("http://localhost:8080")
-      }
+      '__API__': JSON.stringify("http://localhost:8080")
     })
   ]
 };
