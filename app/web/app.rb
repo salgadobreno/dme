@@ -13,7 +13,7 @@ class App < Sinatra::Application
     render :html, :deviceaddindex
   end
 
-  get '/teste' do
+  get '/devicelistindex' do
     render :html, :devicelistindex
   end
 

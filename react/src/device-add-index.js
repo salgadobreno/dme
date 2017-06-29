@@ -72,7 +72,7 @@ class AddDevice extends Component {
       console.log("response: ");
       console.log(r);
       //TODO: verify response code, exception case, etc
-      window.location = "/device-list-index.html";
+      window.location = "/devicelistindex";
     })
   }
 
