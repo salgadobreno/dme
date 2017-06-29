@@ -3,7 +3,7 @@ test:
     default:
       database: mngsrv-test
       hosts:
-       - mongodb:27017
+       - 172.18.0.2:27017
 
 development:
   clients:
@@ -17,4 +17,4 @@ production:
     default:
       database: mngsrv-production
       hosts:
-       - mongodb:27017
+       - 172.18.0.2:27017
