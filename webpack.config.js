@@ -3,10 +3,11 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    items: './react/src/index',
-    myapp: './react/src/myappindex',
+    device: './react/src/device-index.js',
     devicelist: './react/src/device-list-index.js',
-    deviceadd: './react/src/device-add-index.js'
+    deviceadd: './react/src/device-add-index.js',
+    myapp: './react/src/myappindex',
+    items: './react/src/index',
   },
   module: {
     loaders: [
@@ -24,16 +25,25 @@ module.exports = {
   devtool: 'cheap-eval-source-map',
   devServer: {
     contentBase: './react/views/',
-    hot: true
+    disableHostCheck: true,
+    hot: true,
+    historyApiFallback: {
+      index: 'devicelist.html',
+      rewrites: [
+        {from: /\/devices\/new/, to: '/deviceadd.html'},
+        {from: /\/devices\/\d+/, to: '/device.html'},
+        {from: /\/devices\/show/, to: '/device.html'},
+        {from: /\/devices/, to: '/devicelist.html'},
+        {from: '/', to: '/devicelist.html'},
+      ]
+    }
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        'API_URL': JSON.stringify("http://localhost:8080")
-      }
+      '__API__': JSON.stringify("http://localhost:8080")
     })
   ]
 };

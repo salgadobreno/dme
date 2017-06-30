@@ -12,16 +12,13 @@ class ItemLister extends Component {
   }
 
   componentDidMount() {
-    fetch(process.env.API_URL + '/items').then(result=> {
+    fetch(__API__ + '/items').then(result=> {
       result.json().then(json=> this.setState({items:json}));
     });
   }
 
   activateLasers(){
     this.componentDidMount();
-    //fetch(process.env.API_URL + '/items').then(result=> {
-      //result.json().then(json=> this.setState({items:json}));
-    //});
   }
 
   render() {

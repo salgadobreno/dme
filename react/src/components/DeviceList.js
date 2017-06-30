@@ -7,38 +7,15 @@ class DeviceList extends Component {
     super();
     this.state = {
       devices: [],
-      currentDevice: {},
-      showDetails: false,
-      showHistory: false
     };
-
-    this.handleShowDetails = this.handleShowDetails.bind(this);
-    this.handleShowHistory = this.handleShowHistory.bind(this);
   }
 
   componentDidMount() {
-    fetch(process.env.API_URL + '/devices').then(result=> {
+    fetch(__API__ + '/devices').then(result=> {
       result.json().then(json=> this.setState({devices:json}));
     });
   }
 
-  handleShowDetails(device) {
-    this.setState(
-      {
-        currentDevice: device,
-        showDetails: !this.state.showDetails
-      }
-    )
-  }
-
-  handleShowHistory(device) {
-    this.setState(
-      {
-        currentDevice: device,
-        showHistory: !this.state.showHistory
-      }
-    )
-  }
   render() {
     return (
       <div>
@@ -62,8 +39,7 @@ class DeviceList extends Component {
               <tr key={index}>
                 <td> {device.serial_number} </td>
                 <td> {device.current_state} </td>
-                <td> <button onClick={this.handleShowDetails.bind(this, device)}>Details {this.state.showDetails? '(-)': '(+)'} </button> </td>
-                <td> <button onClick={this.handleShowHistory.bind(this, device)}>History {this.state.showHistory? '(-)': '(+)'} </button> </td>
+                <td> <a href={"/devices/" + device.serial_number}>SHOW</a></td>
               </tr>
             )
           })
@@ -71,26 +47,7 @@ class DeviceList extends Component {
         </tbody>
       </table>
       </div>
-      <div>
-      {
-        this.state.showDetails &&
-        <Device
-          serial_number={this.state.currentDevice.serial_number}
-          sold_at={this.state.currentDevice.sold_at}
-          warranty_days={this.state.currentDevice.warranty_days}
-          blacklisted={this.state.currentDevice.blacklisted}
-          current_state={this.state.currentDevice.current_state}
-          />
-      }
-      </div>
       <hr/>
-      <div>
-      {
-        this.state.showHistory &&
-        <DeviceLog history={this.state.currentDevice.device_logs} />
-      }
-      </div>
-
       </div>
    );
   }
