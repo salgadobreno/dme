@@ -24,6 +24,7 @@ gem 'factory_girl', "~> 4.0"
 
 # api service
 gem 'sinatra', '~> 2.0'
+gem 'sinatra-contrib'
 
 # web server
 gem 'puma'
