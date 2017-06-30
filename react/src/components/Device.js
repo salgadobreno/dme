@@ -6,26 +6,21 @@ class Device extends Component {
   }
 
   render() {
-    return (
-      <div>
+    if(this.props.serial_number == null) {
+      return (<div> </div>)
+    }else{
+      return(
         <div>
-        Serial Number: {this.props.serial_number}
+          <hr/>
+          <h4>Device Info</h4>
+          SerialNumber: {this.props.serial_number}<br />
+          SoldAt: {this.props.sold_at}<br />
+          WarrantyDays: {this.props.warranty_days}<br />
+          Blacklisted: {this.props.blacklisted}<br />
+          CurrentState: {this.props.current_state}<br />
         </div>
-        <div>
-        Solt at: {this.props.sold_at}
-        </div>
-        <div>
-        Warranty Days: {this.props.warranty_days}
-        </div>
-        <div>
-        Blacklisted?: {String(this.props.blacklisted)}
-        </div>
-        <div>
-        Current State: {this.props.current_state}
-        </div>
-        <hr/>
-      </div>
-    );
+      );
+    }
   }
 }
 

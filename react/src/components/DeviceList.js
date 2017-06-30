@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import Device from './Device';
+import DeviceLog from './DeviceLog';
 
 class DeviceList extends Component {
   constructor(){
     super();
     this.state = {
-      devices: []
+      devices: [],
+      currentDevice: {},
+      showDetails: false,
+      showHistory: false
     };
+
+    this.handleShowDetails = this.handleShowDetails.bind(this);
+    this.handleShowHistory = this.handleShowHistory.bind(this);
   }
 
   componentDidMount() {
@@ -15,23 +22,77 @@ class DeviceList extends Component {
     });
   }
 
+  handleShowDetails(device) {
+    this.setState(
+      {
+        currentDevice: device,
+        showDetails: !this.state.showDetails
+      }
+    )
+  }
+
+  handleShowHistory(device) {
+    this.setState(
+      {
+        currentDevice: device,
+        showHistory: !this.state.showHistory
+      }
+    )
+  }
   render() {
     return (
       <div>
-      <div>Devices:</div>
+      <div>
+      <table>
+       <caption>
+        <h3> Devices </h3>
+       </caption>
+
+        <thead>
+          <tr>
+            <th> Serial Number </th>
+            <th> Current State </th>
+            <th colSpan="2"> Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+        {
+          this.state.devices.map((device,index)=> {
+            return(
+              <tr key={index}>
+                <td> {device.serial_number} </td>
+                <td> {device.current_state} </td>
+                <td> <button onClick={this.handleShowDetails.bind(this, device)}>Details {this.state.showDetails? '(-)': '(+)'} </button> </td>
+                <td> <button onClick={this.handleShowHistory.bind(this, device)}>History {this.state.showHistory? '(-)': '(+)'} </button> </td>
+              </tr>
+            )
+          })
+        }
+        </tbody>
+      </table>
+      </div>
+      <div>
       {
-        this.state.devices.map(device=> {
-          return <Device
-          serial_number={device.serial_number}
-          sold_at={device.sold_at}
-          warranty_days={device.warranty_days}
-          blacklisted={device.blacklisted}
-          current_state={device.current_state}
-            />
-        })
+        this.state.showDetails &&
+        <Device
+          serial_number={this.state.currentDevice.serial_number}
+          sold_at={this.state.currentDevice.sold_at}
+          warranty_days={this.state.currentDevice.warranty_days}
+          blacklisted={this.state.currentDevice.blacklisted}
+          current_state={this.state.currentDevice.current_state}
+          />
       }
       </div>
-    );
+      <hr/>
+      <div>
+      {
+        this.state.showHistory &&
+        <DeviceLog history={this.state.currentDevice.device_logs} />
+      }
+      </div>
+
+      </div>
+   );
   }
 }
 
