@@ -40,7 +40,6 @@ class App < Sinatra::Application
 
   # Create device
   post '/devices' do
-    binding.pry
     serial_number = params[:serial_number]
     payload = params[:payload]
 
