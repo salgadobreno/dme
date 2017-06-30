@@ -68,7 +68,9 @@ class AddDevice extends Component {
 
     const jsonParams = JSON.stringify(this.state);
 
-    fetch(process.env.API_URL + '/devices', {method: 'post', body:jsonParams, headers: {'Content-Type':'application/json'},}).then(r=> {
+    fetch(__API__ + '/devices', {
+      method: 'post', body:jsonParams, headers: {'Content-Type':'application/json'}
+    }).then(r=> {
       console.log("response: ");
       console.log(r);
       //TODO: verify response code, exception case, etc

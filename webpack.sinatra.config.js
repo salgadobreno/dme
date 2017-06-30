@@ -5,13 +5,8 @@ config.plugins.push(
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('production')
-    }
-  })
-);
-
-config.plugins.unshift(
-  new webpack.DefinePlugin({
-    '__API__': JSON.stringify("http://192.168.2.5:8080")
+    },
+    '__API__': JSON.stringify("http://localhost:4567")
   })
 );
 

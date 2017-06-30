@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/respond_with'
 require 'app/services/app_service'
 
 class App < Sinatra::Application
@@ -9,24 +10,42 @@ class App < Sinatra::Application
 
   set :root, 'app/web'
 
+  #if url is '/anything.json' -> set accept header to json
+  before /.*/ do
+    if request.url.match(/.json$/)
+      request.accept.unshift('application/json')
+      request.path_info = request.path_info.gsub(/.json$/,'')
+    end
+  end
+
   get '/' do
     render :html, :index
   end
 
   # List devices
   get '/devices' do
-    content_type :json
-    SERVICE.list.to_json
+    respond_to do |format|
+      format.json { SERVICE.list.to_json }
+      format.html { render :html, :devicelist }
+    end
   end
 
   # Show device
   get '/devices/:serial_number' do
-    content_type :json
     serial_number = params[:serial_number]
-    SERVICE.show(serial_number).to_json
+
+    respond_to do |format|
+      format.json { SERVICE.show(serial_number).to_json }
+      format.html { render :html, :device }
+    end
   end
 
   # Add device
+  get '/devices/new' do
+    render :html, :deviceadd
+  end
+
+  # Create device
   post '/devices' do
     serial_number = params[:serial_number]
     payload = params[:payload]

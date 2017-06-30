@@ -8,8 +8,8 @@ class DeviceLog extends Component {
   render() {
     if(this.props.history == null)
     {
-      return( 
-        <div> </div> 
+      return(
+        <div> </div>
       )
     }else{
       return(

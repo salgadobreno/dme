@@ -4,9 +4,10 @@
   "description": "example sinatra-react app",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --content-base react/views --hot --inline",
-    "api": "json-server --watch db.json --port 8080",
-    "build": "webpack --config webpack.prod.config.js",
+    "dev": "webpack-dev-server --content-base react/views --hot --inline --host 0.0.0.0",
+    "api": "json-server --watch db.json --port 8080 --id serial_number",
+    "build": "webpack --config webpack.sinatra.config.js",
+    "prod": "webpack --config webpack.prod.config.js",
     "lint": "eslint react/src/**",
     "lint:watch": "esw -w react/src/**",
     "test": "mocha --compilers js:babel-core/register ./react/test/**/*.spec.js --require ignore-styles"
