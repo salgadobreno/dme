@@ -34,7 +34,6 @@ class AddDevice extends Component {
   constructor(){
     super();
     this.state = {
-      id: "",
       serial_number: "",
       payload: [
         ["",""],
@@ -66,7 +65,16 @@ class AddDevice extends Component {
   handleSubmit(event){
     event.preventDefault();
 
-    const jsonParams = JSON.stringify(this.state);
+    //convert the bidimensional payload array into payload object
+    var obj = {}
+    this.state.payload.forEach(function(data) {
+      obj[data[0]] = data[1];
+    });
+    const stateClone = {
+      serial_number: this.state.serial_number,
+      payload: obj
+    };
+    const jsonParams = JSON.stringify(stateClone);
 
     fetch(__API__ + '/devices', {
       method: 'post', body:jsonParams, headers: {'Content-Type':'application/json'}
@@ -74,7 +82,7 @@ class AddDevice extends Component {
       console.log("response: ");
       console.log(r);
       //TODO: verify response code, exception case, etc
-      window.location = "/devicelistindex";
+      window.location = "/devices";
     })
   }
 

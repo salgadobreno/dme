@@ -49,6 +49,7 @@ describe App do
         get "/devices/#{@device.serial_number}"
         last_response.ok?.must_equal true
         response_hash = JSON.parse(last_response.body)
+        #verify response
         @device.serial_number.must_equal response_hash["serial_number"]
       end
     end

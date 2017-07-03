@@ -119,4 +119,12 @@ describe DeviceSo do
       @device.device_logs.last.description.must_equal "this is a test"
     end
   end
+
+  describe "#as_json" do
+    it 'includes the relevant fields' do
+      ["current_state", "sold_at", "serial_number", "warranty_days", "blacklisted", "device_logs"].each do |p|
+        @device.as_json.keys.must_include p
+      end
+    end
+  end
 end
