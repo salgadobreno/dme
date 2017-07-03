@@ -14,7 +14,7 @@ config.plugins.unshift(
 
 config.plugins.unshift(
   new webpack.DefinePlugin({
-    '__API__': JSON.stringify("http://192.168.2.5:4567")
+    '__API__': process.env['__API__'] || JSON.stringify("http://192.168.2.5:4567")
   })
 );
 

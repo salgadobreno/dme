@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --content-base react/views --hot --inline --host 0.0.0.0",
+    "reactproddev": "webpack-dev-server --content-base react/views --hot --inline --host 0.0.0.0 --port 6061 | json-server --watch db.json --port 6060",
     "api": "json-server --watch db.json --port 8080 --id serial_number",
     "build": "webpack --config webpack.sinatra.config.js",
     "prod": "webpack --config webpack.prod.config.js",
