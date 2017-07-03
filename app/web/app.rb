@@ -19,11 +19,7 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    render :html, :deviceaddindex
-  end
-
-  get '/devicelistindex' do
-    render :html, :devicelistindex
+    render :html, :devicelist
   end
 
   # List devices
