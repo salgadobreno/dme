@@ -2,7 +2,7 @@ require 'dashboard_init'
 
 class AppService
   def add(serial_number, payload = {})
-    am_device = AmDevice.find_by(serial_number: serial_number)
+    am_device = AmDevice.find_by serial_number
     if DeviceSo.where(am_device: am_device).active.any?
       #já está no lab
       {
@@ -44,14 +44,13 @@ class AppService
 
   def list
     devices = DeviceSo.active
-
     devices
   end
 
   private
 
   def find_device serial_number
-    am_device = AmDevice.find_by serial_number: serial_number.to_i
+    am_device = AmDevice.find_by serial_number
     device = am_device.device_sos.last
     raise Exception.new "Could not find device #{serial_number}" if device.nil?
 

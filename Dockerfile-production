@@ -4,6 +4,8 @@ COPY Gemfile /usr/src/app
 COPY Gemfile.lock /usr/src/app
 RUN bundle install
 COPY . /usr/src/app
-EXPOSE 4567
+EXPOSE 8080
 ENV RACK_ENV=production
-CMD ["ruby", "./app/api_service.rb"]
+#RUN ruby -I $PWD ./app/web/app.rb -o 0.0.0.0 -p 8080
+CMD ["rackup", "-o", "0.0.0.0", "-p", "8080"]
+#RUN rackup -o 0.0.0.0 -p 4567
