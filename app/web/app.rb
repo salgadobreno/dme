@@ -18,6 +18,14 @@ class App < Sinatra::Application
     end
   end
 
+  #read post body params into params[] hash
+  before do
+    if request.request_method == "POST"
+      body_parameters = request.body.read
+      params.merge!(JSON.parse(body_parameters)) rescue JSON::ParserError #body not valid JSON, ignore
+    end
+  end
+
   get '/' do
     render :html, :devicelist
   end
@@ -30,6 +38,19 @@ class App < Sinatra::Application
     end
   end
 
+  # Create device
+  post '/devices' do
+    serial_number = params[:serial_number]
+    payload = params[:payload]
+
+    SERVICE.add serial_number, payload
+  end
+
+  # Add device
+  get '/devices/new' do
+    render :html, :deviceadd
+  end
+
   # Show device
   get '/devices/:serial_number' do
     serial_number = params[:serial_number]
@@ -38,19 +59,6 @@ class App < Sinatra::Application
       format.json { SERVICE.show(serial_number).to_json }
       format.html { render :html, :device }
     end
-  end
-
-  # Add device
-  get '/devices/new' do
-    render :html, :deviceadd
-  end
-
-  # Create device
-  post '/devices' do
-    serial_number = params[:serial_number]
-    payload = params[:payload]
-
-    SERVICE.add serial_number, payload
   end
 
   # Forward device

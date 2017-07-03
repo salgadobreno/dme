@@ -14,7 +14,7 @@ config.plugins.unshift(
 
 config.plugins.unshift(
   new webpack.DefinePlugin({
-    '__API__': typeof process.env['__API__'] === 'undefined' ? JSON.stringify("http://192.168.2.5:8080") :JSON.stringify(process.env['__API__'])
+    '__API__': typeof process.env['__API__'] === 'undefined' ? JSON.stringify("http://192.168.2.5:4567") :JSON.stringify(process.env['__API__'])
   })
 );
 

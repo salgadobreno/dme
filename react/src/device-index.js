@@ -51,7 +51,7 @@ class DeviceShow extends Component {
       console.log("response: ");
       console.log(r);
       //TODO: verify response code, exception case, etc
-      window.location = "/devices/";
+      window.location = "/devices";
     })
   }
   handleRemove(){
@@ -61,7 +61,7 @@ class DeviceShow extends Component {
       console.log("response: ");
       console.log(r);
       //TODO: verify response code, exception case, etc
-      window.location = "/devices/";
+      window.location = "/devices";
     })
   }
   handleSubmit(event){
