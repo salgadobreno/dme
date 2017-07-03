@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile-production
     ports: 
-      - "8080:8080" # Sinatra mapping
+      - "4567:4567" # Sinatra mapping
     depends_on: 
       - mongodb
 
