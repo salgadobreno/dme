@@ -43,7 +43,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      '__API__': process.env['__API__'] || JSON.stringify("http://localhost:8080")
+      '__API__': typeof process.env['__API__'] === 'undefined' ? JSON.stringify("http://localhost:8080") : JSON.stringify(process.env['__API__'])
     })
   ]
 };
