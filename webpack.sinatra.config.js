@@ -6,7 +6,7 @@ config.plugins.push(
     'process.env': {
       'NODE_ENV': JSON.stringify('production')
     },
-    '__API__': JSON.stringify("http://localhost:4567")
+    '__API__': process.env['__API__'] || JSON.stringify("http://localhost:4567")
   })
 );
 
