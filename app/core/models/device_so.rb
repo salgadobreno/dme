@@ -62,6 +62,8 @@ class DeviceSo
   end
 
   def as_json(options={})
-    super(options.merge({methods: :serial_number}))
+    h = super(options.merge({:include => :device_logs, methods: [:serial_number, :sold_at, :blacklisted, :warranty_days]} ))
+    h["current_state"] = current_state.to_s
+    h
   end
 end

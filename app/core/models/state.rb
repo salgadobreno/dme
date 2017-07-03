@@ -83,4 +83,8 @@ class State
   def inspect
     "#{super} | @operations: #{operations.inspect}, @validations: #{validations.inspect}"
   end
+
+  def to_s
+    name
+  end
 end

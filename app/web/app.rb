@@ -22,7 +22,7 @@ class App < Sinatra::Application
   before do
     if request.request_method == "POST"
       body_parameters = request.body.read
-      params.merge!(JSON.parse(body_parameters))
+      params.merge!(JSON.parse(body_parameters)) rescue JSON::ParserError #body not valid JSON, ignore
     end
   end
 
