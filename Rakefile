@@ -24,6 +24,13 @@ Rake::TestTask.new do |t|
   ]
 end
 
+namespace :tool do
+  desc "Find all todo in the src code"
+  task :find_todo do
+    system "./todo_finder.sh"
+  end
+end
+
 namespace :db do
   def clean_database
     DatabaseCleaner.clean
