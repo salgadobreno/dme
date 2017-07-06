@@ -33,12 +33,18 @@ Sinatra and React
 
 ------------------------------
 ###Running
-
+* Run JSON Server for dev:
+  `yarn api`
 * Run React components in 'dev mode'(webpack js webserver, hot reload):
   `yarn dev`
-* Build React components, update app/web/public/bundle.js and make it
-  available for Sinatra App: `yarn build`
-* Run Sinatra App: `ruby app/web/app.rb`
+* Build React components, update app/web/public/*-bundle.js files and make it
+  available for Sinatra App:
+  `yarn build`
+* Build React components, update app/web/public*-bundle.js files and
+  make it available for Production App:
+  `yarn prod`
+* Run Sinatra App:
+  `ruby app/web/app.rb`
 
 CLI App
 =======
@@ -95,7 +101,7 @@ Vagrant Customizations
 Docker configuration
 ===
 In order to use docker as a tool for development, test and deploy in the
-production environement, some actions should be performed to make
+production environment, some actions should be performed to make
 everything work smothly.
 
 * you need the docker environment installed on your machine. Please
@@ -178,7 +184,7 @@ application, but it can also be used to the development environment.
 
 ## To run and build the environment
 ```
-docker-compose up -d --build
+docker-compose -f docker-compose.yml up -d --build -d
 ```
 
 This will make the mongo container running and will run the application
@@ -202,23 +208,63 @@ Production deployment
 ===
 
 To deploy this project into production you should use the docker-machine
-application. Do the following steps (Google is your friend):
+application (https://docs.docker.com/machine/install-machine/):
 
 - Install docker into the production host if needed
 - Configure your local docker machine to map the production host using a
-  generic driver for example ...
+  generic driver
 - Use the docker-compose-production.yml file as the configuration base
   for your deployment
 
-I will explain the last item:
+There's a script create in order to make it smooth and is
+located at 'scripts/deploy.sh'.
 
-Run:
+First this script checks if there's a mapping the production host in ur local
+machine:
+```
+(sudo docker-machine ls -q | grep '^vm$')
+```
 
+Then it updates React Bundle Resources showed above:
+```
+(cd ../ && exec yarn prod)
+```
+
+After that, if the environment doesnt have the production host mapping
+it creates it locally:
+```
+docker-machine create \
+   --driver generic \
+   --generic-ip-address=192.168.2.5 \
+   --generic-ssh-key $KEY_FILE \
+   --generic-ssh-user avixy vm
+```
+
+Finaly it deploys the application in the proper production container
 ```
 docker-compose -f docker-compose-production.yml up --build -d
 ```
 
-this should bring everything that you need to the production host.
+This should bring everything that you need to the production host
+
+You can check the status of your machine with the command:
+```
+sudo docker-machine ls
+```
+
+There's also a Rake task to do all above procedures in once. Check it
+out:
+
+```
+rake deploy[key_file]
+```
+
+That key_file parameter is a rsa key that need to be on server in order
+to allow access to production server.
+
+Running this task as super user, it brings on what u need and deploy
+what production server needs.
+
 
 KNOWN ISSUES
 ===========
