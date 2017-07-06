@@ -26,7 +26,12 @@ end
 
 desc "Find all todo in the src code"
   task :find_todo do
-  system "./todo_finder.sh"
+  system "./scripts/todo_finder.sh"
+end
+
+desc "Deploy application to remote docker container on production server"
+  task :deploy, [:key_path] do |t, args|
+  system "sudo ./scripts/deploy.sh args[:key_path]"
 end
 
 namespace :db do
