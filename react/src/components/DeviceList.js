@@ -16,7 +16,6 @@ class DeviceList extends Component {
     fetch(__API__ + '/devices').then(result=> {
       result.json().then(json=> this.setState({devices:json["data"]}));
     });
-    });
   }
 
   render() {
