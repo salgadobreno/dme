@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --content-base react/views --hot --inline --host 0.0.0.0",
     "reactproddev": "webpack-dev-server --content-base react/views --hot --inline --host 0.0.0.0 --port 6061 | json-server --watch db.json --port 6060 --id serial_number",
-    "api": "json-server --watch db.json --port 8080 --id serial_number",
+    "api": "node server.js",
     "build": "webpack --config webpack.sinatra.config.js",
     "prod": "webpack --config webpack.prod.config.js",
     "lint": "eslint react/src/**",
@@ -41,7 +41,7 @@
     "eslint-plugin-react": "^6.10.3",
     "eslint-watch": "^3.1.0",
     "ignore-styles": "^5.0.1",
-    "json-server": "^0.10.1",
+    "json-server": "^0.10.3",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
     "webpack-dev-middleware": "^1.10.1",

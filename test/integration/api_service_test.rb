@@ -50,7 +50,7 @@ describe App do
         last_response.ok?.must_equal true
         response_hash = JSON.parse(last_response.body)
         #verify response
-        @device.serial_number.must_equal response_hash["serial_number"]
+        @device.serial_number.must_equal response_hash["data"]["serial_number"]
       end
     end
 
@@ -96,6 +96,7 @@ describe App do
 
         last_response.ok?.must_equal true
         DeviceSo.count.must_equal count+1
+	DeviceSo.last.serial_number.must_equal 1234
       end
 
       it 'can receive key values and they are included in the payload' do

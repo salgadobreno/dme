@@ -4,6 +4,8 @@ test:
       database: mngsrv-test
       hosts:
        - 172.18.0.2:27017
+  options:
+    raise_not_found_error: false
 
 development:
   clients:
@@ -11,6 +13,8 @@ development:
       database: mngsrv-dev
       hosts:
        - localhost:27017
+  options:
+    raise_not_found_error: false
 
 production:
   clients:
@@ -18,3 +22,5 @@ production:
       database: mngsrv-production
       hosts:
        - 172.18.0.2:27017
+  options:
+    raise_not_found_error: false

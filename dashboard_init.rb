@@ -26,6 +26,7 @@ require 'app/lib/app_log'
 require 'app/core/asset_manager/am_device'
 require 'app/core/models/device_log'
 require 'app/core/state_machines'
+require 'app/core/exceptions'
 
 # configure the database
 Mongoid.load! ENV['MONGODB_CFG_PATH'], @db_environment
