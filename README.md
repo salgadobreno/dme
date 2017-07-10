@@ -265,6 +265,29 @@ to allow access to production server.
 Running this task as super user, it brings on what u need and deploy
 what production server needs.
 
+=== GIT HOOKS
+In order to not miss any TODO comments in src code, there's script
+"todo_finder.sh" that
+was mapped to a Rake Task :
+
+```
+rake todo
+```
+
+This script generates todo.txt file and outputs to screen lines that
+contains TODO comments.
+
+In order to update that todo.txt file for development, it was created
+also a git hook "pre-commit" located in scripts folder.
+
+Is recomended to create symbolic link inside .git folder to every
+commit so that todo.txt file could be updated.
+
+```
+ln -s scripts/pre-commit .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
 
 KNOWN ISSUES
 ===========

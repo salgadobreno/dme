@@ -25,8 +25,9 @@ Rake::TestTask.new do |t|
 end
 
 desc "Find all todo in the src code"
-  task :find_todo do
-  system "./scripts/todo_finder.sh"
+  task :todo do
+  system "./scripts/todo_finder.sh > todo.txt"
+  system "cat todo.txt"
 end
 
 desc "Deploy application to production server"
