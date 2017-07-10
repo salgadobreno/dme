@@ -1,10 +1,10 @@
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K269[m[K[36m[K  [m[KIn order to not miss any [01;31m[KTODO[m[K comments in src code, there's script
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K270[m[K[36m[K  [m[K"[01;31m[Ktodo[m[K_finder.sh" that
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K274[m[K[36m[K  [m[Krake [01;31m[Ktodo[m[K
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K277[m[K[36m[K  [m[KThis script generates [01;31m[Ktodo[m[K.txt file and outputs to screen lines that
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K278[m[K[36m[K  [m[Kcontains [01;31m[KTODO[m[K comments.
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K280[m[K[36m[K  [m[KIn order to update that [01;31m[Ktodo[m[K.txt file for development, it was created
-[35m[K./README.md[m[K[36m[K                                [m[K[32m[K284[m[K[36m[K  [m[Kcommit so that [01;31m[Ktodo[m[K.txt file could be updated.
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K271[m[K[36m[K  [m[KIn order to not miss any [01;31m[KTODO[m[K comments in src code, there's script
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K272[m[K[36m[K  [m[K"[01;31m[Ktodo[m[K_finder.sh" that
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K276[m[K[36m[K  [m[Krake [01;31m[Ktodo[m[K
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K279[m[K[36m[K  [m[KThis script generates [01;31m[Ktodo[m[K.txt file and outputs to screen lines that
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K280[m[K[36m[K  [m[Kcontains [01;31m[KTODO[m[K comments.
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K282[m[K[36m[K  [m[KIn order to update that [01;31m[Ktodo[m[K.txt file for development, it was created
+[35m[K./README.md[m[K[36m[K                                [m[K[32m[K286[m[K[36m[K  [m[Kcommit so that [01;31m[Ktodo[m[K.txt file could be updated.
 [35m[K./test/integration/api_service_test.rb[m[K[36m[K     [m[K[32m[K118[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: complete test
 [35m[K./test/core/spec_test.rb[m[K[36m[K                   [m[K[32m[K74[m[K[36m[K   [m[Kskip "[01;31m[KTODO[m[K"
 [35m[K./test/core/models/device_so_test.rb[m[K[36m[K       [m[K[32m[K47[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: State && [nil] && storing

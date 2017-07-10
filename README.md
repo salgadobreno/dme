@@ -265,7 +265,9 @@ to allow access to production server.
 Running this task as super user, it brings on what u need and deploy
 what production server needs.
 
-=== GIT HOOKS
+GIT HOOKS
+===
+
 In order to not miss any TODO comments in src code, there's script
 "todo_finder.sh" that
 was mapped to a Rake Task :
