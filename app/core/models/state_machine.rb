@@ -40,7 +40,7 @@ class StateMachine
     case current_state_index
     when DONE_INDEX
       return DONE_STATE
-    when SEGREGATED_STATE
+    when SEGREGATED_INDEX
       return SEGREGATED_STATE
     else
       return @current_state || self.states[current_state_index]

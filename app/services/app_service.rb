@@ -32,11 +32,12 @@ class AppService
       device = find_device serial_number
 
       # forwards device
-      success = device.forward
+      #success = device.forward
+      device.forward
       device.save!
 
       {
-        success: success,
+        success: true,
         has_next: !(device.current_state == StateMachine::SEGREGATED_STATE || device.finished)
       }
     end

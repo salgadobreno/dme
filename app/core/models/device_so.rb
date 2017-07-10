@@ -49,7 +49,7 @@ class DeviceSo
         log "Device: #{serial_number} exit."
         return true
       else
-        log "State changed from: #{prev_state.name}, from #{current_state.name}"
+        log "State changed to: #{prev_state.name}, from #{current_state.name}"
         return true
       end
     else
