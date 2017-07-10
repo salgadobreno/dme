@@ -3,26 +3,28 @@ require 'dashboard_init'
 class AppService
 
   def add(serial_number, payload = {})
-    am_device = AmDevice.find_by serial_number: serial_number
-    if am_device.nil?
-      {
-        success: false,
-        message: "Serial Number: #{serial_number} did not match any Asset Manager Device."
-      }
-    else
-      if DeviceSo.where(am_device: am_device).active.any?
-        #já está no lab
+    encapsulate_error do
+      am_device = AmDevice.find_by serial_number: serial_number
+      if am_device.nil?
         {
           success: false,
-          message: "Device already in lab"
+          message: "Serial Number: #{serial_number} did not match any Asset Manager Device."
         }
       else
-        state_machine = DefaultStateMachine.new(payload)
-        device = DeviceSo.new am_device, state_machine
-        device.save!
-        {
-          success: true
-        }
+        if DeviceSo.where(am_device: am_device).active.any?
+          #já está no lab
+          {
+            success: false,
+            message: "Device already in lab"
+          }
+        else
+          state_machine = DefaultStateMachine.new(payload)
+          device = DeviceSo.new am_device, state_machine
+          device.save!
+          {
+            success: true
+          }
+        end
       end
     end
   end
@@ -88,7 +90,7 @@ class AppService
     #TODO: theres probably a way to do this with more metaprogramming/less repeated code
     begin
       yield
-    rescue AppException => e
+    rescue Exception => e
       {
         success:false,
         message:e.message

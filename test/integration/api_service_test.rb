@@ -41,6 +41,19 @@ describe App do
       end
     end
 
+    describe "GET /am_devices" do
+      before do
+        @am_device_1 = create :am_device
+        @am_device_2 = create :am_device
+      end
+      it 'lists the devices' do
+        get '/am_devices'
+        last_response.ok?.must_equal true
+        response_hash = JSON.parse(last_response.body)
+        response_hash.size.must_equal 2
+      end
+    end
+
     describe 'GET /devices/:id' do
       before do
         @device = create :device_so
