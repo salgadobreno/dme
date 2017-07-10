@@ -1,0 +1,8 @@
+#!/bin/bash
+rake todo
+git add todo.txt
+
+echo "=============================================="
+echo "[WARNING] Todo list updated in file todo.txt !"
+echo "=============================================="
+
