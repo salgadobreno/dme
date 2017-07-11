@@ -215,6 +215,12 @@ application (https://docs.docker.com/machine/install-machine/):
   generic driver
 - Use the docker-compose-production.yml file as the configuration base
   for your deployment
+- Be sure you have pair of pub/priv key in your local machine
+
+First of all, you have to copy the public key to remote-host.
+```
+ssh-copy-id -i ~/.ssh/id_rsa.pub <remote-host - in this case 192.168.2.5>
+```
 
 There's a script create in order to make it smooth and is
 located at 'scripts/deploy.sh'.
