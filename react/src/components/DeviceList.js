@@ -1,55 +1,59 @@
 import React, { Component } from 'react';
 import Device from './Device';
 import DeviceLog from './DeviceLog';
+import Message from './Message';
 
 class DeviceList extends Component {
   constructor(){
     super();
     this.state = {
       devices: [],
+      error: undefined
     };
   }
 
   componentDidMount() {
     fetch(__API__ + '/devices').then(result=> {
-      result.json().then(json=> this.setState({devices:json}));
+      result.json().then(json=> this.setState({devices:json["data"]}));
     });
   }
 
   render() {
     return (
       <div>
-      <div>
-      <table>
-       <caption>
-        <h3> Devices </h3>
-       </caption>
-
-        <thead>
-          <tr>
-            <th> Serial Number </th>
-            <th> Current State </th>
-            <th colSpan="2"> Actions </th>
-          </tr>
-        </thead>
-        <tbody>
         {
-          this.state.devices.map((device,index)=> {
-            return(
-              <tr key={index}>
-                <td> {device.serial_number} </td>
-                <td> {device.current_state} </td>
-                <td> <a href={"/devices/" + device.serial_number}>SHOW</a></td>
-              </tr>
-            )
-          })
+          this.state.error && <Message message={this.state.error}/>
         }
-        </tbody>
-      </table>
+        <div>
+          <table>
+            <caption>
+              <h3> Devices </h3>
+            </caption>
+            <thead>
+              <tr>
+                <th> Serial Number </th>
+                <th> Current State </th>
+                <th colSpan="2"> Actions </th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              this.state.devices.map((device,index)=> {
+                return(
+                    <tr key={index}>
+                    <td> {device.serial_number} </td>
+                    <td> {device.current_state} </td>
+                    <td> <a href={"/devices/" + device.serial_number}>SHOW</a></td>
+                    </tr>
+                    )
+              })
+            }
+            </tbody>
+          </table>
+        </div>
+        <hr/>
       </div>
-      <hr/>
-      </div>
-   );
+    );
   }
 }
 

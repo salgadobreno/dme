@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import Message from './components/Message';
 
 //payload input component
 class PayloadInput extends Component {
@@ -38,7 +39,8 @@ class AddDevice extends Component {
       payload: [
         ["",""],
         ["",""]
-      ]
+      ],
+      error: undefined
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -79,11 +81,18 @@ class AddDevice extends Component {
     fetch(__API__ + '/devices', {
       method: 'post', body:jsonParams, headers: {'Content-Type':'application/json'}
     }).then(r=> {
-      console.log("response: ");
-      console.log(r);
-      //TODO: verify response code, exception case, etc
-      window.location = "/devices";
-    })
+      r.json().then(json=> {
+        console.log("response: ");
+        console.log(json);
+        //TODO: verify response code, exception case, etc
+        if (json['success']) {
+          console.log('success');
+          window.location = json['redirect'] || '/';
+        } else {
+          console.log('fail');
+          this.setState({ 'error': json['message']})
+        }
+    })})
   }
 
   handleChange(event){
@@ -107,6 +116,9 @@ class AddDevice extends Component {
   render(){
     return (
       <form onSubmit={this.handleSubmit}>
+        {
+          this.state.error && <Message message={this.state.error} />
+        }
         <label>
           Serial Number:
           <input type="text" name="serial_number" onChange={this.handleChange} value={this.state.serial_number}/>

@@ -38,12 +38,22 @@ class App < Sinatra::Application
     end
   end
 
+  # List AmDevices
+  get '/am_devices' do
+    respond_to do |format|
+      format.json { SERVICE.am_device_list.to_json }
+    end
+  end
+
   # Create device
   post '/devices' do
     serial_number = params[:serial_number]
     payload = params[:payload]
 
-    SERVICE.add serial_number, payload
+    r = SERVICE.add serial_number, payload
+    respond_to do |format|
+      format.json { r.merge({redirect: "/devices/#{serial_number}"}).to_json }
+    end
   end
 
   # Add device
@@ -65,14 +75,20 @@ class App < Sinatra::Application
   post '/devices/:serial_number/forward' do
     serial_number = params[:serial_number]
 
-    SERVICE.fw serial_number
+    r = SERVICE.fw serial_number
+    respond_to do |format|
+      format.json { r.merge({redirect: "/devices/#{serial_number}"}).to_json }
+    end
   end
 
   # Delete device
   delete '/devices/:serial_number' do
     content_type :json
     serial_number = params[:serial_number]
-    SERVICE.rm(serial_number)
+    r = SERVICE.rm(serial_number)
+    respond_to do |format|
+      format.json { r.merge({redirect: '/devices'}).to_json }
+    end
   end
 
   get '/items' do
