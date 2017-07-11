@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+#TODO: add groups [:development, :testing, :production]
 gem 'rake', '~> 12.0'
 gem 'bundler', '~> 1.14', '>= 1.14.0'
 
@@ -7,7 +8,10 @@ gem 'tty'
 gem 'gli'
 gem 'mongoid', '~> 6.1'
 gem 'sourcify'
+gem 'rack-flash3'
 
+#develop
+gem 'rerun'
 #debugging
 gem 'awesome_print'
 gem 'pry'
