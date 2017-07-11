@@ -24,6 +24,21 @@ Rake::TestTask.new do |t|
   ]
 end
 
+desc "Find all todo in the src code"
+  task :todo do
+  system "./scripts/todo_finder.sh > todo.txt"
+  system "cat todo.txt"
+end
+
+desc "Deploy application to production server"
+  task :deploy, [:key_file] do |t, args|
+    if args[:key_file].nil?
+      abort "rake aborted! needs key_file parameter. Usage: rake deploy[KEY_FILE]"
+    else
+      system "cd scripts && sudo ./deploy.sh " + args[:key_file]
+    end
+end
+
 namespace :db do
   def clean_database
     DatabaseCleaner.clean

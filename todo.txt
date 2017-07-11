@@ -1,0 +1,13 @@
+./react/src/device-add-index.js:84:      //TODO: verify response code, exception case, etc
+./react/src/device-index.js:53:      //TODO: verify response code, exception case, etc
+./react/src/device-index.js:63:      //TODO: verify response code, exception case, etc
+./Vagrantfile:96:    # TODO: BRENO: force user to define email variable before this step?
+./Gemfile:3:#TODO: add groups [:development, :testing, :production]
+./app/cli3.rb:41:  # TODO: forward whole state?
+./app/core/models/state.rb:55:    #TODO: verificacao/validacao de param p/ validations/operations, muitos erros de esquecer a forma de usar
+./app/core/asset_manager/am_device.rb:8:  field :serial_number, type: Integer #TODO: Integer vs String
+./test/core/spec_test.rb:74:        skip "TODO"
+./test/core/models/device_so_test.rb:47:      #TODO: State && [nil] && storing
+./test/core/models/buffer_test.rb:30:    #TODO: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
+./test/integration/api_service_test.rb:118:        #TODO: complete test
+./test/functional/device_incoming_test.rb:6:# TODO: This test should be user to test
