@@ -35,7 +35,7 @@ desc "Deploy application to production server"
     if args[:key_file].nil?
       abort "rake aborted! needs key_file parameter. Usage: rake deploy[KEY_FILE]"
     else
-      system "cd scripts && sudo ./deploy.sh args[:key_file]"
+      system "cd scripts && sudo ./deploy.sh " + args[:key_file]
     end
 end
 
