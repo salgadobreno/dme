@@ -44,7 +44,7 @@ Sinatra and React
   make it available for Production App:
   `yarn prod`
 * Run Sinatra App:
-  `ruby app/web/app.rb`
+  `ruby app/web/app.rb` or `rackup`
 
 CLI App
 =======
