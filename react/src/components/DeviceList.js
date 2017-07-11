@@ -24,6 +24,7 @@ class DeviceList extends Component {
   }
 
   render() {
+    //TODO: make two separate components
     return (
       <div className={"row"}>
         {
