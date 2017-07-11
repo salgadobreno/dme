@@ -3,10 +3,6 @@
 .db
 dls/
 node_modules
-app/web/public/*
 yarn.lock
-app/web/public/deviceadd-bundle.js
-app/web/public/devicelist-bundle.js
-app/web/public/items-bundle.js
-app/web/public/myapp-bundle.js
+app/web/public/*.js
 
