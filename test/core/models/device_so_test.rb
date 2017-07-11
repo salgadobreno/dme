@@ -104,6 +104,7 @@ describe DeviceSo do
     describe "when DeviceSo is at the last state" do
       it 'should mark the DeviceSo as terminated' do
         @device.forward
+        @device.last_state?.must_equal true
         @device.forward
         @device.finished.must_equal true
         @device.current_state.must_equal StateMachine::DONE_STATE

@@ -56,11 +56,25 @@ describe StateMachine do
       @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
     end
 
-    it "treat error and send to the segregated state" do
+    it "sends to segregated state when there's an error in execution" do
       @state_inicio.stubs(:validate).raises(Exception, 'undefined error')
       @state_machine.forward(@device).must_equal false
       @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
       @am_device.device_logs.last.description.must_match /undefined error/
+    end
+
+    describe "when in segregated state" do
+      it 'should not move forward' do
+        @state_inicio.stubs(:validate).returns(false)
+        @state_machine.forward(@device).must_equal false
+        @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
+
+        #2 times for certainty
+        @state_machine.forward(@device).must_equal false
+        @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
+        @state_machine.forward(@device).must_equal false
+        @state_machine.current_state.must_equal StateMachine::SEGREGATED_STATE
+      end
     end
   end
 
