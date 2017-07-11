@@ -8,6 +8,7 @@ class DeviceList extends Component {
     super();
     this.state = {
       devices: [],
+      am_devices: [],
       error: undefined
     };
   }
@@ -16,18 +17,46 @@ class DeviceList extends Component {
     fetch(__API__ + '/devices').then(result=> {
       result.json().then(json=> this.setState({devices:json["data"]}));
     });
+
+    fetch(__API__ + '/am_devices').then(result=> {
+      result.json().then(json=> this.setState({am_devices:json["data"]}));
+    });
   }
 
   render() {
+    //TODO: make two separate components
     return (
-      <div>
+      <div className={"row"}>
         {
           this.state.error && <Message message={this.state.error}/>
         }
-        <div>
+        <div className={"col-6"}>
           <table>
             <caption>
-              <h3> Devices </h3>
+              <h3> Asset Manager </h3>
+            </caption>
+            <thead>
+              <tr>
+                <th> Serial Number </th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              this.state.am_devices.map((am_device,index)=> {
+                return(
+                    <tr key={'am'+index}>
+                    <td> {am_device.serial_number} </td>
+                    </tr>
+                    )
+              })
+            }
+            </tbody>
+          </table>
+        </div>
+        <div className={"col-6"}>
+          <table>
+            <caption>
+              <h3> Lab </h3>
             </caption>
             <thead>
               <tr>

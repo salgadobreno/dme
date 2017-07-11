@@ -1,24 +1,18 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
   "items": [
     "item-dev-1",
     "item-dev-2"
+  ],
+  "am_devices": [
+    {
+      "serial_number": 1234
+    },
+    {
+      "serial_number": 4567
+    },
+    {
+      "serial_number": 3333
+    }
   ],
   "devices": [
     {
