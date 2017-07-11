@@ -33,6 +33,11 @@ if [ -z "$DOCKER_MACHINE" ]; then
   --generic-ssh-user avixy vm
 fi
 
+#env Variables
+export COMPOSE_HTTP_TIMEOUT=300
+eval $(sudo docker-machine env vm)
+
+
 # Deploy application to production container
 echo "[INFO] Docker machine [vm] is up"
 (cd ../ && exec docker-compose -f docker-compose-production.yml up --build -d)
