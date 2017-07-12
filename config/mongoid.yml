@@ -3,7 +3,7 @@ test:
     default:
       database: mngsrv-test
       hosts:
-       - 172.18.0.2:27017
+       - localhost:27017
   options:
     raise_not_found_error: false
 

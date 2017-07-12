@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import DeviceList from './components/DeviceList';
+import DeviceIndex from './components/DeviceIndex';
 
-render(<DeviceList />, document.getElementById('root'));
+render(<DeviceIndex />, document.getElementById('root'));
