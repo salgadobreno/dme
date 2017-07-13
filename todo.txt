@@ -15,5 +15,5 @@
 [35m[K./test/core/spec_test.rb[m[K[36m[K                   [m[K[32m[K74[m[K[36m[K   [m[Kskip "[01;31m[KTODO[m[K"
 [35m[K./test/core/models/device_so_test.rb[m[K[36m[K       [m[K[32m[K47[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: State && [nil] && storing
 [35m[K./test/core/models/buffer_test.rb[m[K[36m[K          [m[K[32m[K30[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
-[35m[K./test/integration/api_service_test.rb[m[K[36m[K     [m[K[32m[K119[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: complete test
+[35m[K./test/integration/api_service_test.rb[m[K[36m[K     [m[K[32m[K132[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: complete test
 [35m[K./test/functional/device_incoming_test.rb[m[K[36m[K  [m[K[32m[K6[m[K[36m[K    [m[K# [01;31m[KTODO[m[K: This test should be user to test
