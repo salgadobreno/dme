@@ -133,5 +133,17 @@ describe App do
         it 'returns error message when the SerialNumber doesnt match the AssetManager'
       end
     end
+
+    describe "POST /devices/seed" do
+      it 'clears the DeviceSos and populates the AmDevices' do
+        @dso = create :device_so
+        DeviceSo.count.must_be :>=, 1
+        post '/devices/seed'
+
+        last_response.ok?.must_equal true
+        DeviceSo.count.must_equal 0
+        AmDevice.count.must_be :>, 0
+      end
+    end
   end
 end

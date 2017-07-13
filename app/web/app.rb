@@ -91,6 +91,17 @@ class App < Sinatra::Application
     end
   end
 
+  post '/devices/seed' do
+    require 'rake'
+    rake = Rake::Application.new
+    Rake.application = rake
+    rake.init
+    rake.load_rakefile
+    rake["db:seed"].invoke
+    nil
+  end
+
+  #routes of the react examples
   get '/items' do
     content_type :json
     ["item#{rand(0..20)}", "item#{rand(0..20)}"].to_json
