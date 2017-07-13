@@ -134,15 +134,35 @@ describe App do
       end
     end
 
-    describe "POST /devices/seed" do
+    describe "POST /devices/seed.json" do
       it 'clears the DeviceSos and populates the AmDevices' do
         @dso = create :device_so
         DeviceSo.count.must_be :>=, 1
-        post '/devices/seed'
+        post '/devices/seed.json'
 
         last_response.ok?.must_equal true
         DeviceSo.count.must_equal 0
         AmDevice.count.must_be :>, 0
+      end
+    end
+
+    describe "POST /devices/light_seed" do
+      it 'clears the DeviceSos without wiping DeviceLogs' do
+        @dso = create :device_so
+        DeviceSo.count.must_be :>, 0
+        DeviceSo.last.tap do |d|
+          d.forward
+          d.forward
+          d.forward
+          d.save!
+        end
+        DeviceLog.count.must_be :>, 0
+        post '/devices/light_seed.json'
+
+        last_response.ok?.must_equal true
+        DeviceSo.count.must_equal 0
+        AmDevice.count.must_be :>, 0
+        DeviceLog.count.must_be :>, 0
       end
     end
   end

@@ -92,13 +92,17 @@ class App < Sinatra::Application
   end
 
   post '/devices/seed' do
-    require 'rake'
-    rake = Rake::Application.new
-    Rake.application = rake
-    rake.init
-    rake.load_rakefile
-    rake["db:seed"].invoke
-    nil
+    r = SERVICE.run_seed
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
+
+  post '/devices/light_seed' do
+    r = SERVICE.run_light_seed
+    respond_to do |format|
+      format.json { r.to_json }
+    end
   end
 
   #routes of the react examples
