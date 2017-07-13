@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Message from './components/Message';
+import DeviceLog from './components/DeviceLog';
+import AmDeviceList from './components/AmDeviceList';
+import DeviceList from './components/DeviceList';
 
 //import DevicePrompt from './components/DeviceList';
 import Device from './components/Device';
@@ -16,6 +19,30 @@ class DevicePrompt extends Component {
     )
   }
 }
+
+class DeviceIndex extends Component {
+  constructor(){
+    super();
+    this.state = {
+      error: undefined
+    };
+  }
+
+  render() {
+    return (
+      <div className={"row"}>
+      {
+        this.state.error && <Message message={this.state.error}/>
+      }
+
+      <div className={"col-6"}> <AmDeviceList/> </div>
+      <div className={"col-6"}> <DeviceList/> </div>
+      </div>
+    );
+  }
+}
+
+export default DeviceIndex;
 
 class DeviceActions extends Component {
   render() {
