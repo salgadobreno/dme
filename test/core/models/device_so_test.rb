@@ -73,6 +73,28 @@ describe DeviceSo do
       @device.updated_at.wont_be_nil
     end
 
+    it 'should not delete the DeviceLogs for a SerialNumber when DeviceSo is deleted' do
+      serial_number = 67890
+      am_device = create(:am_device, {serial_number: serial_number})
+      @device = create(:device_so, {am_device: am_device})
+      @device.forward
+      @device.forward
+      @device.forward
+      @device.device_logs.count.wont_equal 0
+      count = @device.device_logs.count
+      @device.save.must_equal true
+      @device2 = create(:device_so, {am_device: am_device})
+      @device2.device_logs.count.must_be :>=, count
+    end
+
+    it 'should add an `exit` log when DeviceSo is deleted' do
+      @device = create(:device_so)
+      count = @device.am_device.device_logs.count
+      @device.destroy
+      @device.am_device.device_logs.count.must_equal count+1
+      @device.am_device.device_logs.last.description.must_match /exit/
+    end
+
     describe "#active" do
       before do
         @active = DeviceSo.new @am_device, @state_machine

@@ -4,6 +4,7 @@ const path = require('path');
 module.exports = {
   entry: {
     device: './react/src/device-index.js',
+    devicelog: './react/src/devicelog-index.js',
     devicelist: './react/src/device-list-index.js',
     deviceadd: './react/src/device-add-index.js',
     myapp: './react/src/myappindex',
@@ -32,6 +33,7 @@ module.exports = {
       rewrites: [
         {from: /\/devices\/new/, to: '/deviceadd.html'},
         {from: /\/devices\/\d+/, to: '/device.html'},
+        {from: /\/devices\/show_log/, to: '/device_log.html'},
         {from: /\/devices\/show/, to: '/device.html'},
         {from: /\/devices/, to: '/devicelist.html'},
         {from: '/', to: '/devicelist.html'},

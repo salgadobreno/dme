@@ -1,18 +1,18 @@
 [35m[K./server.js[m[K[36m[K                                [m[K[32m[K2[m[K[36m[K    [m[K[01;31m[K//TODO[m[K: maybe we could add code from the json-server repo so that it accepts parameterized options?
 [35m[K./server.js[m[K[36m[K                                [m[K[32m[K11[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: add way to override the 'metadata' with query params('?success=false')
-[35m[K./react/src/device-add-index.js[m[K[36m[K            [m[K[32m[K87[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
+[35m[K./react/src/device-add-index.js[m[K[36m[K            [m[K[32m[K93[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
 [35m[K./react/src/components/AmDeviceList.js[m[K[36m[K     [m[K[32m[K38[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
-[35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K54[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
-[35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K72[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
+[35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K45[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
+[35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K63[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
 [35m[K./Vagrantfile[m[K[36m[K                              [m[K[32m[K96[m[K[36m[K   [m[K# [01;31m[KTODO[m[K: BRENO: force user to define email variable before this step?
 [35m[K./Gemfile[m[K[36m[K                                  [m[K[32m[K3[m[K[36m[K    [m[K[01;31m[K#TODO[m[K: add groups [:development, :testing, :production]
 [35m[K./app/cli3.rb[m[K[36m[K                              [m[K[32m[K41[m[K[36m[K   [m[K# [01;31m[KTODO[m[K: forward whole state?
 [35m[K./app/core/models/state.rb[m[K[36m[K                 [m[K[32m[K55[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: verificacao/validacao de param p/ validations/operations, muitos erros de esquecer a forma de usar
 [35m[K./app/core/asset_manager/am_device.rb[m[K[36m[K      [m[K[32m[K8[m[K[36m[K    [m[Kfield :serial_number, type: Integer [01;31m[K#TODO[m[K: Integer vs String
-[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K114[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: theres probably a way to do this with more metaprogramming/less repeated code
-[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K128[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: device = am_device.device_sos.active.last ?
+[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K124[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: theres probably a way to do this with more metaprogramming/less repeated code
+[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K138[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: device = am_device.device_sos.active.last ?
 [35m[K./test/core/spec_test.rb[m[K[36m[K                   [m[K[32m[K74[m[K[36m[K   [m[Kskip "[01;31m[KTODO[m[K"
 [35m[K./test/core/models/device_so_test.rb[m[K[36m[K       [m[K[32m[K47[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: State && [nil] && storing
 [35m[K./test/core/models/buffer_test.rb[m[K[36m[K          [m[K[32m[K30[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte
-[35m[K./test/integration/api_service_test.rb[m[K[36m[K     [m[K[32m[K132[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: complete test
+[35m[K./test/integration/api_service_test.rb[m[K[36m[K     [m[K[32m[K149[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: complete test
 [35m[K./test/functional/device_incoming_test.rb[m[K[36m[K  [m[K[32m[K6[m[K[36m[K    [m[K# [01;31m[KTODO[m[K: This test should be user to test

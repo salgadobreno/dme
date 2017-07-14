@@ -31,7 +31,7 @@ class App < Sinatra::Application
   end
 
   # List devices
-  get '/devices' do
+  get '/devices/?' do
     respond_to do |format|
       format.json { SERVICE.list.to_json }
       format.html { render :html, :devicelist }
@@ -39,14 +39,14 @@ class App < Sinatra::Application
   end
 
   # List AmDevices
-  get '/am_devices' do
+  get '/am_devices/?' do
     respond_to do |format|
       format.json { SERVICE.am_device_list.to_json }
     end
   end
 
   # Create device
-  post '/devices' do
+  post '/devices/?' do
     serial_number = params[:serial_number]
     payload = params[:payload]
 
@@ -57,12 +57,24 @@ class App < Sinatra::Application
   end
 
   # Add device
-  get '/devices/new/:serial_number' do
+  get "/devices/new/?:serial_number?" do
     render :html, :deviceadd
   end
 
+  # Show log
+  get "/devices/show_log/?:serial_number?" do
+    render :html, :device_log
+  end
+
+  get '/devices/:serial_number/device_logs' do
+    r = SERVICE.show_log params[:serial_number]
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
+
   # Show device
-  get '/devices/:serial_number' do
+  get "/devices/:serial_number" do
     serial_number = params[:serial_number]
 
     respond_to do |format|
@@ -72,7 +84,7 @@ class App < Sinatra::Application
   end
 
   # Forward device
-  post '/devices/:serial_number/forward' do
+  post "/devices/:serial_number/forward/?" do
     serial_number = params[:serial_number]
 
     r = SERVICE.fw serial_number
@@ -82,7 +94,7 @@ class App < Sinatra::Application
   end
 
   # Delete device
-  delete '/devices/:serial_number' do
+  delete "/devices/:serial_number" do
     content_type :json
     serial_number = params[:serial_number]
     r = SERVICE.rm(serial_number)

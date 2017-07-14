@@ -64,9 +64,6 @@ class AmDeviceList extends Component {
   }
 
   render() {
-    if(Object.keys(this.state.am_devices).length == 0) {
-      return (<div> </div>)
-    }else{
       return (
           <div>
           <h3> Asset Manager </h3>
@@ -93,7 +90,6 @@ class AmDeviceList extends Component {
           </table>
           </div>
       )
-    }
   }
 }
 

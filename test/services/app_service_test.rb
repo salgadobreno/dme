@@ -72,4 +72,22 @@ describe AppService do
       AmDevice.count.must_be :>, 0
     end
   end
+
+  describe "#show_log" do
+    it 'grabs complete log for a serial_number even if its not in Lab' do
+      serial_number = 888888
+      am_device = create :am_device, serial_number: serial_number
+
+      dso = create :device_so, am_device: am_device
+      dso.forward
+      dso.forward
+      dso.forward
+      dso.destroy #"no longer in lab"
+
+      device_log_count = dso.device_logs.count
+      r = @service.show_log serial_number
+      r[:success].must_equal true
+      r[:data].size.must_equal device_log_count
+    end
+  end
 end

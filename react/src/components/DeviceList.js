@@ -15,14 +15,10 @@ class DeviceList extends Component {
     });
   }
   render() {
-    if(Object.keys(this.state.devices).length == 0) {
-      return (<div> </div>)
-    } else {
       return (
+          <div>
+            <h3> Lab </h3>
             <table>
-              <caption>
-                <h3> Lab </h3>
-              </caption>
               <thead>
                 <tr>
                   <th> Serial Number </th>
@@ -44,8 +40,8 @@ class DeviceList extends Component {
               }
               </tbody>
             </table>
+          </div>
       )
-    }
   }
 }
 export default DeviceList;

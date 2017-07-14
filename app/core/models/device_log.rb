@@ -11,6 +11,8 @@ class DeviceLog
 
   validates_presence_of :description
 
+  scope :device_so_logs, ->(dso){ where(device_so:dso) }
+
   def initialize(*args)
     # 2 args: device_so, event_description
     # 3 args: am_device, device_so, event_description
