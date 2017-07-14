@@ -48,6 +48,12 @@ class AddDevice extends Component {
     this.handlePayloadChange = this.handlePayloadChange.bind(this);
     this.removePayloadItem = this.removePayloadItem.bind(this);
     this.addPayloadItem = this.addPayloadItem.bind(this);
+
+    const path = window.location.pathname.split('/');
+    const id = path[path.length - 1];
+    if (!(id === undefined) && !(isNaN(id))) {
+      this.state["serial_number"] = id;
+    }
   }
 
   addPayloadItem(){

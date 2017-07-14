@@ -57,7 +57,7 @@ class App < Sinatra::Application
   end
 
   # Add device
-  get '/devices/new' do
+  get '/devices/new/:serial_number' do
     render :html, :deviceadd
   end
 

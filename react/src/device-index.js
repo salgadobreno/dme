@@ -40,7 +40,8 @@ class DeviceShow extends Component {
     this.handleForward = this.handleForward.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
 
-    const id = window.location.pathname.split('/')[2];
+    const path = window.location.pathname.split('/');
+    const id = path[path.length - 1];
     if (!(id === undefined) && !(isNaN(id))) {
       this.state["serial_number"] = id;
       this.handleSubmit();
