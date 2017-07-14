@@ -97,6 +97,8 @@ class AppService
   def run_seed
     encapsulate_error do
       load 'Rakefile'
+      #NOTE: `reenable` is necessary because rake checks which tasks have already been executed,
+      # in this case we always want it to run
       Rake::Task["db:db_config"].reenable
       Rake::Task["db:seed"].reenable
       Rake::Task["db:seed"].invoke
