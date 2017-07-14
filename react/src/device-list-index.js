@@ -1,6 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import DeviceIndex from './device-index';
+import AmDeviceList from './components/AmDeviceList';
+import DeviceList from './components/DeviceList';
 
-render(<DeviceIndex />, document.getElementById('root'));
+class DeviceListIndex extends Component {
+  constructor(){
+    super();
+    this.state = {
+      error: undefined
+    };
+  }
+
+  render() {
+    return (
+      <div className={"row"}>
+      {
+        this.state.error && <Message message={this.state.error}/>
+      }
+
+      <div className={"col-6"}> <AmDeviceList/> </div>
+      <div className={"col-6"}> <DeviceList/> </div>
+      </div>
+    );
+  }
+}
+
+export default DeviceListIndex
+
+
+render(<DeviceListIndex />, document.getElementById('root'));
