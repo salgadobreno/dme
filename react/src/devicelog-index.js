@@ -5,7 +5,7 @@ import Message from './components/Message';
 import DevicePrompt from './components/DevicePrompt';
 import DeviceLog from './components/DeviceLog';
 
-class DeviceShow extends Component {
+class DeviceHistory extends Component {
   constructor(){
     super();
     this.state = {
@@ -64,4 +64,4 @@ class DeviceShow extends Component {
   }
 }
 
-render(<DeviceShow />, document.getElementById('root'));
+render(<DeviceHistory />, document.getElementById('root'));
