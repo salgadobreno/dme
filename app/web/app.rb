@@ -84,7 +84,7 @@ class App < Sinatra::Application
   end
 
   # Forward device
-  post "/devices/:serial_number/forward/" do
+  post "/devices/:serial_number/forward/?" do
     serial_number = params[:serial_number]
 
     r = SERVICE.fw serial_number
