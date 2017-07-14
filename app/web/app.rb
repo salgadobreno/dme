@@ -91,6 +91,21 @@ class App < Sinatra::Application
     end
   end
 
+  post '/devices/seed' do
+    r = SERVICE.run_seed
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
+
+  post '/devices/light_seed' do
+    r = SERVICE.run_light_seed
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
+
+  #routes of the react examples
   get '/items' do
     content_type :json
     ["item#{rand(0..20)}", "item#{rand(0..20)}"].to_json

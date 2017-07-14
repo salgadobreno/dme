@@ -30,4 +30,46 @@ describe AppService do
       end
     end
   end
+
+  describe "#run_seed" do
+    it 'should clear db and setup AmDevices' do
+      create :device_so
+      create :device_so
+      create :device_so
+      DeviceSo.count.must_be :>, 0
+      DeviceSo.first.tap do |d|
+        d.forward
+        d.forward
+        d.forward
+        d.save!
+      end
+      DeviceLog.count.must_be :>, 0
+      r = @service.run_seed
+      r[:success].must_equal true
+      DeviceSo.count.must_equal 0
+      DeviceLog.count.must_equal 0
+      AmDevice.count.must_be :>, 0
+    end
+  end
+
+  describe "#run_light_seed" do
+    it 'should clear DeviceSos without erasing DeviceLogs' do
+      create :device_so
+      create :device_so
+      create :device_so
+      DeviceSo.count.must_be :>, 0
+      DeviceSo.first.tap do |d|
+        d.forward
+        d.forward
+        d.forward
+        d.save!
+      end
+      DeviceLog.count.must_be :>, 0
+      r = @service.run_light_seed
+      r[:success].must_equal true
+      DeviceSo.count.must_equal 0
+      DeviceLog.count.wont_equal 0
+      AmDevice.count.must_be :>, 0
+    end
+  end
 end

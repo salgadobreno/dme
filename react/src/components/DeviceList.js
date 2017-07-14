@@ -14,7 +14,6 @@ class DeviceList extends Component {
       result.json().then(json=> this.setState({devices:json["data"]}));
     });
   }
-
   render() {
     if(Object.keys(this.state.devices).length == 0) {
       return (<div> </div>)

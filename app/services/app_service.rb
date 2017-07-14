@@ -84,6 +84,30 @@ class AppService
     }
   end
 
+  def run_seed
+    encapsulate_error do
+      load 'Rakefile'
+      #NOTE: `reenable` is necessary because rake checks which tasks have already been executed,
+      # in this case we always want it to run
+      Rake::Task["db:db_config"].reenable
+      Rake::Task["db:seed"].reenable
+      Rake::Task["db:seed"].invoke
+      {
+        success: true
+      }
+    end
+  end
+
+  # The 'light seed' won't remove the DeviceLogs as requested by Felipe
+  def run_light_seed
+    encapsulate_error do
+      DeviceSo.delete_all
+      {
+        success:true
+      }
+    end
+  end
+
   private
 
   def encapsulate_error(&block)
@@ -101,6 +125,8 @@ class AppService
   def find_device serial_number
     am_device = AmDevice.find_by serial_number: serial_number
     raise AppException.new("Device not found") if am_device.nil?
+    #TODO: device = am_device.device_sos.active.last ?
+    #As it currently is, it could fetch a finished DeviceSo
     device = am_device.device_sos.last
 
     device
