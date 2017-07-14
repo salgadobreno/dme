@@ -40,4 +40,23 @@ describe DeviceLog do
     dl = DeviceLog.new(@am_device, nil, "teste")
     dl.valid?.must_equal true
   end
+
+  describe ".device_so_logs scope" do
+    it 'return the logs for a DeviceSo' do
+      am_device = create :am_device
+      dso = create :device_so, am_device: am_device
+      dso.log "teste"
+      dso.log "teste"
+      dso.log "teste"
+      dso.save
+      dso.destroy
+      dso2 = create :device_so, am_device: am_device
+      dso2.log "chave"
+      dso2.save
+
+      logs = DeviceLog.device_so_logs(dso2)
+      logs.count.wont_be :>, 2
+      logs.last.description.must_match /chave/
+    end
+  end
 end

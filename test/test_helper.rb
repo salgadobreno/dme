@@ -4,6 +4,7 @@ require 'minitest/autorun'
 require 'mocha/mini_test'
 require 'dashboard_init'
 require 'factory_girl'
+require "database_cleaner"
 
 class Minitest::Unit::TestCase
   include FactoryGirl::Syntax::Methods

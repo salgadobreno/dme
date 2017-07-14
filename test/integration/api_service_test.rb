@@ -1,7 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 
 require 'mongoid'
-require "database_cleaner"
 require 'rack/test'
 require 'test_helper'
 require 'app/web/app'
@@ -51,6 +50,24 @@ describe App do
         last_response.ok?.must_equal true
         response_hash = JSON.parse(last_response.body)
         response_hash.size.must_equal 2
+      end
+    end
+
+    describe "GET /devices/:serial_number/device_logs" do
+      it 'returns the device_logs for :serial_number' do
+        serial_number = 777777
+        am_device = create :am_device, serial_number: serial_number
+        device_so = create :device_so, am_device: am_device
+        device_so.forward
+        device_so.forward
+        device_so.forward
+        device_so.destroy
+        count = device_so.device_logs.count
+
+        get "/devices/#{serial_number}/device_logs.json"
+        last_response.ok?.must_equal true
+        response_hash = JSON.parse(last_response.body)
+        response_hash['data'].size.must_equal count
       end
     end
 

@@ -59,7 +59,6 @@ class AppService
   def show(serial_number)
     encapsulate_error do
       device = find_device serial_number
-      am_device = device.am_device #grab the AssetManagerDevice because we want the full history
 
       {
         success: true,
@@ -82,6 +81,17 @@ class AppService
       success: true,
       data: am_devices
     }
+  end
+
+  def show_log(serial_number)
+    encapsulate_error do
+      am_device = AmDevice.find_by serial_number: serial_number
+
+      {
+        success:true,
+        data: am_device.device_logs
+      }
+    end
   end
 
   def run_seed

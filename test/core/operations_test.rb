@@ -21,13 +21,14 @@ describe "operations and validations" do
 
   describe WarrantyCheckValidation do
     let(:am_device) { AmDevice.new 1234, (DateTime.now - 6.months), 365, false }
+    let(:am_device2) { AmDevice.new 4321, (DateTime.now - 6.months), 365, false }
     let(:device_in_warranty) {
       d = DeviceSo.new am_device, state_machine
       d.stubs(:warranty_days).returns(365)
       d
     }
     let(:device_out_warranty) {
-      d = DeviceSo.new am_device, state_machine
+      d = DeviceSo.new am_device2, state_machine
       d.stubs(:warranty_days).returns(90)
       d
     }
