@@ -6,6 +6,8 @@ import Message from './components/Message';
 class PayloadInput extends Component {
   constructor(props){
     super(props);
+
+    window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.name=='serial_number'){e.preventDefault();return false;}}},true);
   }
 
   render() {
