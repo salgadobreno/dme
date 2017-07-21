@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Google Fonts -->
+    <!--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">-->
+    <!-- CSS Reset -->
+    <!--<link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">-->
+    <!-- Milligram CSS minified -->
+    <!--<link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">-->
+    <link rel="stylesheet" href="/css/simple-grid.css">
+    <style type="text/css" media="all">
+.border {
+  border: dotted 1px gray;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-3" >
+          <div class="border">
+            <p>Here goes icon</p>
+          </div>
+          <div class="border">
+            <nav>
+              <p><a href="#">DeviceList</a></p>
+              <p><a href="#">Segregated</a></p>
+              <p><a href="#">Backoffice</a></p>
+            </nav>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="col-8"> </div>
+          <div class="col-4">
+            <div class="border">
+              <p><label>
+                Device
+                <input type="text" name="" id="" value="" />
+              </label></p>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="border">
+              <div class="">
+                <h2>Overview</h2>
+                <div class="row border">
+                  <!--<p>here goes overview</p>-->
+                  <div class="col-2 border">Acceptance</div>
+                  <div class="col-2 border">Triage</div>
+                  <div class="col-2 border">Maintenance</div>
+                  <div class="col-2 border">QA</div>
+                  <div class="col-2 border">Expedition</div>
+                </div>
+              </div>
+              <div class="">
+                <h2>Segregated Devices</h2>
+                <div class="row border">
+                  <!--<p>here goes segregated devices</p>-->
+                  <table>
+                    <tr>
+                      <th>SerialNumber</th>
+                      <th>PreviousState</th>
+                      <th>CurrentState</th>
+                    </tr>
+                    <tr>
+                      <td>00000</td>
+                      <td>Triage</td>
+                      <td>Segregated</td>
+                    </tr>
+                    <tr>
+                      <td>66666</td>
+                      <td>Acceptance</td>
+                      <td>Segregated</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
