@@ -11,6 +11,9 @@ describe App do
   before do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
+
+    @service = AppService.new
+    @default_response = {success:true}
   end
 
   after do
@@ -18,7 +21,7 @@ describe App do
   end
 
   def app
-    App
+    App.new nil, @service
   end
 
   describe "REST API" do
@@ -180,6 +183,26 @@ describe App do
         DeviceSo.count.must_equal 0
         AmDevice.count.must_be :>, 0
         DeviceLog.count.must_be :>, 0
+      end
+    end
+
+    describe "POST /devices/forward_all" do
+      it 'sends a forward to all devices in lab' do
+        @service.expects(:forward_all).returns(@default_response)
+        post '/devices/forward_all'
+        last_response.ok?.must_equal true
+        r = JSON.parse(last_response.body)
+        r["redirect"].must_equal '/'
+      end
+    end
+
+    describe "POST /devices/run_complete" do
+      it 'runs all devices in lab until there`s no next step' do
+        @service.expects(:run_complete).returns(@default_response)
+        post '/devices/run_complete'
+        last_response.ok?.must_equal true
+        r = JSON.parse(last_response.body)
+        r["redirect"].must_equal '/'
       end
     end
   end

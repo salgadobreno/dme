@@ -90,4 +90,42 @@ describe AppService do
       r[:data].size.must_equal device_log_count
     end
   end
+
+  describe "#forward_all" do
+    it 'forwards all devices in lab' do
+      create :device_so
+      create :device_so
+      create :device_so
+      DeviceSo.all.each do |d|
+        d.current_state.to_s.must_equal "aceptance"
+      end
+
+      @service.forward_all[:success].must_equal true
+      DeviceSo.all.each do |d|
+        d.current_state.to_s.must_equal "triage"
+      end
+    end
+  end
+
+  describe "#run_complete" do
+    it 'forwards all devices in lab until they`re segregated or finished' do
+      state_fail = State.new :fail, :validations => [ lambda {|k,v| false } ]
+      state_fail.validate({}, nil).must_equal false
+
+      pass1 = create :device_so, state_machine: DefaultStateMachine.new
+      pass2 = create :device_so, state_machine: DefaultStateMachine.new
+      fail1 = create :device_so, state_machine: StateMachine.new([StateAceptance.new, StateTriage.new, state_fail, StateExpedition.new])
+
+      @service.run_complete[:success].must_equal true
+
+      [pass1, pass2].each do |d|
+        d.reload.finished.must_equal true
+        d.reload.current_state.to_s.must_equal "expedition" # "finished"
+        #TODO NOTE: Breno: I'm still unclear on the `finish line` business logic in this, so I'm leaving it
+        #at "expedition" because currently the "finished" would remove the device from the Lab,
+        #this would make the app harder to understand ATM
+      end
+      fail1.reload.current_state.to_s.must_equal "segregated"
+    end
+  end
 end
