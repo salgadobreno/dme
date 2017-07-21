@@ -78,4 +78,17 @@ describe StateMachine do
     end
   end
 
+  describe "#previous_state" do
+    it 'returns a `none` state when at the start' do
+      @state_machine.current_state.must_equal @state_machine.states.first
+      @state_machine.previous_state.must_equal StateMachine::NONE_STATE
+    end
+
+    it 'stores the previous state' do
+      prev_state = @state_machine.current_state
+      @state_machine.forward(@device).must_equal true
+      @state_machine.previous_state.must_equal prev_state
+    end
+  end
+
 end

@@ -3,6 +3,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
+    segregatedwidget: './react/src/segregated-widget-index.js',
+    overviewwidget: './react/src/overview-widget-index.js',
     device: './react/src/device-index.js',
     devicelog: './react/src/devicelog-index.js',
     devicelist: './react/src/device-list-index.js',
@@ -36,6 +38,7 @@ module.exports = {
         {from: /\/devices\/show_log/, to: '/device_log.html'},
         {from: /\/devices\/show/, to: '/device.html'},
         {from: /\/devices/, to: '/devicelist.html'},
+        {from: '/dashboard', to: '/dashboardindex.html'},
         {from: '/lofi', to: '/lofi.html'},
         {from: '/', to: '/devicelist.html'},
       ]

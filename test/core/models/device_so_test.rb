@@ -95,7 +95,7 @@ describe DeviceSo do
       @device.am_device.device_logs.last.description.must_match /exit/
     end
 
-    describe "#active" do
+    describe ".active scope" do
       before do
         @active = DeviceSo.new @am_device, @state_machine
         @finished = DeviceSo.new @am_device, @state_machine
@@ -145,7 +145,7 @@ describe DeviceSo do
 
   describe "#as_json" do
     it 'includes the relevant fields' do
-      ["current_state", "sold_at", "serial_number", "warranty_days", "blacklisted", "device_logs"].each do |p|
+      ["current_state", "previous_state", "sold_at", "serial_number", "warranty_days", "blacklisted", "device_logs"].each do |p|
         @device.as_json.keys.must_include p
       end
     end

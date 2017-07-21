@@ -31,31 +31,22 @@ describe App do
     end
 
     describe "GET /devices" do
-      before do
-        @device_1 = create :device_so
-        @device_2 = create :device_so
-      end
       it 'lists the devices' do
+        @service.expects(:list).returns(@default_response)
         get '/devices'
         last_response.ok?.must_equal true
-        response_hash = JSON.parse(last_response.body)
-        response_hash.size.must_equal 2
       end
     end
 
     describe "GET /am_devices" do
-      before do
-        @am_device_1 = create :am_device
-        @am_device_2 = create :am_device
-      end
-      it 'lists the devices' do
+      it 'lists the am_devices' do
+        @service.expects(:am_device_list).returns(@default_response)
         get '/am_devices'
         last_response.ok?.must_equal true
-        response_hash = JSON.parse(last_response.body)
-        response_hash.size.must_equal 2
       end
     end
 
+    #TODO: finish making all tests run with mocks
     describe "GET /devices/:serial_number/device_logs" do
       it 'returns the device_logs for :serial_number' do
         serial_number = 777777
@@ -203,6 +194,22 @@ describe App do
         last_response.ok?.must_equal true
         r = JSON.parse(last_response.body)
         r["redirect"].must_equal '/'
+      end
+    end
+
+    describe "GET /devices/overview" do
+      it 'gets the lab state overview' do
+        @service.expects(:overview).returns(@default_response)
+        get '/devices/overview'
+        last_response.ok?.must_equal true
+      end
+    end
+
+    describe "GET /devices/segregated_overview" do
+      it 'gets the lab state overview' do
+        @service.expects(:segregated_overview).returns(@default_response)
+        get '/devices/segregated_overview'
+        last_response.ok?.must_equal true
       end
     end
   end
