@@ -1,6 +1,6 @@
 [35m[K./server.js[m[K[36m[K                                [m[K[32m[K2[m[K[36m[K    [m[K[01;31m[K//TODO[m[K: maybe we could add code from the json-server repo so that it accepts parameterized options?
 [35m[K./server.js[m[K[36m[K                                [m[K[32m[K11[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: add way to override the 'metadata' with query params('?success=false')
-[35m[K./react/src/device-add-index.js[m[K[36m[K            [m[K[32m[K93[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
+[35m[K./react/src/device-add-index.js[m[K[36m[K            [m[K[32m[K95[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
 [35m[K./react/src/components/AmDeviceList.js[m[K[36m[K     [m[K[32m[K38[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
 [35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K45[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
 [35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K63[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
