@@ -86,7 +86,7 @@ class AddDevice extends Component {
     };
     const jsonParams = JSON.stringify(stateClone);
 
-    fetch(__API__ + '/devices', {
+    fetch(__API__+'/devices', {
       method: 'post', body:jsonParams, headers: {'Content-Type':'application/json'}
     }).then(r=> {
       r.json().then(json=> {

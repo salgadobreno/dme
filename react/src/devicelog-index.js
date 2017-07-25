@@ -30,7 +30,7 @@ class DeviceHistory extends Component {
     }
 
     const device = {};
-    fetch(__API__ + '/devices/' + this.state.serial_number + '/device_logs').then(result=> {
+    fetch(__API__ + '/devices/' + this.state.serial_number + '/device_logs?ajax=true').then(result=> {
       result.json().then(json=> {
         if (json['success']) {
           console.log('success');
