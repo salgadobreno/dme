@@ -17,8 +17,14 @@ class OverviewWidget extends Component {
 
   componentDidMount() {
     fetch(__API__ + '/devices/overview').then(result=> {
-      result.json().then(json=> this.setState({states:json["data"]}));
-    });
+      if (result.ok) {
+        result.json().then(json=> {
+          this.setState({states:json["data"]})}
+          );
+      } else {
+        console.log("Fetch fail. status: "+result.status)
+      }
+    })
   }
 
   render() {
@@ -26,7 +32,7 @@ class OverviewWidget extends Component {
       return (
           <div key={index} className={"col-2 border"}>
             <p>{this.state.states[key]}</p>
-            {key}
+            <a href={"/devices?filter="+key}>{key}</a>
           </div>
           );
     })

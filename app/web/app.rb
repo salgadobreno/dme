@@ -17,9 +17,9 @@ class App < Sinatra::Application
 
   #if url is '/anything.json' -> set accept header to json
   before /.*/ do
-    if request.url.match(/.json$/)
+    if request.url.match(/.json/)
       request.accept.unshift('application/json')
-      request.path_info = request.path_info.gsub(/.json$/,'')
+      request.path_info = request.path_info.gsub(/.json/,'')
     end
   end
 
@@ -32,17 +32,22 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    render :html, :devicelist
+    render :html, :dashboardindex
   end
 
   get '/dashboard' do
     render :html, :dashboardindex
   end
 
+  get '/devoffice' do
+    render :html, :devicelist
+  end
+
   # List devices
-  get '/devices/?' do
+  get '/devices?' do
+    r = @service.list(params)
     respond_to do |format|
-      format.json { @service.list.to_json }
+      format.json { r.to_json }
       format.html { render :html, :devicelist }
     end
   end
@@ -130,21 +135,21 @@ class App < Sinatra::Application
   post '/devices/seed' do
     r = @service.run_seed
     respond_to do |format|
-      format.json { r.to_json }
+      format.json { r.merge(redirect:'/devices').to_json }
     end
   end
 
   post '/devices/light_seed' do
     r = @service.run_light_seed
     respond_to do |format|
-      format.json { r.to_json }
+      format.json { r.merge(redirect:'/devices').to_json }
     end
   end
 
   post '/devices/forward_all' do
     r = @service.forward_all
     respond_to do |format|
-      format.json { r.merge(redirect:'/').to_json }
+      format.json { r.merge(redirect:'/devices').to_json }
     end
   end
 
@@ -152,7 +157,7 @@ class App < Sinatra::Application
   post '/devices/run_complete' do
     r = @service.run_complete
     respond_to do |format|
-      format.json { r.merge(redirect:'/').to_json }
+      format.json { r.merge(redirect:'/devices').to_json }
     end
   end
 

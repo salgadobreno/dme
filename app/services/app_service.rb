@@ -68,12 +68,25 @@ class AppService
     end
   end
 
-  def list
-    devices = DeviceSo.active
-    {
-      success: true,
-      data: devices
-    }
+  #NOTE: TODO: Breno: Filtering is being implemented in a hardcoded fashion for the moment because there is no direct reference to a State in StateMachine which is embedded in DeviceSo, so a better implementation will need a rework on how it's modelled now. Since currently the StateMachine is also hardcoded(DefaultStateMachine) I'll go with the simplest implementation for now but whenever this changes we must have another look at this.
+  FILTER_MAP = {
+    "segregated" => -1,
+    "aceptance" => 0,
+    "triage" => 1,
+    "expedition" => 2,
+  }
+  def list(params = {})
+    encapsulate_error do
+      devices = DeviceSo.active
+      if params[:filter]
+        raise "unknown filter: #{params[:filter]}" if FILTER_MAP[params[:filter]] == nil
+        devices = devices.by_state FILTER_MAP[params[:filter]]
+      end
+      {
+        success: true,
+        data: devices
+      }
+    end
   end
 
   def am_device_list
@@ -126,7 +139,7 @@ class AppService
         d.save!
       end
       {
-        success:true
+       success:true
       }
     end
   end
@@ -151,6 +164,7 @@ class AppService
       h.default = 0
       DeviceSo.active.map { |e| h[e.current_state.to_s.to_sym] += 1 }
       h.default = nil
+      h = {aceptance: 0, triage: 0, maintenance: 0, qa: 0, expedition: 0}.merge(h)
       {
         data: h,
         success:true

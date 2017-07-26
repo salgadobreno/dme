@@ -1,5 +1,6 @@
 //This server is meant to replace the `yarn api`("json-server --watch db.json --port 8080 --id serial_number") since running it this way let us do more customizations so the React Dev keeps up with the sinatra environment i.e.: This change was made so that we could envelope the responses inside the 'data' key
 //TODO: maybe we could add code from the json-server repo so that it accepts parameterized options?
+//TODO: add code to allow command-line arguments as in json-server executable, so that the options are not hardcoded here e.x.: node server.js --port 6060
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')

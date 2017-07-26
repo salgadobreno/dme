@@ -35,6 +35,7 @@ class DeviceSo
 
   scope :active, ->{ where(finished: false) }
   scope :finished, ->{ where(finished: true) }
+  scope :by_state, ->(state_index){ where('state_machine.current_state_index': state_index) }
   scope :segregated, ->{ where('state_machine.current_state_index': StateMachine::SEGREGATED_INDEX) }
 
   def lab_logs
