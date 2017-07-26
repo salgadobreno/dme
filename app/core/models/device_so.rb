@@ -18,6 +18,7 @@ class DeviceSo
   def_delegators :am_device, :device_logs
 
   def_delegators :state_machine, :current_state
+  def_delegators :state_machine, :previous_state
   def_delegators :state_machine, :last_state?
   def_delegators :state_machine, :payload
 
@@ -34,6 +35,7 @@ class DeviceSo
 
   scope :active, ->{ where(finished: false) }
   scope :finished, ->{ where(finished: true) }
+  scope :segregated, ->{ where('state_machine.current_state_index': StateMachine::SEGREGATED_INDEX) }
 
   def lab_logs
     DeviceLog.device_so_logs(self)
@@ -50,14 +52,13 @@ class DeviceSo
   end
 
   def forward
-    prev_state = current_state
     if state_machine.forward self
       if state_machine.last_state?
         self.finished = true
         log "Device: #{serial_number} exit."
         return true
       else
-        log "State changed to: #{prev_state.name}, from #{current_state.name}"
+        log "State changed to: #{previous_state.name}, from #{current_state.name}"
         return true
       end
     else
@@ -72,6 +73,7 @@ class DeviceSo
   def as_json(options={})
     h = super(options.merge({methods: [:serial_number, :sold_at, :blacklisted, :warranty_days]} ))
     h["device_logs"] = lab_logs
+    h["previous_state"] = previous_state.to_s
     h["current_state"] = current_state.to_s
     h
   end

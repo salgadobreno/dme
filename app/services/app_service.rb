@@ -144,6 +144,30 @@ class AppService
       }
     end
   end
+
+  def overview
+    encapsulate_error do
+      h = {}
+      h.default = 0
+      DeviceSo.active.map { |e| h[e.current_state.to_s.to_sym] += 1 }
+      h.default = nil
+      {
+        data: h,
+        success:true
+      }
+    end
+  end
+
+  def segregated_overview
+    encapsulate_error do
+      data = DeviceSo.active.segregated
+      {
+        data: data,
+        success:true
+      }
+    end
+  end
+
   private
 
   def encapsulate_error(&block)

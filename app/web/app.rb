@@ -35,6 +35,10 @@ class App < Sinatra::Application
     render :html, :devicelist
   end
 
+  get '/dashboard' do
+    render :html, :dashboardindex
+  end
+
   # List devices
   get '/devices/?' do
     respond_to do |format|
@@ -78,7 +82,22 @@ class App < Sinatra::Application
     end
   end
 
+  get '/devices/overview' do
+    r = @service.overview
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
+
+  get '/devices/segregated_overview' do
+    r = @service.segregated_overview
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
+
   # Show device
+  # TODO: do something about this route colliding w/ others ex.: "/devices/anything" will match 'anything' as :serial_number unless '/devices/anything' is defined ABOVE '/devices/:serial_number', maybe #show could filter for numeric only, if business logic applies
   get "/devices/:serial_number" do
     serial_number = params[:serial_number]
 

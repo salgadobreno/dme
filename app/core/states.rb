@@ -30,3 +30,9 @@ class StateFinished < State
     super :finished, {}
   end
 end
+
+class StateNone < State
+  def initialize
+    super :none, {}
+  end
+end

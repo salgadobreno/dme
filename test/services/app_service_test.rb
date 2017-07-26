@@ -128,4 +128,42 @@ describe AppService do
       fail1.reload.current_state.to_s.must_equal "segregated"
     end
   end
+
+  describe "#overview" do
+    it 'gets data for the number of devices in each state in the lab' do
+      create :device_so, state_machine: StateMachine.new([StateAceptance.new])
+      create :device_so, state_machine: StateMachine.new([StateTriage.new])
+      create :device_so, state_machine: StateMachine.new([StateExpedition.new])
+      create :device_so, state_machine: StateMachine.new([StateSegregated.new])
+
+      r = @service.overview
+      r[:success].must_equal true
+      r[:data][:aceptance].must_equal 1
+      r[:data][:triage].must_equal 1
+      r[:data][:expedition].must_equal 1
+      r[:data][:segregated].must_equal 1
+    end
+  end
+
+  describe "#segregated_overview" do
+    it 'gets segregated devices and data about previous state' do
+      class StateFail < State
+      end
+      state_fail = StateFail.new "fail"
+      #state_fail.stubs(:validate).returns(false)
+      StateFail.any_instance.stubs(:validate).returns(false)
+      #state_fail = State.new "fail", :validations => [Proc.new {|k,v| false}]
+      stm = StateMachine.new [StateAceptance.new, StateTriage.new, state_fail, StateExpedition.new]
+      list = []
+      list << create(:device_so, state_machine: stm)
+      list << create(:device_so, state_machine: stm)
+      list << create(:device_so, state_machine: stm)
+      list << create(:device_so, state_machine: stm)
+      list.each {|d| 5.times { d.reload.forward; d.save! }}
+      r = JSON.parse(@service.segregated_overview.to_json)
+      r["success"].must_equal true
+      r["data"].size.must_equal 4
+      r["data"].first["previous_state"].must_equal "fail"
+    end
+  end
 end
