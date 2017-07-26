@@ -39,7 +39,7 @@ class DeviceShow extends Component {
   }
 
   handleForward(){
-    fetch(__API__ + '/devices/' + this.state.serial_number + '/forward', {
+    fetch(__API__+'/devices/'+this.state.serial_number+'/forward', {
       method: 'post', headers: {'Content-Type':'application/json'}
     }).then(r=> {
       //TODO: verify response code, exception case, etc in r
@@ -57,7 +57,7 @@ class DeviceShow extends Component {
   }
 
   handleRemove(){
-    fetch(__API__ + '/devices/' + this.state.serial_number, {
+    fetch(__API__+'/devices/'+this.state.serial_number, {
       method: 'delete', headers: {'Content-Type':'application/json'}
     }).then(r=> {
       //TODO: verify response code, exception case, etc in r
@@ -84,7 +84,7 @@ class DeviceShow extends Component {
     }
 
     const device = {};
-    fetch(__API__ + '/devices/' + this.state.serial_number).then(result=> {
+    fetch(__API__+'/devices/'+this.state.serial_number+'?ajax=true').then(result=> {
       result.json().then(json=> {
         if (json['success']) {
           console.log('success');
