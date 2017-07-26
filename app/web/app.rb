@@ -77,10 +77,6 @@ class App < Sinatra::Application
       format.json { r.to_json }
     end
   end
-    respond_to do |format|
-      format.json { r.to_json }
-    end
-  end
 
   # Show device
   get "/devices/:serial_number" do
