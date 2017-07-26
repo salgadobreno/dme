@@ -1,9 +1,10 @@
 [35m[K./server.js[m[K[36m[K                                [m[K[32m[K2[m[K[36m[K    [m[K[01;31m[K//TODO[m[K: maybe we could add code from the json-server repo so that it accepts parameterized options?
-[35m[K./server.js[m[K[36m[K                                [m[K[32m[K11[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: add way to override the 'metadata' with query params('?success=false')
+[35m[K./server.js[m[K[36m[K                                [m[K[32m[K3[m[K[36m[K    [m[K[01;31m[K//TODO[m[K: add code to allow command-line arguments as in json-server executable, so that the options are not hardcoded here e.x.: node server.js --port 6060
+[35m[K./server.js[m[K[36m[K                                [m[K[32m[K12[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: add way to override the 'metadata' with query params('?success=false')
 [35m[K./react/src/device-add-index.js[m[K[36m[K            [m[K[32m[K93[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
 [35m[K./react/src/components/AmDeviceList.js[m[K[36m[K     [m[K[32m[K38[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
-[35m[K./react/src/components/DeviceList.js[m[K[36m[K       [m[K[32m[K38[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
-[35m[K./react/src/components/DeviceList.js[m[K[36m[K       [m[K[32m[K56[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
+[35m[K./react/src/components/DeviceList.js[m[K[36m[K       [m[K[32m[K50[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
+[35m[K./react/src/components/DeviceList.js[m[K[36m[K       [m[K[32m[K68[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc
 [35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K45[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
 [35m[K./react/src/device-index.js[m[K[36m[K                [m[K[32m[K63[m[K[36m[K   [m[K[01;31m[K//TODO[m[K: verify response code, exception case, etc in r
 [35m[K./Vagrantfile[m[K[36m[K                              [m[K[32m[K96[m[K[36m[K   [m[K# [01;31m[KTODO[m[K: BRENO: force user to define email variable before this step?
@@ -14,11 +15,12 @@
 [35m[K./app/cli3.rb[m[K[36m[K                              [m[K[32m[K41[m[K[36m[K   [m[K# [01;31m[KTODO[m[K: forward whole state?
 [35m[K./app/core/models/state.rb[m[K[36m[K                 [m[K[32m[K55[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: verificacao/validacao de param p/ validations/operations, muitos erros de esquecer a forma de usar
 [35m[K./app/core/asset_manager/am_device.rb[m[K[36m[K      [m[K[32m[K8[m[K[36m[K    [m[Kfield :serial_number, type: Integer [01;31m[K#TODO[m[K: Integer vs String
-[35m[K./app/web/app.rb[m[K[36m[K                           [m[K[32m[K100[m[K[36m[K  [m[K# [01;31m[KTODO[m[K: do something about this route colliding w/ others ex.: "/devices/anything" will match 'anything' as :serial_number unless '/devices/anything' is defined ABOVE '/devices/:serial_number', maybe #show could filter for numeric only, if business logic applies
-[35m[K./app/web/app.rb[m[K[36m[K                           [m[K[32m[K151[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: need a better name for this
+[35m[K./app/web/app.rb[m[K[36m[K                           [m[K[32m[K105[m[K[36m[K  [m[K# [01;31m[KTODO[m[K: do something about this route colliding w/ others ex.: "/devices/anything" will match 'anything' as :serial_number unless '/devices/anything' is defined ABOVE '/devices/:serial_number', maybe #show could filter for numeric only, if business logic applies
+[35m[K./app/web/app.rb[m[K[36m[K                           [m[K[32m[K156[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: need a better name for this
 [35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K44[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: has_next should be in model
-[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K174[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: theres probably a way to do this with more metaprogramming/less repeated code
-[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K188[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: device = am_device.device_sos.active.last ?
+[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K71[m[K[36m[K   [m[K#NOTE: [01;31m[KTODO[m[K: Breno: Filtering is being implemented in a hardcoded fashion for the moment because there is no direct reference to a State in StateMachine which is embedded in DeviceSo, so a better implementation will need a rework on how it's modelled now. Since currently the StateMachine is also hardcoded(DefaultStateMachine) I'll go with the simplest implementation for now but whenever this changes we must have another look at this.
+[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K188[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: theres probably a way to do this with more metaprogramming/less repeated code
+[35m[K./app/services/app_service.rb[m[K[36m[K              [m[K[32m[K202[m[K[36m[K  [m[K[01;31m[K#TODO[m[K: device = am_device.device_sos.active.last ?
 [35m[K./test/core/spec_test.rb[m[K[36m[K                   [m[K[32m[K74[m[K[36m[K   [m[Kskip "[01;31m[KTODO[m[K"
 [35m[K./test/core/models/device_so_test.rb[m[K[36m[K       [m[K[32m[K47[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: State && [nil] && storing
 [35m[K./test/core/models/buffer_test.rb[m[K[36m[K          [m[K[32m[K30[m[K[36m[K   [m[K[01;31m[K#TODO[m[K: Breno: vou 'configurar' o payload na mao mas teremos que rever essa parte

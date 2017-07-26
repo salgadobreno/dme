@@ -10,12 +10,21 @@
     <link rel="stylesheet" href="/css/simple-grid.css">
   </head>
   <body class="container">
-    <nav style="padding:10px">
-      <a href="/devices">LIST</a>
-      <a href="/devices/new">ADD</a>
-      <a href="/devices/show">SHOW(LAB)</a>
-      <a href="/devices/show_log">SHOW(Device Logs)</a>
-    </nav>
+    <div class="row">
+      <div class="col-9">
+        <nav style="padding:10px">
+          <a href="/devices">LIST</a>
+          <a href="/devices/new">ADD</a>
+          <a href="/devices/show">SHOW(LAB)</a>
+          <a href="/devices/show_log">SHOW(Device Logs)</a>
+        </nav>
+      </div>
+      <div class="col-3">
+        <nav>
+          <a href="/dashboard">&larr; Dashboard</a>
+        </nav>
+      </div>
+    </div>
     <h1>Device List</h1>
     <div id='root'></div>
   </body>

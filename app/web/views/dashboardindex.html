@@ -17,9 +17,9 @@
           </div>
           <div class="border">
             <nav>
-              <p><a href="#">DeviceList</a></p>
-              <p><a href="#">Segregated</a></p>
-              <p><a href="#">DevOffice</a></p>
+              <p><a href="/devices">DeviceList</a></p>
+              <p><a href="/devices?filter=segregated">Segregated</a></p>
+              <p><a href="/devices">DevOffice &rarr;</a></p>
             </nav>
           </div>
         </div>
@@ -28,8 +28,10 @@
           <div class="col-4">
             <div class="border">
               <p><label>
-                Device
-                <input type="text" name="" id="" value="" />
+                <form action="/devices/" method="get" onSubmit="this.action='/devices/'+this.serial_number.value;">
+                  Device
+                  <input type="text" name="serial_number" id="" value="" />
+                </form>
               </label></p>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Device from './Device';
+import Message from './Message';
 
 class DeviceListActions extends Component {
   render(){
@@ -16,15 +17,26 @@ class DeviceList extends Component {
   constructor(){
     super();
     this.state = {
-      devices: []
+      devices: [],
+      error: undefined
     };
     this.sendFwAll = this.sendFwAll.bind(this);
     this.sendRunComplete = this.sendRunComplete.bind(this);
   }
 
   componentDidMount() {
-    fetch(__API__ + '/devices').then(result=> {
-      result.json().then(json=> this.setState({devices:json["data"]}));
+    const params = window.location.href.split('?')[1];
+    const urlParams = params === undefined ? '' : '?'+params;
+    fetch(__API__ + '/devices'+urlParams).then(result=> {
+      result.json().then(json=> {
+        if (json['success']) {
+          console.log('success');
+          this.setState({devices:json["data"]})
+        } else {
+          console.log('fail');
+          this.setState({ 'error': json['message']})
+        }
+      });
     });
   }
 
@@ -68,6 +80,9 @@ class DeviceList extends Component {
       return (
           <div>
           <h3> Lab </h3>
+          {
+            this.state.error && <Message message={this.state.error} />
+          }
           <DeviceListActions sendFwAll={this.sendFwAll} sendRunComplete={this.sendRunComplete}/>
           <table>
           <thead>

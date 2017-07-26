@@ -17,8 +17,14 @@ class SegregatedWidget extends Component {
 
   componentDidMount() {
     fetch(__API__ + '/devices/segregated_overview').then(result=> {
-      result.json().then(json=> this.setState({devices:json["data"]}));
-    });
+      if (result.ok) {
+        result.json().then(json=> {
+          this.setState({devices:json["data"]})}
+          );
+      } else {
+        console.log("Fetch fail. status: "+result.status)
+      }
+    })
   }
 
   render() {
