@@ -6,9 +6,14 @@ class App < Sinatra::Application
 
   configure { set :server, :puma }
 
-  SERVICE = AppService.new
 
   set :root, 'app/web'
+
+  def initialize(app=nil, service=AppService.new)
+    super(app)
+    APP_LOG.info("App initialized, service=#{service}")
+    @service = service
+  end
 
   #if url is '/anything.json' -> set accept header to json
   before /.*/ do
@@ -33,7 +38,7 @@ class App < Sinatra::Application
   # List devices
   get '/devices/?' do
     respond_to do |format|
-      format.json { SERVICE.list.to_json }
+      format.json { @service.list.to_json }
       format.html { render :html, :devicelist }
     end
   end
@@ -41,7 +46,7 @@ class App < Sinatra::Application
   # List AmDevices
   get '/am_devices/?' do
     respond_to do |format|
-      format.json { SERVICE.am_device_list.to_json }
+      format.json { @service.am_device_list.to_json }
     end
   end
 
@@ -50,7 +55,7 @@ class App < Sinatra::Application
     serial_number = params[:serial_number]
     payload = params[:payload]
 
-    r = SERVICE.add serial_number, payload
+    r = @service.add serial_number, payload
     respond_to do |format|
       format.json { r.merge({redirect: "/devices/#{serial_number}"}).to_json }
     end
@@ -67,7 +72,11 @@ class App < Sinatra::Application
   end
 
   get '/devices/:serial_number/device_logs' do
-    r = SERVICE.show_log params[:serial_number]
+    r = @service.show_log params[:serial_number]
+    respond_to do |format|
+      format.json { r.to_json }
+    end
+  end
     respond_to do |format|
       format.json { r.to_json }
     end
@@ -78,7 +87,7 @@ class App < Sinatra::Application
     serial_number = params[:serial_number]
 
     respond_to do |format|
-      format.json { SERVICE.show(serial_number).to_json }
+      format.json { @service.show(serial_number).to_json }
       format.html { render :html, :device }
     end
   end
@@ -87,7 +96,7 @@ class App < Sinatra::Application
   post "/devices/:serial_number/forward/?" do
     serial_number = params[:serial_number]
 
-    r = SERVICE.fw serial_number
+    r = @service.fw serial_number
     respond_to do |format|
       format.json { r.merge({redirect: "/devices/#{serial_number}"}).to_json }
     end
@@ -97,23 +106,38 @@ class App < Sinatra::Application
   delete "/devices/:serial_number" do
     content_type :json
     serial_number = params[:serial_number]
-    r = SERVICE.rm(serial_number)
+    r = @service.rm(serial_number)
     respond_to do |format|
       format.json { r.merge({redirect: '/devices'}).to_json }
     end
   end
 
   post '/devices/seed' do
-    r = SERVICE.run_seed
+    r = @service.run_seed
     respond_to do |format|
       format.json { r.to_json }
     end
   end
 
   post '/devices/light_seed' do
-    r = SERVICE.run_light_seed
+    r = @service.run_light_seed
     respond_to do |format|
       format.json { r.to_json }
+    end
+  end
+
+  post '/devices/forward_all' do
+    r = @service.forward_all
+    respond_to do |format|
+      format.json { r.merge(redirect:'/').to_json }
+    end
+  end
+
+  #TODO: need a better name for this
+  post '/devices/run_complete' do
+    r = @service.run_complete
+    respond_to do |format|
+      format.json { r.merge(redirect:'/').to_json }
     end
   end
 

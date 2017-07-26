@@ -12,7 +12,7 @@ FactoryGirl.define do
 
   factory :device_so do
     am_device
-    state_machine DefaultStateMachine.new
+    state_machine { DefaultStateMachine.new }
 
     initialize_with { new(am_device, state_machine)}
   end

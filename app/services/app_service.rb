@@ -41,6 +41,7 @@ class AppService
       {
         success: true,
         has_next: !(device.current_state == StateMachine::SEGREGATED_STATE || device.finished)
+        #TODO: has_next should be in model
       }
     end
   end
@@ -118,6 +119,31 @@ class AppService
     end
   end
 
+  def forward_all
+    encapsulate_error do
+      DeviceSo.active.each do |d|
+        d.forward
+        d.save!
+      end
+      {
+        success:true
+      }
+    end
+  end
+
+  def run_complete
+    encapsulate_error do
+      DeviceSo.active.map(&:serial_number).each do |serial_number|
+        r = fw(serial_number)
+        while r[:has_next] do
+          r = fw(serial_number)
+        end
+      end
+      {
+        success:true
+      }
+    end
+  end
   private
 
   def encapsulate_error(&block)
