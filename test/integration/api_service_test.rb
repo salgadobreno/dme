@@ -183,7 +183,7 @@ describe App do
         post '/devices/forward_all'
         last_response.ok?.must_equal true
         r = JSON.parse(last_response.body)
-        r["redirect"].must_equal '/'
+        r["redirect"].wont_equal nil
       end
     end
 
@@ -193,7 +193,7 @@ describe App do
         post '/devices/run_complete'
         last_response.ok?.must_equal true
         r = JSON.parse(last_response.body)
-        r["redirect"].must_equal '/'
+        r["redirect"].wont_equal nil
       end
     end
 
