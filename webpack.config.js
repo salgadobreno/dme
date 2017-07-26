@@ -36,6 +36,7 @@ module.exports = {
         {from: /\/devices\/show_log/, to: '/device_log.html'},
         {from: /\/devices\/show/, to: '/device.html'},
         {from: /\/devices/, to: '/devicelist.html'},
+        {from: '/lofi', to: '/lofi.html'},
         {from: '/', to: '/devicelist.html'},
       ]
     }
