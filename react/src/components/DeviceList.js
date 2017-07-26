@@ -23,7 +23,7 @@ class DeviceList extends Component {
   }
 
   componentDidMount() {
-    fetch(__API__ + '/devices').then(result=> {
+    fetch(__API__+'/devices'+'?ajax=true').then(result=> {
       result.json().then(json=> this.setState({devices:json["data"]}));
     });
   }
