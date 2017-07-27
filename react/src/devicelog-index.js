@@ -5,6 +5,8 @@ import Message from './components/Message';
 import DevicePrompt from './components/DevicePrompt';
 import DeviceLog from './components/DeviceLog';
 
+import {handleResponse} from './helpers'
+
 class DeviceHistory extends Component {
   constructor(){
     super();
@@ -30,16 +32,10 @@ class DeviceHistory extends Component {
     }
 
     const device = {};
-    fetch(__API__ + '/devices/' + this.state.serial_number + '/device_logs').then(result=> {
-      result.json().then(json=> {
-        if (json['success']) {
-          console.log('success');
-          this.setState({device_log:json['data']})
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    fetch(__API__ + '/devices/' + this.state.serial_number + '/device_logs').then(result=>
+        handleResponse(result,
+          (r)=> { this.setState({device_log:r.data}) },
+          (r)=> { this.setState({error: r.message}) }))
   }
 
   handleChange(event){

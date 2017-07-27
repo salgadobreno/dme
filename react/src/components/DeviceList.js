@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import Device from './Device';
+
 import Message from './Message';
+
+import {handleResponse} from '../helpers'
 
 class DeviceListActions extends Component {
   render(){
@@ -27,17 +30,10 @@ class DeviceList extends Component {
   componentDidMount() {
     const params = window.location.href.split('?')[1];
     const urlParams = params === undefined ? '' : '?'+params;
-    fetch(__API__ + '/devices'+urlParams).then(result=> {
-      result.json().then(json=> {
-        if (json['success']) {
-          console.log('success');
-          this.setState({devices:json["data"]})
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-      });
-    });
+    fetch(__API__ + '/devices'+urlParams).then(result=> handleResponse(result,
+          (r) => { this.setState({devices:r.data}) },
+          (r) => { this.setState({error: r.message}) }
+          ));
   }
 
   sendFwAll(event) {
@@ -45,17 +41,10 @@ class DeviceList extends Component {
 
     fetch(__API__ + '/devices/forward_all', {
       method: 'post', headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      r.json().then(json=> {
-        //TODO: verify response code, exception case, etc
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(result=> handleResponse(result,
+        (r) => { window.location = r.redirect || '/' },
+        (r) => { this.setState({error: r.message})}
+        ));
   }
 
   sendRunComplete(event) {
@@ -63,17 +52,11 @@ class DeviceList extends Component {
 
     fetch(__API__ + '/devices/run_complete', {
       method: 'post', headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      r.json().then(json=> {
-        //TODO: verify response code, exception case, etc
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(
+      result => handleResponse(result,
+        (r) => { window.location = r.redirect || '/' },
+        (r) => { this.setState({error: r.message})})
+      )
   }
 
   render() {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Message from './components/Message';
 
+import {handleResponse} from './helpers'
+
 //payload input component
 class PayloadInput extends Component {
   constructor(props){
@@ -86,19 +88,11 @@ class AddDevice extends Component {
 
     fetch(__API__ + '/devices', {
       method: 'post', body:jsonParams, headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      r.json().then(json=> {
-        console.log("response: ");
-        console.log(json);
-        //TODO: verify response code, exception case, etc
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(
+      result => handleResponse(result,
+        (r) => { window.location = r.redirect || '/' },
+        (r) => { this.setState({error: r.message})})
+      )
   }
 
   handleChange(event){
