@@ -41,7 +41,7 @@ class DeviceShow extends Component {
   }
 
   handleForward(){
-    fetch(__API__ + '/devices/' + this.state.serial_number + '/forward', {
+    fetch(__API__+'/devices/'+this.state.serial_number+'/forward', {
       method: 'post', headers: {'Content-Type':'application/json'}
     }).then(result=>handleResponse(result,
         (r)=>{window.location = r.redirect || '/'},
@@ -50,7 +50,7 @@ class DeviceShow extends Component {
   }
 
   handleRemove(){
-    fetch(__API__ + '/devices/' + this.state.serial_number, {
+    fetch(__API__+'/devices/'+this.state.serial_number, {
       method: 'delete', headers: {'Content-Type':'application/json'}
     }).then(result=>handleResponse(result,
         (r)=>{window.location = r.redirect || '/'},
@@ -59,7 +59,7 @@ class DeviceShow extends Component {
   }
 
   handleShowHistory(){
-    window.location = '/devices/show_log/' + this.state.serial_number;
+    window.location = '/devices/show_log/'+this.state.serial_number;
   }
 
   handleSubmit(event){
@@ -68,7 +68,7 @@ class DeviceShow extends Component {
     }
 
     const device = {};
-    fetch(__API__ + '/devices/' + this.state.serial_number).then(result=> handleResponse(result,
+    fetch(__API__+'/devices/'+this.state.serial_number+'?ajax=true').then(result=> handleResponse(result,
           (r)=>{this.setState({device:r.data})},
           (r)=>{this.setState({error:r.message})}
           ))

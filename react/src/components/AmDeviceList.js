@@ -25,7 +25,7 @@ class AmDeviceList extends Component {
   }
 
   componentDidMount() {
-    fetch(__API__ + '/am_devices').then(result=> {
+    fetch(__API__+'/am_devices'+'?ajax=true').then(result=> {
       result.json().then(json=> this.setState({am_devices:json["data"]}));
     });
   }
@@ -33,7 +33,7 @@ class AmDeviceList extends Component {
   sendSeed(event) {
     event.preventDefault();
 
-    fetch(__API__ + '/devices/seed', {
+    fetch(__API__+'/devices/seed', {
       method: 'post', headers: {'Content-Type':'application/json'}
     }).then(result=> handleResponse(result,
         (r)=> { window.location = r.redirect || '/'},
@@ -44,7 +44,7 @@ class AmDeviceList extends Component {
   sendLightSeed(event) {
     event.preventDefault();
 
-    fetch(__API__ + '/devices/light_seed', {
+    fetch(__API__+'/devices/light_seed', {
       method: 'post', headers: {'Content-Type':'application/json'}
     }).then(result=> handleResponse(result,
         (r)=> { window.location = r.redirect || '/' },

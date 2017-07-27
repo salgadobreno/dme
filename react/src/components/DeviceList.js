@@ -29,8 +29,8 @@ class DeviceList extends Component {
 
   componentDidMount() {
     const params = window.location.href.split('?')[1];
-    const urlParams = params === undefined ? '' : '?'+params;
-    fetch(__API__ + '/devices'+urlParams).then(result=> handleResponse(result,
+    const urlParams = params === undefined ? '' : '&'+params;
+    fetch(__API__+'/devices'+'?ajax=true'+urlParams).then(result=> handleResponse(result,
           (r) => { this.setState({devices:r.data}) },
           (r) => { this.setState({error: r.message}) }
           ));
@@ -39,7 +39,7 @@ class DeviceList extends Component {
   sendFwAll(event) {
     event.preventDefault();
 
-    fetch(__API__ + '/devices/forward_all', {
+    fetch(__API__+'/devices/forward_all', {
       method: 'post', headers: {'Content-Type':'application/json'}
     }).then(result=> handleResponse(result,
         (r) => { window.location = r.redirect || '/' },
@@ -50,7 +50,7 @@ class DeviceList extends Component {
   sendRunComplete(event) {
     event.preventDefault();
 
-    fetch(__API__ + '/devices/run_complete', {
+    fetch(__API__+'/devices/run_complete', {
       method: 'post', headers: {'Content-Type':'application/json'}
     }).then(
       result => handleResponse(result,
