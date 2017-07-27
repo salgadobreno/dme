@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import {handleResponse} from '../helpers'
+
 class AmDeviceListActions extends Component {
   render(){
     return (
@@ -33,17 +35,10 @@ class AmDeviceList extends Component {
 
     fetch(__API__+'/devices/seed', {
       method: 'post', headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      r.json().then(json=> {
-        //TODO: verify response code, exception case, etc
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(result=> handleResponse(result,
+        (r)=> { window.location = r.redirect || '/'},
+        (r)=> { this.setState({error: r.message}) }
+        ))
   }
 
   sendLightSeed(event) {
@@ -51,16 +46,10 @@ class AmDeviceList extends Component {
 
     fetch(__API__+'/devices/light_seed', {
       method: 'post', headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      r.json().then(json=> {
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(result=> handleResponse(result,
+        (r)=> { window.location = r.redirect || '/' },
+        (r)=> { this.setState({error: r.message}) }
+        ))
   }
 
   render() {

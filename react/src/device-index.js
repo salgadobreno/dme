@@ -5,6 +5,8 @@ import Message from './components/Message';
 import DevicePrompt from './components/DevicePrompt';
 import Device from './components/Device';
 
+import {handleResponse} from './helpers'
+
 class DeviceActions extends Component {
   render() {
     const r = Object.keys(this.props.device).length == 0 ? (<div></div>) : (<div>
@@ -41,41 +43,23 @@ class DeviceShow extends Component {
   handleForward(){
     fetch(__API__+'/devices/'+this.state.serial_number+'/forward', {
       method: 'post', headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      //TODO: verify response code, exception case, etc in r
-      r.json().then(json=> {
-        console.log("response: ");
-        console.log(json);
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(result=>handleResponse(result,
+        (r)=>{window.location = r.redirect || '/'},
+        (r)=>{this.setState({error:r.message})}
+        ))
   }
 
   handleRemove(){
     fetch(__API__+'/devices/'+this.state.serial_number, {
       method: 'delete', headers: {'Content-Type':'application/json'}
-    }).then(r=> {
-      //TODO: verify response code, exception case, etc in r
-      r.json().then(json=> {
-        console.log("response: ");
-        console.log(json);
-        if (json['success']) {
-          console.log('success');
-          window.location = json['redirect'] || '/';
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    }).then(result=>handleResponse(result,
+        (r)=>{window.location = r.redirect || '/'},
+        (r)=>{this.setState({error:r.message})}
+        ))
   }
 
   handleShowHistory(){
-    window.location = '/devices/show_log/' + this.state.serial_number;
+    window.location = '/devices/show_log/'+this.state.serial_number;
   }
 
   handleSubmit(event){
@@ -84,16 +68,10 @@ class DeviceShow extends Component {
     }
 
     const device = {};
-    fetch(__API__+'/devices/'+this.state.serial_number+'?ajax=true').then(result=> {
-      result.json().then(json=> {
-        if (json['success']) {
-          console.log('success');
-          this.setState({device:json['data']})
-        } else {
-          console.log('fail');
-          this.setState({ 'error': json['message']})
-        }
-    })})
+    fetch(__API__+'/devices/'+this.state.serial_number+'?ajax=true').then(result=> handleResponse(result,
+          (r)=>{this.setState({device:r.data})},
+          (r)=>{this.setState({error:r.message})}
+          ))
   }
 
   handleChange(event){

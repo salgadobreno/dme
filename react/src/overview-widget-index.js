@@ -16,7 +16,7 @@ class OverviewWidget extends Component {
   }
 
   componentDidMount() {
-    fetch(__API__ + '/devices/overview').then(result=> {
+    fetch(__API__+'/devices/overview').then(result=> {
       if (result.ok) {
         result.json().then(json=> {
           this.setState({states:json["data"]})}

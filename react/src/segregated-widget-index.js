@@ -16,7 +16,7 @@ class SegregatedWidget extends Component {
   }
 
   componentDidMount() {
-    fetch(__API__ + '/devices/segregated_overview').then(result=> {
+    fetch(__API__+'/devices/segregated_overview').then(result=> {
       if (result.ok) {
         result.json().then(json=> {
           this.setState({devices:json["data"]})}
