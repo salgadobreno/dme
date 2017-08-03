@@ -32,11 +32,13 @@ Sinatra and React
 - node
 
 ------------------------------
-###Running
+### Running
 * Run JSON Server for dev:
   `yarn api`
-* Run React components in 'dev mode'(webpack js webserver, hot reload):
+* Run React components in 'dev mode'(webpack js devserver, hot reload):
   `yarn dev`
+* Run both!
+  `yarn api | yarn dev`
 * Build React components, update app/web/public/*-bundle.js files and make it
   available for Sinatra App:
   `yarn build`
@@ -45,6 +47,24 @@ Sinatra and React
   `yarn prod`
 * Run Sinatra App:
   `ruby app/web/app.rb` or `rackup`
+
+#### Attention!
+
+> The `API URL` will be different depending on what environment you're in or what you're trying to do. When running React devserver normally you'll be using json-server as the API, so the default `API_URL` there is set, in `webpack.config.js`, to `http://localhost:8080`. When you run `yarn build` it will use the `webpack.prod.config.js`, which sets `API_URL` to `http://localhost:4567`. You can override the `API_URL` with an environment variable(normally sent along with the command) like: 
+
+> `__API__='http://192.168.1.53:4567' yarn dev`
+
+> `__API__='http://192.168.2.5:6060' yarn api | yarn api`
+
+> `__API__='http://192.168.2.5:6060' yarn build && rackup`
+
+#### Attention2!
+
+> If you're working remotely through VPN you may need to pass additional parameters to access the server.
+
+> `yarn dev --host 0.0.0.0`
+
+> `ruby -I . app/web/app.rb -o 0.0.0.0`
 
 CLI App
 =======
