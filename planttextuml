@@ -1,0 +1,33 @@
+@startuml
+allow_mixing
+
+title Packages - Class Diagram
+
+package App {
+    package Services {
+        class AppService
+    }
+    package models {
+        class Operations
+        class StateMachines
+        class States
+        package Core {
+            class StateMachine
+            class State
+            class DeviceSo
+            class DeviceLog
+        }
+        package asset_manager {
+            class AmDevice
+        }
+    }
+    package Web {
+        class App <<Sinatra>>
+    }
+}
+
+package React {
+    package Components {}
+}
+
+@enduml

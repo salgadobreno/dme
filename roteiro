@@ -1,0 +1,70 @@
+roteiro
+-------
+
+-> expose app_service as WSAPI
+  -> prepare test setup for url requests
+    - Rack Middleware stuff ~get '/xxx'
+  endpoints:
+  x get /devices/ -> list
+      {
+        devices: [
+          {
+            serial_number: xxx,
+            ...
+          }
+        ]
+      }
+  x get /devices/:id -> show
+      {
+        serial_number: xxx,
+        ...
+      }
+  x post /devices/ -> add
+      entryFormat -> {
+        serial_number: xxx,
+        ...
+        payload: {
+          key:value,
+          key:value,
+          key:value,
+        }
+      }
+  o delete /devices/:id -> rm
+  o post /devices/:id/forward -> fw
+
+-> interface react p/ execucao do service
+  -> no forward!
+    <- ou: sem operations?
+  -> / : add
+    <input> serial number
+    <input>:<input> <+> key:value (add another)
+    -> submit -> show
+  -> /devices : list
+    <DeviceList> (serial_number, state, <show>, <remove>)
+  -> /devices/:id
+    <Device>
+    <DeviceLog> (created_at, msg)
+  -> delete /device/:id
+
+-> 'componente de comunicação de entrada do processo de manutenção'
+-> 'adicionar um endpoint para o inicio do webservice de manutenção de 3400 na avx'
+-> 'definir protocolo para o estado de recepção'
+  -> definição do formato do protocolo
+  -> implementação do protocolo com testes
+----
+  - add no ws no modelo discutido + testes
+    - primeiro endpoint 'de vdd'
+    - primeiro view 'de vdd'
+    - integra asset mng
+
+----
+
+<Device>
+  <serial_number>
+  <sold_at>
+  <warranty_days> > <InWarranty>
+  <blacklisted>
+  <current_state>
+</Device>
+
+----

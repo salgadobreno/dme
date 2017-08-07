@@ -1,0 +1,80 @@
+RELEASE
+-------
+
+FrontOffice:
+  - UI
+    - Logo placeholder
+    - Search -> DeviceShow
+    - Navigation
+      - Device List
+      - Segregated List
+      - Atravessador
+      - Deploy
+    - Overview Widget
+    - Segregated Widget
+  -> UI Lo-Fi
+    -> UI Bootstrap
+BackOffice:
+  - Atravessador:
+    x Avançar todos
+    x Complete Run
+    x Seed
+    x Light Seed
+
+Tasks:
+  x [react] avançar todos
+  x [react] run completo
+  x [react] overview widget
+  x [react] segregated widget
+  x [api] avançar todos
+  x [api] run completo
+  x [api] overview widget
+  x [api] segregated widget
+  x [jenkins] test
+  - [jenkins] deploy
+  x [ui] design lo-fi
+  - [ui] design bootstrap
+
+UI lo-fi:
+
++------------+-----------------------------------------+
+|            |                          Device: ______ |
+|  icon      |                                         |
+|            | Overview                                |
+|            | --------                                |
++------------+                                         |
+| DeviceList | +----+  +----+  +----+  +----+  +----+  |
+| Segregated | |    +->|    +->|    +->|    +->|    |  |
+|            | +----+  +----+  +----+  +----+  +----+  |
+| DevOffice  | Accept  Triage  Mainte  QA      Expedi  |
+|            |                                         |
+|            |                                         |
+|            | Segregated                              |
+|            | ----------                              |
+|            |                                         |
+|            | +---+--------+--------+--------+------+ |
+|            | |   |        |        |        |      | |
+|            | |   |        |        |        |      | |
+|            | |   |        |        |        |      | |
+|            | +---+--------+--------+--------+------+ |
++------------+-----------------------------------------+
+
+x /           -> /dashboard
+x DeviceList  -> /devices/
+x Segregated  -> /devices/?param=segregated
+x DevOffice   -> /devices/
+x Device(srch)-> /devices/1231231
+x (wdg)overvie-> /devices/
+- (wdg)segrega-> /devices/?param=segregated
+
+- check redirects
+- do DRY function for redirects?
+
++------------------------------------------------------+
+| list add show(lab) show(device logs)    <-Dashboard  |
+| ---- --- --------- -----------------    -----------  |
+|                                                      |
+|                                                      |
++------------------------------------------------------+
+
+x Dashboard   -> /dashboard
